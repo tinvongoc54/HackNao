@@ -6,7 +6,7 @@ import androidx.test.runner.AndroidJUnitRunner
 
 /**
  * Set to app gradle:
- * testInstrumentationRunner = "com.neolab.mvvm_architecture.app.CustomTestRunner"
+ * testInstrumentationRunner = "com.app.hack_brain.app.CustomTestRunner"
  */
 class CustomTestRunner : AndroidJUnitRunner() {
 
