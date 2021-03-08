@@ -20,11 +20,11 @@ android {
     flavorDimensions("default")
 
     defaultConfig {
-        applicationId = "com.neolab.mvvm_architecture"
+        applicationId = "com.app.hack_brain"
         minSdkVersion(Versions.min_sdk_version)
         targetSdkVersion(Versions.target_sdk_version)
         vectorDrawables.useSupportLibrary = true
-        testInstrumentationRunner = "com.neolab.mvvm_architecture.app.CustomTestRunner"
+        testInstrumentationRunner = "com.app.hack_brain.app.CustomTestRunner"
     }
 
     productFlavors {
@@ -158,6 +158,10 @@ dependencies {
     implementation(Dependencies.support_core_ktx)
     implementation(Dependencies.view_model_ktx)
     implementation(Dependencies.live_data_ktx)
+
+    // Navigation
+    implementation(Dependencies.nav_fragment_ktx)
+    implementation(Dependencies.nav_ui_ktx)
 
     // Unit Test
     implementLocalUnitTest()

@@ -17,6 +17,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.neolab.mvvm_architecture.dev", appContext.packageName)
+        assertEquals("com.app.hack_brain.dev", appContext.packageName)
     }
 }

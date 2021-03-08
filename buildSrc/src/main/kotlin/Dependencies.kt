@@ -69,6 +69,7 @@ object Versions {
     const val conscrypt_android = "2.4.0"
     const val detekt = "1.9.1"
     const val rxjava = "3.0.0"
+    const val nav_version = "2.3.2"
 
     // Release notes https://developer.android.com/jetpack/androidx/releases/recyclerview
     const val recycler_view = "1.1.0"
@@ -183,6 +184,10 @@ object Dependencies {
     const val kt_ext = "com.github.ThuanPx:KtExt:${Versions.kt_ext}"
 
     const val conscrypt_android = "org.conscrypt:conscrypt-android:${Versions.conscrypt_android}"
+
+    // navigation
+    const val nav_fragment_ktx = "androidx.navigation:navigation-fragment-ktx:${Versions.nav_version}"
+    const val nav_ui_ktx = "androidx.navigation:navigation-ui-ktx:${Versions.nav_version}"
 }
 
 fun DependencyHandler.implementLocalUnitTest() {
