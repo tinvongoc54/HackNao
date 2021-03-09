@@ -1,6 +1,237 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="@dimen/dp_150"
+        android:layout_marginTop="@dimen/dp_50"
+        android:src="@drawable/ic_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvShortStory"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_80"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_70"
+        app:cardCornerRadius="@dimen/dp_10"
+        app:cardElevation="@dimen/dp_10"
+        app:layout_constraintEnd_toStartOf="@id/cvCheck"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivLogo">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_weight="0.6"
+                android:src="@drawable/ic_audio" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:text="@string/text_short_story"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_15" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvCheck"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_80"
+        android:layout_marginStart="@dimen/dp_16"
+        app:cardCornerRadius="@dimen/dp_10"
+        app:cardElevation="@dimen/dp_10"
+        app:layout_constraintEnd_toStartOf="@+id/cvTranslate"
+        app:layout_constraintStart_toEndOf="@+id/cvShortStory"
+        app:layout_constraintTop_toTopOf="@+id/cvShortStory">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_weight="0.6"
+                android:src="@drawable/ic_practice" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:text="@string/text_checking"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_15" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvTranslate"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_80"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        app:cardCornerRadius="@dimen/dp_10"
+        app:cardElevation="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cvCheck"
+        app:layout_constraintTop_toTopOf="@id/cvShortStory">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_weight="0.6"
+                android:src="@drawable/ic_search" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:text="@string/text_translate_sentence"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_15" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvIrregular"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_80"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_20"
+        app:cardCornerRadius="@dimen/dp_10"
+        app:cardElevation="@dimen/dp_10"
+        app:layout_constraintEnd_toStartOf="@id/cvFavourite"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cvShortStory">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_weight="0.6"
+                android:src="@drawable/ic_bqt" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:text="@string/text_irregular"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_15" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvFavourite"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_80"
+        android:layout_marginStart="@dimen/dp_16"
+        app:cardCornerRadius="@dimen/dp_10"
+        app:cardElevation="@dimen/dp_10"
+        app:layout_constraintEnd_toStartOf="@+id/cvTimer"
+        app:layout_constraintStart_toEndOf="@+id/cvIrregular"
+        app:layout_constraintTop_toTopOf="@+id/cvIrregular">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_weight="0.6"
+                android:src="@drawable/ic_like" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:text="@string/text_favourite"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_15" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvTimer"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_80"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        app:cardCornerRadius="@dimen/dp_10"
+        app:cardElevation="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cvFavourite"
+        app:layout_constraintTop_toTopOf="@id/cvIrregular">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_weight="0.6"
+                android:src="@drawable/ic_alarm" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:text="@string/text_timer"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/sp_15" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
