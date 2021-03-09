@@ -2,4 +2,10 @@
     <string name="msg_error_time_out">Connection timeout!</string>
     <string name="msg_error_no_internet">Not connect internet!</string>
     <string name="msg_error_data_parse">Parse data error!</string>
+    <string name="text_short_story">Truyện ngắn</string>
+    <string name="text_checking">Kiểm tra</string>
+    <string name="text_translate_sentence">Dịch câu</string>
+    <string name="text_irregular">Bất quy tắc</string>
+    <string name="text_favourite">Yêu thích</string>
+    <string name="text_timer">Hẹn giờ học</string>
 </resources>
