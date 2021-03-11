@@ -1,5 +1,7 @@
 package com.app.hack_brain.di
 
+import com.app.hack_brain.repository.DefaultGeneralRepository
+import com.app.hack_brain.repository.GeneralRepository
 import com.app.hack_brain.repository.task.DefaultTaskRepository
 import com.app.hack_brain.repository.task.TaskRepository
 import org.koin.dsl.module
@@ -11,8 +13,13 @@ import org.koin.dsl.module
 
 val repositoryModule = module {
     single { providerTaskRepository() }
+    single { providerGeneralRepository() }
 }
 
 fun providerTaskRepository(): TaskRepository {
     return DefaultTaskRepository()
+}
+
+fun providerGeneralRepository(): GeneralRepository {
+    return DefaultGeneralRepository()
 }

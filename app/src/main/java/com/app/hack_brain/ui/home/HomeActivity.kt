@@ -18,27 +18,28 @@ import com.app.hack_brain.databinding.ActivityHomeBinding
  */
 class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewModel::class) {
 
-//    private lateinit var navController: NavController
-//    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun inflateViewBinding(inflater: LayoutInflater): ActivityHomeBinding {
         return ActivityHomeBinding.inflate(inflater)
     }
 
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
-//    }
-//
-//    override fun onSupportNavigateUp(): Boolean {
-//        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-//    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
 
     override fun initialize() {
         setSupportActionBar(viewBinding.toolbar)
         val navHost = supportFragmentManager.findFragmentById(R.id.navHostFragment)
         navHost?.let {
-//            navController = it.findNavController()
-//            setupActionBarWithNavController(navController, appBarConfiguration)
+            navController = it.findNavController()
+            appBarConfiguration = AppBarConfiguration.Builder().build()
+            setupActionBarWithNavController(navController, appBarConfiguration)
         }
     }
 

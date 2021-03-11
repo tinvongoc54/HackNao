@@ -6,6 +6,9 @@ plugins {
     kotlin(Plugins.kotlinAndroid)
     kotlin(Plugins.kotlinExt)
     kotlin(Plugins.kotlinApt)
+    id(Plugins.kotlinNavSafeargs)
+//    id(Plugins.googleServices)
+//    id(Plugins.crashlytics)
     id(Plugins.checkDependencyUpdates) version (Versions.check_dependency_updates)
 }
 

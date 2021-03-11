@@ -8,6 +8,8 @@ import org.gradle.api.artifacts.dsl.DependencyHandler
 object Versions {
     // Release notes https://github.com/JetBrains/kotlin/blob/master/ChangeLog.md
     const val kotlin = "1.3.72"
+//    const val google_service = "4.3.4"
+//    const val crashlytics_gradle = "2.4.1"
 
     // Release notes https://developer.android.com/studio/releases/gradle-plugin
     const val android_gradle_plugin = "4.0.0"
@@ -112,6 +114,9 @@ object ClassPaths {
     const val android_gradle_plugin =
         "com.android.tools.build:gradle:${Versions.android_gradle_plugin}"
     const val kotlin_gradle_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+    const val nav_safe_args = "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.nav_version}"
+//    const val google_service = "com.google.gms:google-services:${Versions.google_service}"
+//    const val crashlytics = "com.google.firebase:firebase-crashlytics-gradle:${Versions.crashlytics_gradle}"
 }
 
 /**
@@ -126,6 +131,9 @@ object Plugins {
     const val detekt = "io.gitlab.arturbosch.detekt"
     const val koin = "koin"
     const val checkDependencyUpdates = "name.remal.check-dependency-updates"
+    const val kotlinNavSafeargs = "androidx.navigation.safeargs.kotlin"
+    const val googleServices = "com.google.gms.google-services"
+    const val crashlytics = "com.google.firebase.crashlytics"
 }
 
 /**
