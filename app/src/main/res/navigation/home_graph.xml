@@ -21,7 +21,7 @@
             app:destination="@id/shortStoryFragment" />
         <action
             android:id="@+id/actionHomeFragmentToIrregularFragment"
-            app:destination="@id/shortStoryFragment" />
+            app:destination="@id/irregularFragment" />
         <action
             android:id="@+id/actionHomeFragmentToFavouriteFragment"
             app:destination="@id/shortStoryFragment" />
@@ -47,4 +47,9 @@
             android:name="shortStory"
             app:argType="com.app.hack_brain.model.uimodel.ShortStory"/>
     </fragment>
+    <fragment
+        android:id="@+id/irregularFragment"
+        android:name="com.app.hack_brain.ui.irregular.IrregularFragment"
+        android:label="fragment_irregular"
+        tools:layout="@layout/fragment_irregular"/>
 </navigation>
