@@ -11,6 +11,8 @@ object Versions {
 //    const val google_service = "4.3.4"
 //    const val crashlytics_gradle = "2.4.1"
 
+    const val pdf_viewer = "2.8.2"
+
     // Release notes https://developer.android.com/studio/releases/gradle-plugin
     const val android_gradle_plugin = "4.0.0"
 
@@ -196,6 +198,9 @@ object Dependencies {
     // navigation
     const val nav_fragment_ktx = "androidx.navigation:navigation-fragment-ktx:${Versions.nav_version}"
     const val nav_ui_ktx = "androidx.navigation:navigation-ui-ktx:${Versions.nav_version}"
+
+    //pdf viewer
+    const val pdf_viewer = "com.github.barteksc:android-pdf-viewer:${Versions.pdf_viewer}"
 }
 
 fun DependencyHandler.implementLocalUnitTest() {

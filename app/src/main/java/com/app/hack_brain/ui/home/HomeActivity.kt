@@ -37,9 +37,9 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
         setSupportActionBar(viewBinding.toolbar)
         val navHost = supportFragmentManager.findFragmentById(R.id.navHostFragment)
         navHost?.let {
-            navController = it.findNavController()
-            appBarConfiguration = AppBarConfiguration.Builder().build()
-            setupActionBarWithNavController(navController, appBarConfiguration)
+//            navController = it.findNavController()
+//            appBarConfiguration = AppBarConfiguration.Builder().build()
+//            setupActionBarWithNavController(navController, appBarConfiguration)
         }
     }
 

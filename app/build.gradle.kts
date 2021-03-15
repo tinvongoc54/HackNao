@@ -166,6 +166,9 @@ dependencies {
     implementation(Dependencies.nav_fragment_ktx)
     implementation(Dependencies.nav_ui_ktx)
 
+    // Pdf viewer
+    implementation(Dependencies.pdf_viewer)
+
     // Unit Test
     implementLocalUnitTest()
     implementInstrumentationUnitTest()
