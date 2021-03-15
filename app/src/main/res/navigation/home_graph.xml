@@ -10,6 +10,41 @@
         android:name="com.app.hack_brain.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
-
+        <action
+            android:id="@+id/actionHomeFragmentToShortStoryFragment"
+            app:destination="@id/shortStoryFragment" />
+        <action
+            android:id="@+id/actionHomeFragmentToCheckFragment"
+            app:destination="@id/shortStoryFragment" />
+        <action
+            android:id="@+id/actionHomeFragmentToTranslateFragment"
+            app:destination="@id/shortStoryFragment" />
+        <action
+            android:id="@+id/actionHomeFragmentToIrregularFragment"
+            app:destination="@id/shortStoryFragment" />
+        <action
+            android:id="@+id/actionHomeFragmentToFavouriteFragment"
+            app:destination="@id/shortStoryFragment" />
+        <action
+            android:id="@+id/actionHomeFragmentToTimerFragment"
+            app:destination="@id/shortStoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/shortStoryFragment"
+        android:name="com.app.hack_brain.ui.short_story.ShortStoryFragment"
+        android:label="fragment_short_story"
+        tools:layout="@layout/fragment_short_story">
+        <action
+            android:id="@+id/actionShortStoryFragmentToDetailFragment"
+            app:destination="@id/detailShortStoryFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/detailShortStoryFragment"
+        android:name="com.app.hack_brain.ui.short_story.detail.DetailShortStoryFragment"
+        android:label="fragment_detail_short_story"
+        tools:layout="@layout/fragment_detail_short_story">
+        <argument
+            android:name="shortStory"
+            app:argType="com.app.hack_brain.model.uimodel.ShortStory"/>
     </fragment>
 </navigation>

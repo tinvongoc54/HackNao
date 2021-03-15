@@ -9,6 +9,9 @@ buildscript {
     dependencies {
         classpath(ClassPaths.android_gradle_plugin)
         classpath(ClassPaths.kotlin_gradle_plugin)
+        classpath(ClassPaths.nav_safe_args)
+//        classpath(ClassPaths.google_service)
+//        classpath(ClassPaths.crashlytics)
     }
 }
 
