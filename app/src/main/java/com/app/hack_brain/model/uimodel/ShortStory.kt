@@ -7,5 +7,6 @@ import kotlinx.android.parcel.Parcelize
 data class ShortStory(
     val id: Int,
     val title: String,
-    val content: String
+    val content: String,
+    val audio: String
 ): Parcelable

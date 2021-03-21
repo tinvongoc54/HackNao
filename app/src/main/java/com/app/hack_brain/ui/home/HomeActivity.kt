@@ -11,6 +11,10 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.app.hack_brain.R
 import com.app.hack_brain.common.base.BaseActivity
 import com.app.hack_brain.databinding.ActivityHomeBinding
+import com.app.hack_brain.extension.gone
+import com.app.hack_brain.extension.show
+import com.app.hack_brain.ui.short_story.detail.DetailShortStoryFragmentArgs
+import timber.log.Timber
 
 /**
  * Copyright © 2020 Neolab VN.
@@ -37,14 +41,45 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
         setSupportActionBar(viewBinding.toolbar)
         val navHost = supportFragmentManager.findFragmentById(R.id.navHostFragment)
         navHost?.let {
-//            navController = it.findNavController()
+            navController = it.findNavController()
 //            appBarConfiguration = AppBarConfiguration.Builder().build()
 //            setupActionBarWithNavController(navController, appBarConfiguration)
         }
-    }
 
-    override fun onSubscribeObserver() {
-        super.onSubscribeObserver()
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            when (destination.id) {
+                R.id.detailShortStoryFragment -> {
+                    viewBinding.ivAudio.show()
+                    viewBinding.ivBack.show()
+                }
+                R.id.shortStoryFragment -> {
+                    viewBinding.ivAudio.gone()
+                    viewBinding.ivBack.show()
+                    viewBinding.tvTitle.text = getString(R.string.text_short_story)
+                }
+                else -> {
+                    viewBinding.ivBack.gone()
+                    viewBinding.tvTitle.text = ""
+                }
+            }
+
+            supportActionBar?.let {
+                arguments?.let { args ->
+                    when (destination.id) {
+                        R.id.detailShortStoryFragment -> {
+                            val fragArgs = DetailShortStoryFragmentArgs.fromBundle(args)
+                            viewBinding.tvTitle.text = fragArgs.shortStory.title
+                            Timber.i("title: %s", fragArgs.shortStory.title)
+                        }
+                    }
+                }
+                it.setHomeAsUpIndicator(R.drawable.ic_back)
+            }
+        }
+
+        viewBinding.ivBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 }
 
