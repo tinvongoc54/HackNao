@@ -44,6 +44,7 @@
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPoint"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -55,6 +56,7 @@
                     android:visibility="gone" />
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivAudio"
                     android:layout_width="@dimen/dp_30"
                     android:layout_height="@dimen/dp_30"
                     android:layout_alignParentEnd="true"
