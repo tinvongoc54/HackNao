@@ -15,7 +15,7 @@
             app:destination="@id/shortStoryFragment" />
         <action
             android:id="@+id/actionHomeFragmentToCheckFragment"
-            app:destination="@id/shortStoryFragment" />
+            app:destination="@id/checkFragment" />
         <action
             android:id="@+id/actionHomeFragmentToTranslateFragment"
             app:destination="@id/shortStoryFragment" />
@@ -52,4 +52,11 @@
         android:name="com.app.hack_brain.ui.irregular.IrregularFragment"
         android:label="fragment_irregular"
         tools:layout="@layout/fragment_irregular"/>
+    <fragment
+        android:id="@+id/checkFragment"
+        android:name="com.app.hack_brain.ui.check.CheckFragment"
+        android:label="fragment_check"
+        tools:layout="@layout/fragment_check">
+
+    </fragment>
 </navigation>
