@@ -20,7 +20,7 @@ class HomeFragment :
         initClickEvent()
     }
 
-    fun initClickEvent() {
+    private fun initClickEvent() {
         viewBinding.cvShortStory.setOnClickListener {
             navigateToShortStory()
         }
