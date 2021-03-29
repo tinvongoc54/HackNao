@@ -36,26 +36,26 @@ android {
             versionCode = 1
             versionName = "1.0.0"
 
-            resValue("string", "app_name", "Android Team Base")
-            buildConfigField("String", "END_POINT", "\"https://api-dev.neo-lab.com/v1/\"")
+            resValue("string", "app_name", "Hack Nao")
+            buildConfigField("String", "END_POINT", "\"http://api.tracau.vn/WBBcwnwQpV89/\"")
         }
 
         create("PROD") {
             versionCode = 1
             versionName = "1.0.0"
 
-            resValue("string", "app_name", "Android Team Base")
+            resValue("string", "app_name", "Hack Nao")
             buildConfigField("String", "END_POINT", "\"https://api-dev.neo-lab.com/v1/\"")
         }
 
-        applicationVariants.all {
-            outputs.forEach { output ->
-                if (output is com.android.build.gradle.internal.api.BaseVariantOutputImpl) {
-                    output.outputFileName =
-                        "App-${SimpleDateFormat("HH_mm_dd_MM_yyyy").format(Calendar.getInstance().time)}-v$versionName(${this.versionCode})-$name.${output.outputFile.extension}"
-                }
-            }
-        }
+//        applicationVariants.all {
+//            outputs.forEach { output ->
+//                if (output is com.android.build.gradle.internal.api.BaseVariantOutputImpl) {
+//                    output.outputFileName =
+//                        "App-${SimpleDateFormat("HH_mm_dd_MM_yyyy").format(Calendar.getInstance().time)}-v$versionName(${this.versionCode})-$name.${output.outputFile.extension}"
+//                }
+//            }
+//        }
     }
 
     buildTypes {
