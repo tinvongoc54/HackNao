@@ -34,5 +34,6 @@ fun provideGson(): Gson {
         .registerTypeAdapter(Int::class.java, integerAdapter)
         .registerTypeAdapter(Double::class.java, doubleAdapter)
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .setLenient()
         .create()
 }
