@@ -2,6 +2,7 @@ package com.app.hack_brain.di
 
 import com.app.hack_brain.ui.check.CheckFragViewModel
 import com.app.hack_brain.ui.check.eng_vie.CheckEngVieFragViewModel
+import com.app.hack_brain.ui.check.vie_eng.CheckVieEngFragViewModel
 import com.app.hack_brain.ui.home.HomeFragViewModel
 import com.app.hack_brain.ui.home.HomeViewModel
 import com.app.hack_brain.ui.irregular.IrregularFragViewModel
@@ -27,4 +28,5 @@ val viewModelModule = module {
     viewModel<CheckFragViewModel>()
     viewModel<TranslateFragViewModel>()
     viewModel<CheckEngVieFragViewModel>()
+    viewModel<CheckVieEngFragViewModel>()
 }

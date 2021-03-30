@@ -13,6 +13,8 @@ import com.app.hack_brain.common.base.BaseActivity
 import com.app.hack_brain.databinding.ActivityHomeBinding
 import com.app.hack_brain.extension.gone
 import com.app.hack_brain.extension.show
+import com.app.hack_brain.ui.check.eng_vie.CheckEngVieFragmentArgs
+import com.app.hack_brain.ui.check.vie_eng.CheckVieEngFragmentArgs
 import com.app.hack_brain.ui.short_story.detail.DetailShortStoryFragmentArgs
 import timber.log.Timber
 
@@ -83,7 +85,19 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
                         R.id.detailShortStoryFragment -> {
                             val fragArgs = DetailShortStoryFragmentArgs.fromBundle(args)
                             viewBinding.tvTitle.text = fragArgs.shortStory.title
-                            Timber.i("title: %s", fragArgs.shortStory.title)
+                        }
+                        R.id.checkEngVieFragment -> {
+                            val fragArgs = CheckEngVieFragmentArgs.fromBundle(args)
+                            viewBinding.tvTitle.text = fragArgs.unit.unit
+                            viewBinding.ivBack.show()
+                        }
+                        R.id.checkVieEngFragment -> {
+                            val fragArgs = CheckVieEngFragmentArgs.fromBundle(args)
+                            viewBinding.tvTitle.text = fragArgs.unit.unit
+                            viewBinding.ivBack.show()
+                        }
+                        else -> {
+                            viewBinding.ivBack.gone()
                         }
                     }
                 }

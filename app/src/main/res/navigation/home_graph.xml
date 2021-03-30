@@ -73,10 +73,18 @@
         android:id="@+id/checkEngVieFragment"
         android:name="com.app.hack_brain.ui.check.eng_vie.CheckEngVieFragment"
         android:label="fragment_check_eng_vie"
-        tools:layout="@layout/fragment_check_eng_vie" />
+        tools:layout="@layout/fragment_check_eng_vie">
+        <argument
+            android:name="unit"
+            app:argType="com.app.hack_brain.model.uimodel.Unit" />
+    </fragment>
     <fragment
         android:id="@+id/checkVieEngFragment"
         android:name="com.app.hack_brain.ui.check.vie_eng.CheckVieEngFragment"
         android:label="fragment_check_vie_eng"
-        tools:layout="@layout/fragment_check_vie_eng" />
+        tools:layout="@layout/fragment_check_vie_eng">
+        <argument
+            android:name="unit"
+            app:argType="com.app.hack_brain.model.uimodel.Unit" />
+    </fragment>
 </navigation>
