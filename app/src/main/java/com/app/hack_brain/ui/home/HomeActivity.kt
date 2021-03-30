@@ -47,19 +47,33 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
         }
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            when (destination.id) {
-                R.id.detailShortStoryFragment -> {
-                    viewBinding.ivAudio.show()
-                    viewBinding.ivBack.show()
-                }
-                R.id.shortStoryFragment -> {
-                    viewBinding.ivAudio.gone()
-                    viewBinding.ivBack.show()
-                    viewBinding.tvTitle.text = getString(R.string.text_short_story)
-                }
-                else -> {
-                    viewBinding.ivBack.gone()
-                    viewBinding.tvTitle.text = ""
+            viewBinding.run {
+                when (destination.id) {
+                    R.id.detailShortStoryFragment -> {
+                        ivAudio.show()
+                        ivBack.show()
+                    }
+                    R.id.shortStoryFragment -> {
+                        ivAudio.gone()
+                        ivBack.show()
+                        tvTitle.text = getString(R.string.text_short_story)
+                    }
+                    R.id.checkFragment -> {
+                        ivBack.show()
+                        tvTitle.text = getString(R.string.text_checking)
+                    }
+                    R.id.translateFragment -> {
+                        ivBack.show()
+                        tvTitle.text = getString(R.string.text_translate_sentence)
+                    }
+                    R.id.irregularFragment -> {
+                        ivBack.show()
+                        tvTitle.text = getString(R.string.text_irregular)
+                    }
+                    else -> {
+                        ivBack.gone()
+                        tvTitle.text = ""
+                    }
                 }
             }
 

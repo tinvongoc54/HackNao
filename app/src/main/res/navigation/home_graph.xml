@@ -36,7 +36,7 @@
         tools:layout="@layout/fragment_short_story">
         <action
             android:id="@+id/actionShortStoryFragmentToDetailFragment"
-            app:destination="@id/detailShortStoryFragment"/>
+            app:destination="@id/detailShortStoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailShortStoryFragment"
@@ -45,23 +45,38 @@
         tools:layout="@layout/fragment_detail_short_story">
         <argument
             android:name="shortStory"
-            app:argType="com.app.hack_brain.model.uimodel.ShortStory"/>
+            app:argType="com.app.hack_brain.model.uimodel.ShortStory" />
     </fragment>
     <fragment
         android:id="@+id/irregularFragment"
         android:name="com.app.hack_brain.ui.irregular.IrregularFragment"
         android:label="fragment_irregular"
-        tools:layout="@layout/fragment_irregular"/>
+        tools:layout="@layout/fragment_irregular" />
     <fragment
         android:id="@+id/checkFragment"
         android:name="com.app.hack_brain.ui.check.CheckFragment"
         android:label="fragment_check"
         tools:layout="@layout/fragment_check">
-
+        <action
+            android:id="@+id/actionToCheckEngVieFragment"
+            app:destination="@+id/checkEngVieFragment" />
+        <action
+            android:id="@+id/actionToCheckVieEngFragment"
+            app:destination="@+id/checkVieEngFragment" />
     </fragment>
     <fragment
         android:id="@+id/translateFragment"
         android:name="com.app.hack_brain.ui.translate.TranslateFragment"
         android:label="fragment_translate"
-        tools:layout="@layout/fragment_translate"/>
+        tools:layout="@layout/fragment_translate" />
+    <fragment
+        android:id="@+id/checkEngVieFragment"
+        android:name="com.app.hack_brain.ui.check.eng_vie.CheckEngVieFragment"
+        android:label="fragment_check_eng_vie"
+        tools:layout="@layout/fragment_check_eng_vie" />
+    <fragment
+        android:id="@+id/checkVieEngFragment"
+        android:name="com.app.hack_brain.ui.check.vie_eng.CheckVieEngFragment"
+        android:label="fragment_check_vie_eng"
+        tools:layout="@layout/fragment_check_vie_eng" />
 </navigation>

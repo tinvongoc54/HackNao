@@ -2,7 +2,9 @@ package com.app.hack_brain.ui.check
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.app.hack_brain.R
 import com.app.hack_brain.common.base.BaseFragment
 import com.app.hack_brain.databinding.FragmentCheckBinding
 import com.app.hack_brain.model.uimodel.Unit
@@ -36,11 +38,15 @@ class CheckFragment : BaseFragment<CheckFragViewModel, FragmentCheckBinding>(Che
         viewBinding.rvUnit.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = UnitAdapter(requireContext()) {
-
+                navigateToDetailUnit(it)
             }
             with(adapter as UnitAdapter) {
                 replaceData(list)
             }
         }
+    }
+
+    private fun navigateToDetailUnit(unit: Unit) {
+        findNavController().navigate(R.id.actionToCheckEngVieFragment)
     }
 }

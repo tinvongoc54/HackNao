@@ -7,6 +7,7 @@
     <color name="dim_gray_opacity_40">#4D717171</color>
     <color name="white">#FFFFFF</color>
     <color name="gray">#DDDDDD</color>
+    <color name="gray_black">#ACACAC</color>
     <color name="black">#000000</color>
     <color name="red">#FF0000</color>
     <color name="light_red">#FF5020</color>
