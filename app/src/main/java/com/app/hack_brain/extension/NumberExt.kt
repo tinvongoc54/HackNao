@@ -24,3 +24,5 @@ fun Double.formatMoney(): String {
     val formatter = DecimalFormat("###,###,###")
     return formatter.format(this)
 }
+
+fun Float.appendPercent() = "$this%"
