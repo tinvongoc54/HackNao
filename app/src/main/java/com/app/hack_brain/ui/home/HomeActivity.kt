@@ -72,6 +72,10 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
                         ivBack.show()
                         tvTitle.text = getString(R.string.text_irregular)
                     }
+                    R.id.favouriteFragment -> {
+                        ivBack.show()
+                        tvTitle.text = getString(R.string.text_favourite)
+                    }
                     else -> {
                         ivBack.gone()
                         tvTitle.text = ""

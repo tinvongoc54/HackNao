@@ -24,7 +24,7 @@
             app:destination="@id/irregularFragment" />
         <action
             android:id="@+id/actionHomeFragmentToFavouriteFragment"
-            app:destination="@id/shortStoryFragment" />
+            app:destination="@id/favouriteFragment" />
         <action
             android:id="@+id/actionHomeFragmentToTimerFragment"
             app:destination="@id/shortStoryFragment" />
@@ -86,5 +86,20 @@
         <argument
             android:name="unit"
             app:argType="com.app.hack_brain.model.uimodel.Unit" />
+    </fragment>
+    <fragment
+        android:id="@+id/favouriteFragment"
+        android:name="com.app.hack_brain.ui.favourite.FavouriteFragment"
+        android:label="fragment_favourite"
+        tools:layout="@layout/fragment_favourite">
+        <action
+            android:id="@+id/actionFavouriteToCheckEngVieFragment"
+            app:destination="@+id/checkEngVieFragment"/>
+        <action
+            android:id="@+id/actionFavouriteToCheckVieEngFragment"
+            app:destination="@+id/checkVieEngFragment"/>
+<!--        <action-->
+<!--            android:id="@+id/actionFavouriteToCheckSoundFragment"-->
+<!--            app:destination="@+id/checkSoundFragment"/>-->
     </fragment>
 </navigation>

@@ -30,7 +30,7 @@
                     android:layout_height="@dimen/dp_30"
                     android:layout_alignParentStart="true"
                     android:padding="@dimen/dp_6"
-                    android:src="@drawable/ic_close"
+                    android:src="@drawable/ic_back"
                     android:visibility="gone" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:text="Title"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/sp_16"
                     android:textStyle="bold" />
 

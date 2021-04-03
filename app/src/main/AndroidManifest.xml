@@ -21,7 +21,7 @@
         android:theme="@style/AppTheme"
         tools:targetApi="m">
         <activity android:name="com.app.hack_brain.ui.splash.SplashActivity">
-            <intent-filter>a
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
