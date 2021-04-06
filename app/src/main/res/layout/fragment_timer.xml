@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@color/gray_black"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/dp_15"
+        android:text="Hẹn giờ mở ứng dụng"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_15"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvOpenApp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:background="@color/gray_black"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/dp_15"
+        android:text="Hẹn giờ nhắc từ vựng"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_15"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRemindVocabulary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
