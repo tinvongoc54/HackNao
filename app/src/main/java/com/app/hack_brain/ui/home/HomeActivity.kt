@@ -53,28 +53,26 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
                 when (destination.id) {
                     R.id.detailShortStoryFragment -> {
                         ivAudio.show()
-                        ivBack.show()
                     }
                     R.id.shortStoryFragment -> {
                         ivAudio.gone()
-                        ivBack.show()
                         tvTitle.text = getString(R.string.text_short_story)
                     }
                     R.id.checkFragment -> {
-                        ivBack.show()
                         tvTitle.text = getString(R.string.text_checking)
                     }
                     R.id.translateFragment -> {
-                        ivBack.show()
                         tvTitle.text = getString(R.string.text_translate_sentence)
                     }
                     R.id.irregularFragment -> {
-                        ivBack.show()
                         tvTitle.text = getString(R.string.text_irregular)
                     }
                     R.id.favouriteFragment -> {
-                        ivBack.show()
                         tvTitle.text = getString(R.string.text_favourite)
+                    }
+                    R.id.timerFragment -> {
+                        ivAdd.show()
+                        tvTitle.text = getString(R.string.text_timer)
                     }
                     else -> {
                         ivBack.gone()

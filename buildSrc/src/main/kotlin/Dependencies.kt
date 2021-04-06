@@ -12,6 +12,7 @@ object Versions {
 //    const val crashlytics_gradle = "2.4.1"
 
     const val pdf_viewer = "2.8.2"
+    const val swipe_layout = "1.2.0@aar"
 
     // Release notes https://developer.android.com/studio/releases/gradle-plugin
     const val android_gradle_plugin = "4.0.0"
@@ -201,6 +202,9 @@ object Dependencies {
 
     //pdf viewer
     const val pdf_viewer = "com.github.barteksc:android-pdf-viewer:${Versions.pdf_viewer}"
+
+    //swipe layout
+    const val swipe_layout = "com.daimajia.swipelayout:library:${Versions.swipe_layout}"
 }
 
 fun DependencyHandler.implementLocalUnitTest() {

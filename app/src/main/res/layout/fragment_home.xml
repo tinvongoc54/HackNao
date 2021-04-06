@@ -20,7 +20,7 @@
         android:layout_height="@dimen/dp_80"
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_70"
-        app:cardCornerRadius="@dimen/dp_10"
+        app:cardCornerRadius="@dimen/dp_2"
         app:cardElevation="@dimen/dp_10"
         app:layout_constraintEnd_toStartOf="@id/cvCheck"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
                 android:layout_weight="0.4"
                 android:gravity="center"
                 android:text="@string/text_short_story"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/sp_15" />
 
         </LinearLayout>
@@ -56,7 +56,7 @@
         android:layout_width="@dimen/dp_0"
         android:layout_height="@dimen/dp_80"
         android:layout_marginStart="@dimen/dp_16"
-        app:cardCornerRadius="@dimen/dp_10"
+        app:cardCornerRadius="@dimen/dp_2"
         app:cardElevation="@dimen/dp_10"
         app:layout_constraintEnd_toStartOf="@+id/cvTranslate"
         app:layout_constraintStart_toEndOf="@+id/cvShortStory"
@@ -80,7 +80,7 @@
                 android:layout_weight="0.4"
                 android:gravity="center"
                 android:text="@string/text_checking"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/sp_15" />
 
         </LinearLayout>
@@ -93,7 +93,7 @@
         android:layout_height="@dimen/dp_80"
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginEnd="@dimen/dp_16"
-        app:cardCornerRadius="@dimen/dp_10"
+        app:cardCornerRadius="@dimen/dp_2"
         app:cardElevation="@dimen/dp_10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/cvCheck"
@@ -117,7 +117,7 @@
                 android:layout_weight="0.4"
                 android:gravity="center"
                 android:text="@string/text_translate_sentence"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/sp_15" />
 
         </LinearLayout>
@@ -130,7 +130,7 @@
         android:layout_height="@dimen/dp_80"
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_20"
-        app:cardCornerRadius="@dimen/dp_10"
+        app:cardCornerRadius="@dimen/dp_2"
         app:cardElevation="@dimen/dp_10"
         app:layout_constraintEnd_toStartOf="@id/cvFavourite"
         app:layout_constraintStart_toStartOf="parent"
@@ -154,7 +154,7 @@
                 android:layout_weight="0.4"
                 android:gravity="center"
                 android:text="@string/text_irregular"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/sp_15" />
 
         </LinearLayout>
@@ -166,7 +166,7 @@
         android:layout_width="@dimen/dp_0"
         android:layout_height="@dimen/dp_80"
         android:layout_marginStart="@dimen/dp_16"
-        app:cardCornerRadius="@dimen/dp_10"
+        app:cardCornerRadius="@dimen/dp_2"
         app:cardElevation="@dimen/dp_10"
         app:layout_constraintEnd_toStartOf="@+id/cvTimer"
         app:layout_constraintStart_toEndOf="@+id/cvIrregular"
@@ -190,7 +190,7 @@
                 android:layout_weight="0.4"
                 android:gravity="center"
                 android:text="@string/text_favourite"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/sp_15" />
 
         </LinearLayout>
@@ -203,7 +203,7 @@
         android:layout_height="@dimen/dp_80"
         android:layout_marginStart="@dimen/dp_16"
         android:layout_marginEnd="@dimen/dp_16"
-        app:cardCornerRadius="@dimen/dp_10"
+        app:cardCornerRadius="@dimen/dp_2"
         app:cardElevation="@dimen/dp_10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/cvFavourite"
@@ -227,7 +227,117 @@
                 android:layout_weight="0.4"
                 android:gravity="center"
                 android:text="@string/text_timer"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/sp_15" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvPronounce"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_80"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_20"
+        app:cardCornerRadius="@dimen/dp_2"
+        app:cardElevation="@dimen/dp_10"
+        app:layout_constraintEnd_toStartOf="@id/cvShare"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cvIrregular">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_weight="0.6"
+                android:src="@drawable/ic_bqt" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:text="@string/text_pronounce"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/sp_15" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvShare"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_80"
+        android:layout_marginStart="@dimen/dp_16"
+        app:cardCornerRadius="@dimen/dp_2"
+        app:cardElevation="@dimen/dp_10"
+        app:layout_constraintEnd_toStartOf="@+id/cvReview"
+        app:layout_constraintStart_toEndOf="@+id/cvPronounce"
+        app:layout_constraintTop_toTopOf="@+id/cvPronounce">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_weight="0.6"
+                android:src="@drawable/ic_like" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:text="@string/text_share"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/sp_15" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvReview"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_80"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        app:cardCornerRadius="@dimen/dp_2"
+        app:cardElevation="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cvShare"
+        app:layout_constraintTop_toTopOf="@id/cvShare">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_weight="0.6"
+                android:src="@drawable/ic_alarm" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:gravity="center"
+                android:text="@string/text_review"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/sp_15" />
 
         </LinearLayout>
