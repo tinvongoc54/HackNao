@@ -27,7 +27,7 @@
             app:destination="@id/favouriteFragment" />
         <action
             android:id="@+id/actionHomeFragmentToTimerFragment"
-            app:destination="@id/shortStoryFragment" />
+            app:destination="@id/timerFragment" />
     </fragment>
     <fragment
         android:id="@+id/shortStoryFragment"
@@ -108,7 +108,12 @@
         android:label="fragment_timer"
         tools:layout="@layout/fragment_timer">
 
-
+        <action android:id="@+id/actionTimerToTimerDialogFragment"
+            app:destination="@+id/chooseTimerFragment"/>
 
     </fragment>
+    <fragment android:id="@+id/chooseTimerFragment"
+        android:name="com.app.hack_brain.ui.timer.dialog.ChooseTimerFragment"
+        android:label="fragment_choose_timer"
+        tools:layout="@layout/fragment_choose_timer"/>
 </navigation>

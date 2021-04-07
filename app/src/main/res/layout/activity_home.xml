@@ -31,7 +31,7 @@
                     android:layout_alignParentStart="true"
                     android:padding="@dimen/dp_6"
                     android:src="@drawable/ic_back"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvTitle"
@@ -56,12 +56,43 @@
                     android:visibility="gone" />
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivAudio"
+                    android:id="@+id/ivPause"
                     android:layout_width="@dimen/dp_30"
                     android:layout_height="@dimen/dp_30"
                     android:layout_alignParentEnd="true"
                     android:padding="@dimen/dp_5"
-                    android:src="@drawable/ic_sound"
+                    android:src="@drawable/ic_pause"
+                    android:visibility="gone" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivPlay"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_alignParentEnd="true"
+                    android:padding="@dimen/dp_5"
+                    android:src="@drawable/ic_play"
+                    android:visibility="gone" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivAdd"
+                    android:layout_width="@dimen/dp_30"
+                    android:layout_height="@dimen/dp_30"
+                    android:layout_alignParentEnd="true"
+                    android:padding="@dimen/dp_5"
+                    android:src="@drawable/ic_add"
+                    android:visibility="gone" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvDone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:text="Done"
+                    android:padding="@dimen/dp_6"
+                    android:textColor="@color/colorPrimaryLight"
+                    android:textSize="@dimen/sp_14"
+                    android:textStyle="bold"
                     android:visibility="gone" />
 
             </RelativeLayout>

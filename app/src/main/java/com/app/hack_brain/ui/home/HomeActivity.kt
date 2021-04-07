@@ -50,34 +50,42 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
 
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             viewBinding.run {
+                ivBack.show()
                 when (destination.id) {
                     R.id.detailShortStoryFragment -> {
-                        ivAudio.show()
-                        ivBack.show()
+                        ivPlay.show()
                     }
                     R.id.shortStoryFragment -> {
-                        ivAudio.gone()
-                        ivBack.show()
+                        ivPlay.gone()
+                        ivPause.gone()
                         tvTitle.text = getString(R.string.text_short_story)
                     }
                     R.id.checkFragment -> {
-                        ivBack.show()
                         tvTitle.text = getString(R.string.text_checking)
                     }
                     R.id.translateFragment -> {
-                        ivBack.show()
                         tvTitle.text = getString(R.string.text_translate_sentence)
                     }
                     R.id.irregularFragment -> {
-                        ivBack.show()
                         tvTitle.text = getString(R.string.text_irregular)
                     }
                     R.id.favouriteFragment -> {
-                        ivBack.show()
                         tvTitle.text = getString(R.string.text_favourite)
+                    }
+                    R.id.timerFragment -> {
+                        ivAdd.show()
+                        tvDone.show()
+                        tvDone.gone()
+                        tvTitle.text = getString(R.string.text_timer)
+                    }
+                    R.id.chooseTimerFragment -> {
+                        ivAdd.gone()
+                        tvDone.show()
                     }
                     else -> {
                         ivBack.gone()
+                        ivAdd.gone()
+                        tvDone.gone()
                         tvTitle.text = ""
                     }
                 }

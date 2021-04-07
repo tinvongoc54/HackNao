@@ -2,6 +2,9 @@ package com.app.hack_brain.extension
 
 import android.R
 import android.app.Activity
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.content.Context
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
@@ -50,3 +53,14 @@ fun <T> Fragment.setNavigationResult(result: T, key: String = "result") {
 
 fun <T> Fragment.removeNavigationResult(key: String = "result") =
     findNavController().currentBackStackEntry?.savedStateHandle?.remove<T>(key)
+
+fun Context.showDialogChooseTime(
+    hour: Int,
+    minute: Int,
+    onDateSet: (hour: Int, minute: Int) -> Unit
+) {
+    val timePickerDialog = TimePickerDialog(this, { _, h, m ->
+        onDateSet(h, m)
+    }, hour, minute, true)
+    timePickerDialog.show()
+}

@@ -8,4 +8,9 @@
     <string name="text_irregular">Bất quy tắc</string>
     <string name="text_favourite">Yêu thích</string>
     <string name="text_timer">Hẹn giờ học</string>
+    <string name="text_pronounce">Phát âm</string>
+    <string name="text_share">Chia sẻ</string>
+    <string name="text_review">Đánh giá</string>
+    <string name="text_choose_timer_open_app">Hẹn giờ mở ứng dụng</string>
+    <string name="text_choose_timer_remind">Hẹn giờ nhắc từ vựng</string>
 </resources>

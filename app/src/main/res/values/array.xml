@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="repeat">
+        <item>Mọi Chủ Nhật</item>
+        <item>Mọi Thứ Hai</item>
+        <item>Mọi Thứ Ba</item>
+        <item>Mọi Thứ Tư</item>
+        <item>Mọi Thứ Năm</item>
+        <item>Mọi Thứ Sáu</item>
+        <item>Mọi Thứ Bảy</item>
+    </string-array>
+
+    <string-array name="number_repeat">
+        <item>1 lần</item>
+        <item>3 lần</item>
+        <item>5 lần</item>
+        <item>7 lần</item>
+        <item>9 lần</item>
+    </string-array>
+
+    <string-array name="waiting_time">
+        <item>5 giây</item>
+        <item>10 giây</item>
+        <item>15 giây</item>
+        <item>30 giây</item>
+        <item>1 phút</item>
+        <item>2 phút</item>
+        <item>5 phút</item>
+        <item>10 phút</item>
+        <item>20 phút</item>
+        <item>30 phút</item>
+    </string-array>
+</resources>
