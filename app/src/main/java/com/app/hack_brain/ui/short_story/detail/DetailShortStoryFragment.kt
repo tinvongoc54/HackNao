@@ -33,6 +33,7 @@ class DetailShortStoryFragment :
 
     override fun initialize() {
         tvContent.text = args.shortStory.content
+        openAudio(args.shortStory.audio)
 
         val ivPlay = activity?.findViewById<AppCompatImageView>(R.id.ivPlay)
         val ivPause = activity?.findViewById<AppCompatImageView>(R.id.ivPause)
@@ -44,21 +45,23 @@ class DetailShortStoryFragment :
         ivPause?.setOnClickListener {
             ivPause.gone()
             ivPlay?.show()
-            mediaPlayer.release()
+            mediaPlayer.reset()
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mediaPlayer.release()
-        mediaPlayer.stop()
+        if (mediaPlayer.isPlaying) {
+            mediaPlayer.stop()
+            mediaPlayer.release()
+        }
     }
 
     private fun openAudio(audio: String) {
         mediaPlayer = MediaPlayer()
         try {
             val activity = activity ?: return
-            val afd = activity.assets.pronounce_file.openFd(audio)
+            val afd = activity.assets.openFd(audio)
             mediaPlayer.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
             afd.close()
             mediaPlayer.prepare()
@@ -68,7 +71,7 @@ class DetailShortStoryFragment :
         mediaPlayer.start()
 
         mediaPlayer.setOnCompletionListener {
-            it.release()
+            it.reset()
         }
     }
 }

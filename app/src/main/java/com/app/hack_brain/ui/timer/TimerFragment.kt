@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.hack_brain.R
 import com.app.hack_brain.common.base.BaseFragment
 import com.app.hack_brain.databinding.FragmentTimerBinding
+import com.app.hack_brain.extension.navigateWithSlideAnim
 import com.app.hack_brain.model.uimodel.Timer
 import com.app.hack_brain.ui.timer.dialog.ChooseTimerFragment
 import timber.log.Timber
@@ -57,7 +58,7 @@ class TimerFragment : BaseFragment<TimerFragViewModel, FragmentTimerBinding>(Tim
         viewBinding.rvOpenApp.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = TimerAdapter({
-                navigateToTimerDialog()
+                navigateToTimerDialog(true)
             }, {
                 Timber.i("edit")
             }, {
@@ -75,7 +76,7 @@ class TimerFragment : BaseFragment<TimerFragViewModel, FragmentTimerBinding>(Tim
         viewBinding.rvRemindVocabulary.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = TimerAdapter({
-                navigateToTimerDialog()
+                navigateToTimerDialog(false)
             }, {
                 Timber.i("edit")
             }, {
@@ -89,7 +90,8 @@ class TimerFragment : BaseFragment<TimerFragViewModel, FragmentTimerBinding>(Tim
         }
     }
 
-    private fun navigateToTimerDialog() {
-        findNavController().navigate(R.id.actionTimerToTimerDialogFragment)
+    private fun navigateToTimerDialog(isOpenApp: Boolean) {
+        val action = TimerFragmentDirections.actionTimerToTimerDialogFragment(isOpenApp)
+        navigateWithSlideAnim(action)
     }
 }

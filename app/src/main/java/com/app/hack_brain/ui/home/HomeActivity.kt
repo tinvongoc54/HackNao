@@ -53,7 +53,7 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
                 ivBack.show()
                 when (destination.id) {
                     R.id.detailShortStoryFragment -> {
-                        ivPlay.show()
+                        ivPause.show()
                     }
                     R.id.shortStoryFragment -> {
                         ivPlay.gone()
@@ -74,7 +74,6 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
                     }
                     R.id.timerFragment -> {
                         ivAdd.show()
-                        tvDone.show()
                         tvDone.gone()
                         tvTitle.text = getString(R.string.text_timer)
                     }
@@ -101,12 +100,10 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
                         R.id.checkEngVieFragment -> {
                             val fragArgs = CheckEngVieFragmentArgs.fromBundle(args)
                             viewBinding.tvTitle.text = fragArgs.unit.unit
-                            viewBinding.ivBack.show()
                         }
                         R.id.checkVieEngFragment -> {
                             val fragArgs = CheckVieEngFragmentArgs.fromBundle(args)
                             viewBinding.tvTitle.text = fragArgs.unit.unit
-                            viewBinding.ivBack.show()
                         }
                         else -> {
                             viewBinding.ivBack.gone()
