@@ -115,5 +115,8 @@
     <fragment android:id="@+id/chooseTimerFragment"
         android:name="com.app.hack_brain.ui.timer.dialog.ChooseTimerFragment"
         android:label="fragment_choose_timer"
-        tools:layout="@layout/fragment_choose_timer"/>
+        tools:layout="@layout/fragment_choose_timer">
+        <argument android:name="isOpenApp"
+            app:argType="boolean"/>
+    </fragment>
 </navigation>

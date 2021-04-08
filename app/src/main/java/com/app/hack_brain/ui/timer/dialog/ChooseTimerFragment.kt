@@ -4,14 +4,19 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.navigation.fragment.navArgs
 import com.app.hack_brain.R
 import com.app.hack_brain.common.base.BaseFragment
 import com.app.hack_brain.databinding.FragmentChooseTimerBinding
+import com.app.hack_brain.extension.gone
 import com.app.hack_brain.extension.showDialogChooseTime
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class ChooseTimerFragment(
 ) : BaseFragment<ChooseTimerFragViewModel, FragmentChooseTimerBinding>(ChooseTimerFragViewModel::class) {
+
+    private val args: ChooseTimerFragmentArgs by navArgs()
+
     override fun inflateViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -21,7 +26,13 @@ class ChooseTimerFragment(
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun initialize() {
+        val isOpenApp = args.isOpenApp
+
         viewBinding.run {
+            clNumberRepeat.gone(isOpenApp)
+            clVocabulary.gone(isOpenApp)
+            clWait.gone(isOpenApp)
+
             tvTime.setOnClickListener {
                 val time = tvTime.text.toString().split(":")
                 requireContext().showDialogChooseTime(
