@@ -8,7 +8,7 @@ import com.app.hack_brain.databinding.ItemShortStoryBinding
 import com.app.hack_brain.model.uimodel.ShortStory
 
 class ShortStoryAdapter(
-    private val onItemClicked: (story: ShortStory) -> Unit
+    private var onItemClicked: ((story: ShortStory) -> Unit)? = null
 ) : BaseRecyclerViewAdapter<ShortStory, ShortStoryAdapter.ShortStoryViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShortStoryViewHolder {
         return ShortStoryViewHolder(
@@ -27,9 +27,13 @@ class ShortStoryAdapter(
         }
     }
 
+    fun removeListener() {
+        onItemClicked = null
+    }
+
     inner class ShortStoryViewHolder(
         private val itemBinding: ItemShortStoryBinding,
-        private val onItemClicked: (story: ShortStory) -> Unit
+        private val onItemClicked: ((story: ShortStory) -> Unit)? = null
     ) : RecyclerView.ViewHolder(itemBinding.root) {
         fun bindData(story: ShortStory) {
             itemBinding.run {
@@ -40,7 +44,7 @@ class ShortStoryAdapter(
         fun bindItemClick(story: ShortStory) {
             itemBinding.run {
                 clShortStory.setOnClickListener {
-                    onItemClicked(story)
+                    onItemClicked?.invoke(story)
                 }
             }
         }

@@ -23,6 +23,11 @@ class ShortStoryFragment :
         initShortStoryAdapter()
     }
 
+    override fun onStop() {
+        super.onStop()
+        (viewBinding.rvShortStoryList.adapter as? ShortStoryAdapter)?.removeListener()
+    }
+
     private fun navigateToDetailShortStory(story: ShortStory) {
         val action = ShortStoryFragmentDirections.actionShortStoryFragmentToDetailFragment(story)
         navigateWithSlideAnim(action)

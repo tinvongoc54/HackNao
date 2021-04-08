@@ -21,23 +21,28 @@ class HomeFragment :
     }
 
     private fun initClickEvent() {
-        viewBinding.cvShortStory.setOnClickListener {
-            navigateToShortStory()
-        }
-        viewBinding.cvCheck.setOnClickListener {
-            navigateToCheck()
-        }
-        viewBinding.cvTranslate.setOnClickListener {
-            navigateToTranslate()
-        }
-        viewBinding.cvIrregular.setOnClickListener {
-            navigateToIrregular()
-        }
-        viewBinding.cvFavourite.setOnClickListener {
-            navigateToFavourite()
-        }
-        viewBinding.cvTimer.setOnClickListener {
-            navigateToTimer()
+        viewBinding.run {
+            cvShortStory.setOnClickListener {
+                navigateToShortStory()
+            }
+            cvCheck.setOnClickListener {
+                navigateToCheck()
+            }
+            cvTranslate.setOnClickListener {
+                navigateToTranslate()
+            }
+            cvIrregular.setOnClickListener {
+                navigateToIrregular()
+            }
+            cvFavourite.setOnClickListener {
+                navigateToFavourite()
+            }
+            cvTimer.setOnClickListener {
+                navigateToTimer()
+            }
+            cvPronounce.setOnClickListener {
+                navigateToPronounce()
+            }
         }
     }
 
@@ -58,4 +63,7 @@ class HomeFragment :
 
     private fun navigateToTimer() =
         findNavController().navigate(R.id.actionHomeFragmentToTimerFragment)
+
+    private fun navigateToPronounce() =
+        findNavController().navigate(R.id.actionHomeFragmentToPronounceFragment)
 }
