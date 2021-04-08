@@ -35,7 +35,7 @@ class TranslateAdapter :
         }
 
         private fun getTextHighlight(text: String): String {
-            return text.replace("<em>", "<font color='#008DC0'>").replace("</em>", "</font>")
+            return text.replace("<em>", "<font color='#343C6A'>").replace("</em>", "</font>")
         }
     }
 }

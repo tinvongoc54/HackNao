@@ -169,6 +169,9 @@ dependencies {
     // Pdf viewer
     implementation(Dependencies.pdf_viewer)
 
+    // Swipe layout
+    implementation(Dependencies.swipe_layout)
+
     // Unit Test
     implementLocalUnitTest()
     implementInstrumentationUnitTest()

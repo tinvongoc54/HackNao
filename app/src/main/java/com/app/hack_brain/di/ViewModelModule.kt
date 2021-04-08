@@ -10,6 +10,8 @@ import com.app.hack_brain.ui.irregular.IrregularFragViewModel
 import com.app.hack_brain.ui.short_story.ShortStoryFragViewModel
 import com.app.hack_brain.ui.short_story.detail.DetailShortStoryFragViewModel
 import com.app.hack_brain.ui.splash.SplashActViewModel
+import com.app.hack_brain.ui.timer.TimerFragViewModel
+import com.app.hack_brain.ui.timer.dialog.ChooseTimerFragViewModel
 import com.app.hack_brain.ui.translate.TranslateFragViewModel
 import org.koin.androidx.experimental.dsl.viewModel
 import org.koin.dsl.module
@@ -31,4 +33,6 @@ val viewModelModule = module {
     viewModel<CheckEngVieFragViewModel>()
     viewModel<CheckVieEngFragViewModel>()
     viewModel<FavouriteFragViewModel>()
+    viewModel<TimerFragViewModel>()
+    viewModel<ChooseTimerFragViewModel>()
 }
