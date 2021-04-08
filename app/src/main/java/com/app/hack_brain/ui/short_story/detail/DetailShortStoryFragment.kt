@@ -34,6 +34,7 @@ class DetailShortStoryFragment :
     override fun initialize() {
         tvContent.text = args.shortStory.content
         openAudio(args.shortStory.audio)
+        Timber.i(args.shortStory.audio)
 
         val ivPlay = activity?.findViewById<AppCompatImageView>(R.id.ivPlay)
         val ivPause = activity?.findViewById<AppCompatImageView>(R.id.ivPause)

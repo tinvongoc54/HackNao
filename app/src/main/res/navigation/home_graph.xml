@@ -28,6 +28,10 @@
         <action
             android:id="@+id/actionHomeFragmentToTimerFragment"
             app:destination="@id/timerFragment" />
+        <action
+            android:id="@+id/actionHomeFragmentToPronounceFragment"
+            app:destination="@id/pronounceFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/shortStoryFragment"
@@ -94,13 +98,13 @@
         tools:layout="@layout/fragment_favourite">
         <action
             android:id="@+id/actionFavouriteToCheckEngVieFragment"
-            app:destination="@+id/checkEngVieFragment"/>
+            app:destination="@+id/checkEngVieFragment" />
         <action
             android:id="@+id/actionFavouriteToCheckVieEngFragment"
-            app:destination="@+id/checkVieEngFragment"/>
-<!--        <action-->
-<!--            android:id="@+id/actionFavouriteToCheckSoundFragment"-->
-<!--            app:destination="@+id/checkSoundFragment"/>-->
+            app:destination="@+id/checkVieEngFragment" />
+        <!--        <action-->
+        <!--            android:id="@+id/actionFavouriteToCheckSoundFragment"-->
+        <!--            app:destination="@+id/checkSoundFragment"/>-->
     </fragment>
     <fragment
         android:id="@+id/timerFragment"
@@ -108,15 +112,23 @@
         android:label="fragment_timer"
         tools:layout="@layout/fragment_timer">
 
-        <action android:id="@+id/actionTimerToTimerDialogFragment"
-            app:destination="@+id/chooseTimerFragment"/>
+        <action
+            android:id="@+id/actionTimerToTimerDialogFragment"
+            app:destination="@+id/chooseTimerFragment" />
 
     </fragment>
-    <fragment android:id="@+id/chooseTimerFragment"
+    <fragment
+        android:id="@+id/chooseTimerFragment"
         android:name="com.app.hack_brain.ui.timer.dialog.ChooseTimerFragment"
         android:label="fragment_choose_timer"
         tools:layout="@layout/fragment_choose_timer">
-        <argument android:name="isOpenApp"
-            app:argType="boolean"/>
+        <argument
+            android:name="isOpenApp"
+            app:argType="boolean" />
     </fragment>
+    <fragment
+        android:id="@+id/pronounceFragment"
+        android:name="com.app.hack_brain.ui.pronounce.PronounceFragment"
+        android:label="fragment_pronounce"
+        tools:layout="@layout/fragment_pronounce" />
 </navigation>

@@ -79,7 +79,11 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
                     }
                     R.id.chooseTimerFragment -> {
                         ivAdd.gone()
+                        ivBack.show()
                         tvDone.show()
+                    }
+                    R.id.pronounceFragment -> {
+                        tvTitle.text = getString(R.string.text_pronounce)
                     }
                     else -> {
                         ivBack.gone()
