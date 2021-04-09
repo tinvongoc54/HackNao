@@ -130,6 +130,7 @@ dependencies {
     implementation(Dependencies.support_core)
     implementation(Dependencies.support_design)
     implementation(Dependencies.constraint_layout)
+    implementation(Dependencies.play_core)
     // Rxjava
     implementation(Dependencies.rx_java)
     implementation(Dependencies.rx_android)

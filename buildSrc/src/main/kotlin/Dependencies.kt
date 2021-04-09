@@ -13,6 +13,7 @@ object Versions {
 
     const val pdf_viewer = "2.8.2"
     const val swipe_layout = "1.2.0@aar"
+    const val play_core = "1.10.0"
 
     // Release notes https://developer.android.com/studio/releases/gradle-plugin
     const val android_gradle_plugin = "4.0.0"
@@ -148,6 +149,7 @@ object Dependencies {
     const val support_design = "com.google.android.material:material:${Versions.material}"
     const val support_core_ktx = "androidx.core:core-ktx:${Versions.core_ktx}"
     const val support_core = "androidx.core:core:${Versions.core_ktx}"
+    const val play_core = "com.google.android.play:core:${Versions.play_core}"
     const val view_model_ktx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle_ktx}"
     const val live_data_ktx = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle_ktx}"
 
