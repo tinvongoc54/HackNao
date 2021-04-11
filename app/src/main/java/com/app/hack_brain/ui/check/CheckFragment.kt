@@ -17,15 +17,14 @@ class CheckFragment : BaseFragment<CheckFragViewModel, FragmentCheckBinding>(Che
     }
 
     override fun initialize() {
-        val databaseHelper = DatabaseHelper(requireContext())
-        databaseHelper.createDataBase()
-        databaseHelper.openDataBase()
-        val unitList = mutableListOf<Unit>()
-        for (i in 1..150) {
-            val unit = Unit(unit = "Unit $i", words = databaseHelper.getAllWord(i))
-            unitList.add(unit)
-        }
-        initUnitAdapter(unitList)
+//        viewModel.insert()
+        viewModel.getVoc()
+//        val unitList = mutableListOf<Unit>()
+//        for (i in 1..150) {
+//            val unit = Unit(unit = "Unit $i", words = databaseHelper.getAllWord(i))
+//            unitList.add(unit)
+//        }
+//        initUnitAdapter(unitList)
     }
 
     private fun initUnitAdapter(list: MutableList<Unit>) {
