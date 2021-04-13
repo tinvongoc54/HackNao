@@ -12,8 +12,11 @@
     <color name="black">#000000</color>
     <color name="red">#FF0000</color>
     <color name="light_red">#FF5020</color>
+    <color name="super_light_red">#FFC7B8</color>
     <color name="light_gray">#F7F7F7</color>
     <color name="border_gray">#E5E5E5</color>
+    <color name="light_green">#CAEFA5</color>
 
     <color name="green_text">#88C14E</color>
+    <color name="dark_green_text">#588C23</color>
 </resources>

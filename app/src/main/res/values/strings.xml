@@ -13,4 +13,7 @@
     <string name="text_review">Đánh giá</string>
     <string name="text_choose_timer_open_app">Hẹn giờ mở ứng dụng</string>
     <string name="text_choose_timer_remind">Hẹn giờ nhắc từ vựng</string>
+
+    <string name="text_wrong_answer">Oops!\nBạn trả lời sai mất rồi\nĐáp án đúng:</string>
+    <string name="text_correct_answer">Yeah!\nBạn đã trả lời đúng!\nTiếp tục nào!\n</string>
 </resources>

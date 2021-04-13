@@ -50,7 +50,7 @@ class PronounceFragment : BaseFragment<PronounceFragViewModel, FragmentPronounce
         mediaPlayer = MediaPlayer()
         try {
             val activity = activity ?: return
-            val afd = activity.assets.openFd(audio)
+            val afd = activity.assets.openFd("pronounce_audio/$audio")
             mediaPlayer?.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
             afd.close()
             mediaPlayer?.prepare()
@@ -68,7 +68,7 @@ class PronounceFragment : BaseFragment<PronounceFragViewModel, FragmentPronounce
         var json = ""
         try {
             val activity = activity ?: return emptyList()
-            val inputStream = activity.assets.open("pronounce")
+            val inputStream = activity.assets.open("pronounce_audio/pronounce")
             val size = inputStream.available()
             val buffer = ByteArray(size)
             inputStream.read(buffer)

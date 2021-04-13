@@ -62,7 +62,7 @@ class DetailShortStoryFragment :
         mediaPlayer = MediaPlayer()
         try {
             val activity = activity ?: return
-            val afd = activity.assets.openFd(audio)
+            val afd = activity.assets.openFd("short_story_audio/$audio")
             mediaPlayer.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
             afd.close()
             mediaPlayer.prepare()

@@ -49,10 +49,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:text="10 điểm"
-                    android:textColor="@color/green_text"
+                    android:text="0 điểm"
+                    android:textColor="@color/colorPrimaryLight"
                     android:textSize="@dimen/sp_14"
-                    android:textStyle="bold"
                     android:visibility="gone" />
 
                 <androidx.appcompat.widget.AppCompatImageView

@@ -2,7 +2,6 @@ package com.app.hack_brain.ui.short_story
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.hack_brain.common.base.BaseFragment
 import com.app.hack_brain.databinding.FragmentShortStoryBinding
@@ -37,7 +36,7 @@ class ShortStoryFragment :
         var json = ""
         try {
             val activity = activity ?: return emptyList()
-            val inputStream = activity.assets.open("short_story")
+            val inputStream = activity.assets.open("short_story_audio/short_story")
             val size = inputStream.available()
             val buffer = ByteArray(size)
             inputStream.read(buffer)
