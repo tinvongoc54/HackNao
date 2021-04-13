@@ -16,7 +16,7 @@ import org.koin.dsl.module
 val localModule = module {
     single { providerSharedPrefs(androidApplication()) }
     single { providerSharedPrefsWrapper(get(), get()) }
-    single { provideDatabase(androidContext()) }
+//    single { provideDatabase(androidContext()) }
 }
 
 fun providerSharedPrefs(app: Application): SharedPreferences {
@@ -32,6 +32,6 @@ fun providerSharedPrefsWrapper(
     return SharedPrefsWrapper(sharedPreferences, gson)
 }
 
-fun provideDatabase(context: Context): DatabaseHelper {
-    return DatabaseHelperImpl(AppDatabase.getInstance(context))
-}
+//fun provideDatabase(context: Context): DatabaseHelper {
+//    return DatabaseHelperImpl(AppDatabase.getInstance(context))
+//}

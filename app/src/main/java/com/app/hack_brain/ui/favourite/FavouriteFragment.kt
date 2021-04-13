@@ -23,9 +23,13 @@ class FavouriteFragment : BaseFragment<FavouriteFragViewModel, FragmentFavourite
     override fun initialize() {
         val list = mutableListOf<Word>()
         list.add(Word(id = 1, word = "cup", phonetic = "", meanings = "cai ly, cai tach cai ly, cai tach cai ly, cai tach cai ly, cai tach cai ly, cai tach cai ly, cai tach"))
-        list.add(Word(id = 1, word = "hello", phonetic = "", meanings = "Xin chao"))
-        list.add(Word(id = 1, word = "sorry", phonetic = "", meanings = "xin loi"))
-        list.add(Word(id = 1, word = "cut", phonetic = "", meanings = "cat"))
+        list.add(Word(id = 2, word = "hello", phonetic = "", meanings = "Xin chao"))
+        list.add(Word(id = 3, word = "sorry", phonetic = "sorry", meanings = "xin loi"))
+        list.add(Word(id = 4, word = "cut", phonetic = "cut", meanings = "cat"))
+        list.add(Word(id = 5, word = "cat", phonetic = "cat", meanings = "con meo"))
+        list.add(Word(id = 6, word = "headphone", phonetic = "headphone", meanings = "tai nghe"))
+        list.add(Word(id = 7, word = "clock", phonetic = "clock", meanings = "dong ho"))
+        list.add(Word(id = 8, word = "die", phonetic = "die", meanings = "chet"))
         initFavouriteAdapter(list)
 
         val options = arrayOf("Anh - Việt", "Việt - Anh", "Âm thanh")
@@ -35,7 +39,7 @@ class FavouriteFragment : BaseFragment<FavouriteFragViewModel, FragmentFavourite
                 .setTitle("Chọn loại kiểm tra")
                 .setItems(options) { dialog, which ->
                     when (which) {
-                        0 -> navigateToDetailCheckEngVieUnit(Unit())
+                        0 -> navigateToDetailCheckEngVieUnit(Unit(unit = "1", words = list))
                         1 -> navigateToDetailCheckVieEngUnit(Unit())
                         2 -> navigateToDetailCheckSoundUnit(Unit())
                     }

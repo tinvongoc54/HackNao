@@ -8,5 +8,6 @@ data class Word(
     val id: Int,
     val word: String,
     val phonetic: String,
-    val meanings: String
+    val meanings: String,
+    var isChecked: Boolean = false
 ): Parcelable

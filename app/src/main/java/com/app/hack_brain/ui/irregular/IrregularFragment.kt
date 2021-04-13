@@ -15,6 +15,6 @@ class IrregularFragment : BaseFragment<IrregularFragViewModel, FragmentIrregular
     }
 
     override fun initialize() {
-        pdfViewer.fromAsset("bqt.pdf").load()
+        pdfViewer.fromAsset("pronounce_audio/bqt.pdf").load()
     }
 }

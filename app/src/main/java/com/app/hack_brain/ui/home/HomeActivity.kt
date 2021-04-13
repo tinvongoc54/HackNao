@@ -85,10 +85,15 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
                     R.id.pronounceFragment -> {
                         tvTitle.text = getString(R.string.text_pronounce)
                     }
+                    R.id.checkEngVieFragment -> {
+                        ivBack.show()
+                        tvPoint.show()
+                    }
                     else -> {
                         ivBack.gone()
                         ivAdd.gone()
                         tvDone.gone()
+                        tvPoint.gone()
                         tvTitle.text = ""
                     }
                 }
@@ -121,6 +126,10 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
         viewBinding.ivBack.setOnClickListener {
             onBackPressed()
         }
+    }
+
+    fun setPoint(point: Int) {
+        viewBinding.tvPoint.text = String.format("$point điểm")
     }
 }
 
