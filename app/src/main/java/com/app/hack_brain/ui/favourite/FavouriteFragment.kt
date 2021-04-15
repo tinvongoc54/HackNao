@@ -40,7 +40,7 @@ class FavouriteFragment : BaseFragment<FavouriteFragViewModel, FragmentFavourite
                 .setItems(options) { dialog, which ->
                     when (which) {
                         0 -> navigateToDetailCheckEngVieUnit(Unit(unit = "1", words = list))
-                        1 -> navigateToDetailCheckVieEngUnit(Unit())
+                        1 -> navigateToDetailCheckVieEngUnit(Unit(unit = "1", words = list))
                         2 -> navigateToDetailCheckSoundUnit(Unit())
                     }
                 }

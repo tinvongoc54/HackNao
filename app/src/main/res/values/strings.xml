@@ -14,6 +14,9 @@
     <string name="text_choose_timer_open_app">Hẹn giờ mở ứng dụng</string>
     <string name="text_choose_timer_remind">Hẹn giờ nhắc từ vựng</string>
 
-    <string name="text_wrong_answer">Oops!\nBạn trả lời sai mất rồi\nĐáp án đúng:</string>
-    <string name="text_correct_answer">Yeah!\nBạn đã trả lời đúng!\nTiếp tục nào!\n</string>
+    <string name="text_wrong_answer">Oops!\nBạn trả lời sai mất rồi\nĐáp án đúng:\n</string>
+    <string name="text_correct_answer">Yeah!\nBạn đã trả lời đúng!\nTiếp tục nào!\nĐáp án đúng:\n</string>
+
+    <string name="text_result_fail">Rất tiếc bạn chưa vượt qua được bài kiểm tra. Vui lòng chơi lại để có kết quả tốt hơn</string>
+    <string name="text_result_pass">Chúc mừng bạn đã vượt qua bài kiểm tra. Bạn có thể chơi lại để có kết quả tốt hơn hoặc chọn unit mới nhé</string>
 </resources>
