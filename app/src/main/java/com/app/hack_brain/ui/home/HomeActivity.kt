@@ -86,8 +86,12 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
                         tvTitle.text = getString(R.string.text_pronounce)
                     }
                     R.id.checkEngVieFragment -> {
-                        ivBack.show()
                         tvPoint.show()
+                        tvTitle.text = "Anh - Việt"
+                    }
+                    R.id.checkVieEngFragment -> {
+                        tvPoint.show()
+                        tvTitle.text = "Việt - Anh"
                     }
                     else -> {
                         ivBack.gone()
@@ -106,16 +110,8 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
                             val fragArgs = DetailShortStoryFragmentArgs.fromBundle(args)
                             viewBinding.tvTitle.text = fragArgs.shortStory.title
                         }
-                        R.id.checkEngVieFragment -> {
-                            val fragArgs = CheckEngVieFragmentArgs.fromBundle(args)
-                            viewBinding.tvTitle.text = fragArgs.unit.unit
-                        }
-                        R.id.checkVieEngFragment -> {
-                            val fragArgs = CheckVieEngFragmentArgs.fromBundle(args)
-                            viewBinding.tvTitle.text = fragArgs.unit.unit
-                        }
                         else -> {
-                            viewBinding.ivBack.gone()
+
                         }
                     }
                 }

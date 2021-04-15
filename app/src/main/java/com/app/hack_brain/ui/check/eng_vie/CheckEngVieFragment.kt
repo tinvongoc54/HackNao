@@ -58,15 +58,12 @@ class CheckEngVieFragment :
 
     private fun showQuestion() {
         if (viewBinding.sbProgress.progress < viewBinding.sbProgress.max) {
-            checkWord = if (checkedList.size == 1) checkedList[0] else checkedList[Random.nextInt(
-                0,
-                checkedList.size - 1
-            )]
+            checkWord = checkedList.random()
             var random2: Word
             var random3: Word
             do {
-                random2 = wordList[Random.nextInt(0, wordList.size - 1)]
-                random3 = wordList[Random.nextInt(0, wordList.size - 1)]
+                random2 = wordList.random()
+                random3 = wordList.random()
                 Timber.i("${checkWord.word} , ${random2.word} , ${random3.word}")
             } while (checkWord.id == random2.id || checkWord.id == random3.id || random2.id == random3.id)
 
@@ -101,9 +98,9 @@ class CheckEngVieFragment :
             llResult.show()
             ivCorrect.show(result)
             ivWrong.show(result.not())
-            tvAnswer.text = if (result) getString(R.string.text_correct_answer) else String.format(
+            tvAnswer.text = String.format(
                 "%s %s",
-                getString(R.string.text_wrong_answer),
+                if (result) getString(R.string.text_correct_answer) else getString(R.string.text_wrong_answer),
                 checkWord.meanings
             )
             tvAnswer.setTextColor(

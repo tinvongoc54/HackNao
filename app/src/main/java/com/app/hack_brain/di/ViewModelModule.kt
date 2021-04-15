@@ -1,6 +1,7 @@
 package com.app.hack_brain.di
 
 import com.app.hack_brain.ui.check.CheckFragViewModel
+import com.app.hack_brain.ui.check.dialog.FinishDialogFragViewModel
 import com.app.hack_brain.ui.check.eng_vie.CheckEngVieFragViewModel
 import com.app.hack_brain.ui.check.vie_eng.CheckVieEngFragViewModel
 import com.app.hack_brain.ui.favourite.FavouriteFragViewModel
@@ -37,4 +38,5 @@ val viewModelModule = module {
     viewModel<TimerFragViewModel>()
     viewModel<ChooseTimerFragViewModel>()
     viewModel<PronounceFragViewModel>()
+    viewModel<FinishDialogFragViewModel>()
 }
