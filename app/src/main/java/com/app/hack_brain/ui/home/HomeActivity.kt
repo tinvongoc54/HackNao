@@ -70,6 +70,7 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
                         tvTitle.text = getString(R.string.text_irregular)
                     }
                     R.id.favouriteFragment -> {
+                        tvPoint.gone()
                         tvTitle.text = getString(R.string.text_favourite)
                     }
                     R.id.timerFragment -> {
@@ -92,6 +93,10 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
                     R.id.checkVieEngFragment -> {
                         tvPoint.show()
                         tvTitle.text = "Việt - Anh"
+                    }
+                    R.id.checkSoundFragment -> {
+                        tvPoint.show()
+                        tvTitle.text = "Âm thanh"
                     }
                     else -> {
                         ivBack.gone()

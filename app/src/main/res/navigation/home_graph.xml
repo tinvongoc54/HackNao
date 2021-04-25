@@ -67,6 +67,9 @@
         <action
             android:id="@+id/actionToCheckVieEngFragment"
             app:destination="@+id/checkVieEngFragment" />
+        <action
+            android:id="@+id/actionToCheckSoundFragment"
+            app:destination="@+id/checkSoundFragment" />
     </fragment>
     <fragment
         android:id="@+id/translateFragment"
@@ -92,6 +95,15 @@
             app:argType="com.app.hack_brain.model.uimodel.Unit" />
     </fragment>
     <fragment
+        android:id="@+id/checkSoundFragment"
+        android:name="com.app.hack_brain.ui.check.sound.CheckSoundFragment"
+        android:label="fragment_check_sound"
+        tools:layout="@layout/fragment_check_sound">
+        <argument
+            android:name="unit"
+            app:argType="com.app.hack_brain.model.uimodel.Unit" />
+    </fragment>
+    <fragment
         android:id="@+id/favouriteFragment"
         android:name="com.app.hack_brain.ui.favourite.FavouriteFragment"
         android:label="fragment_favourite"
@@ -102,9 +114,9 @@
         <action
             android:id="@+id/actionFavouriteToCheckVieEngFragment"
             app:destination="@+id/checkVieEngFragment" />
-        <!--        <action-->
-        <!--            android:id="@+id/actionFavouriteToCheckSoundFragment"-->
-        <!--            app:destination="@+id/checkSoundFragment"/>-->
+        <action
+            android:id="@+id/actionFavouriteToCheckSoundFragment"
+            app:destination="@+id/checkSoundFragment"/>
     </fragment>
     <fragment
         android:id="@+id/timerFragment"
