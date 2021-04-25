@@ -1,4 +1,4 @@
-package com.app.hack_brain.ui.check.eng_vie
+package com.app.hack_brain.ui.check.sound
 
 import android.os.Handler
 import android.view.LayoutInflater
@@ -8,20 +8,19 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.hack_brain.R
 import com.app.hack_brain.common.base.BaseFragment
-import com.app.hack_brain.databinding.FragmentCheckEngVieBinding
+import com.app.hack_brain.databinding.FragmentCheckSoundBinding
 import com.app.hack_brain.extension.gone
 import com.app.hack_brain.extension.show
 import com.app.hack_brain.model.uimodel.Word
 import com.app.hack_brain.ui.check.dialog.FinishDialogFragment
+import com.app.hack_brain.ui.check.eng_vie.AnswerAdapter
 import com.app.hack_brain.ui.check.vie_eng.CheckVieEngFragment
 import com.app.hack_brain.ui.home.HomeActivity
 import timber.log.Timber
-import kotlin.random.Random
 
-class CheckEngVieFragment :
-    BaseFragment<CheckEngVieFragViewModel, FragmentCheckEngVieBinding>(CheckEngVieFragViewModel::class) {
+class CheckSoundFragment : BaseFragment<CheckSoundFragViewModel, FragmentCheckSoundBinding>(CheckSoundFragViewModel::class) {
 
-    private val args: CheckEngVieFragmentArgs by navArgs()
+    private val args: CheckSoundFragmentArgs by navArgs()
     private val wordList: MutableList<Word> = mutableListOf()
     private val checkedList: MutableList<Word> = mutableListOf()
     private var point = 0
@@ -30,14 +29,15 @@ class CheckEngVieFragment :
     override fun inflateViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ): FragmentCheckEngVieBinding {
-        return FragmentCheckEngVieBinding.inflate(inflater)
+    ): FragmentCheckSoundBinding {
+        return FragmentCheckSoundBinding.inflate(inflater)
     }
 
     override fun initialize() {
         checkWord = Word(0, "", "", "")
         wordList.addAll(args.unit.words)
         checkedList.addAll(wordList)
+        Timber.i("Size: " + wordList.size)
         viewBinding.sbProgress.max = wordList.size
         initRecyclerAdapter()
         showQuestion()
@@ -72,8 +72,6 @@ class CheckEngVieFragment :
             viewBinding.run {
                 llResult.gone()
                 btnNext.gone()
-                tvWord.text = checkWord.word
-                tvSpelling.text = checkWord.phonetic
                 Timber.i("check word: ${checkWord.word}")
 
                 with(rvAnswer.adapter as AnswerAdapter) {

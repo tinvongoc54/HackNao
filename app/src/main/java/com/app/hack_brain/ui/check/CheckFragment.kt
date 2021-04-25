@@ -59,7 +59,7 @@ class CheckFragment : BaseFragment<CheckFragViewModel, FragmentCheckBinding>(Che
     }
 
     private fun navigateToDetailCheckSoundUnit(unit: Unit) {
-        val action = CheckFragmentDirections.actionToCheckEngVieFragment(unit)
+        val action = CheckFragmentDirections.actionToCheckSoundFragment(unit)
         navigateWithSlideAnim(action)
     }
 }

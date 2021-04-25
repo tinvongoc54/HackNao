@@ -41,7 +41,7 @@ class FavouriteFragment : BaseFragment<FavouriteFragViewModel, FragmentFavourite
                     when (which) {
                         0 -> navigateToDetailCheckEngVieUnit(Unit(unit = "1", words = list))
                         1 -> navigateToDetailCheckVieEngUnit(Unit(unit = "1", words = list))
-                        2 -> navigateToDetailCheckSoundUnit(Unit())
+                        2 -> navigateToDetailCheckSoundUnit(Unit(unit = "1", words = list))
                     }
                 }
                 .show()
@@ -71,7 +71,7 @@ class FavouriteFragment : BaseFragment<FavouriteFragViewModel, FragmentFavourite
     }
 
     private fun navigateToDetailCheckSoundUnit(unit: Unit) {
-        val action = FavouriteFragmentDirections.actionFavouriteToCheckEngVieFragment(unit)
+        val action = FavouriteFragmentDirections.actionFavouriteToCheckSoundFragment(unit)
         navigateWithSlideAnim(action)
     }
 }
