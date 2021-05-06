@@ -7,7 +7,10 @@ import com.app.hack_brain.common.base.BaseRecyclerViewAdapter
 import com.app.hack_brain.databinding.ItemFavouriteBinding
 import com.app.hack_brain.model.uimodel.Word
 
-class FavouriteAdapter : BaseRecyclerViewAdapter<Word, FavouriteAdapter.ItemViewHolderFavourite>() {
+class FavouriteAdapter(
+    private var onClickSound: ((word: Word) -> Unit)? = null,
+    private var onClickFavourite: ((word: Word) -> Unit)? = null
+) : BaseRecyclerViewAdapter<Word, FavouriteAdapter.ItemViewHolderFavourite>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolderFavourite {
@@ -19,7 +22,15 @@ class FavouriteAdapter : BaseRecyclerViewAdapter<Word, FavouriteAdapter.ItemView
     }
 
     override fun onBindViewHolder(holder: ItemViewHolderFavourite, position: Int) {
-        getItem(position)?.let { holder.bindData(it) }
+        getItem(position)?.let {
+            holder.bindData(it)
+            holder.bindClickEvent(it)
+        }
+    }
+
+    fun removeListener() {
+        onClickFavourite = null
+        onClickSound = null
     }
 
     inner class ItemViewHolderFavourite(private val itemBinding: ItemFavouriteBinding) :
@@ -29,6 +40,13 @@ class FavouriteAdapter : BaseRecyclerViewAdapter<Word, FavouriteAdapter.ItemView
             itemBinding.run {
                 tvWord.text = word.word
                 tvMeanings.text = word.meanings
+            }
+        }
+
+        fun bindClickEvent(word: Word) {
+            itemBinding.run {
+                ivFavourite.setOnClickListener { onClickFavourite?.let { it1 -> it1(word) } }
+                ivAudio.setOnClickListener { onClickSound?.let { it1 -> it1(word) } }
             }
         }
     }
