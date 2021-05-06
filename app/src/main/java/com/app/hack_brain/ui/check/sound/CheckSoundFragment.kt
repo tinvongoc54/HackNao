@@ -1,5 +1,6 @@
 package com.app.hack_brain.ui.check.sound
 
+import android.media.MediaPlayer
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.app.hack_brain.ui.check.dialog.FinishDialogFragment
 import com.app.hack_brain.ui.check.eng_vie.AnswerAdapter
 import com.app.hack_brain.ui.check.vie_eng.CheckVieEngFragment
 import com.app.hack_brain.ui.home.HomeActivity
+import com.app.hack_brain.ui.pronounce.PronounceAdapter
 import timber.log.Timber
 
 class CheckSoundFragment : BaseFragment<CheckSoundFragViewModel, FragmentCheckSoundBinding>(CheckSoundFragViewModel::class) {
@@ -24,6 +26,7 @@ class CheckSoundFragment : BaseFragment<CheckSoundFragViewModel, FragmentCheckSo
     private val wordList: MutableList<Word> = mutableListOf()
     private val checkedList: MutableList<Word> = mutableListOf()
     private var point = 0
+    private var mediaPlayer: MediaPlayer? = null
     private lateinit var checkWord: Word
 
     override fun inflateViewBinding(
@@ -41,10 +44,23 @@ class CheckSoundFragment : BaseFragment<CheckSoundFragViewModel, FragmentCheckSo
         viewBinding.sbProgress.max = wordList.size
         initRecyclerAdapter()
         showQuestion()
+        openAudio("${checkWord.word}.mp3")
 
         viewBinding.btnNext.setOnClickListener {
             checkedList.remove(checkWord)
             showQuestion()
+        }
+
+        viewBinding.ivPronounce.setOnClickListener {
+            openAudio("${checkWord.word}.mp3")
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (mediaPlayer?.isPlaying == true) {
+            mediaPlayer?.stop()
+            mediaPlayer?.release()
         }
     }
 
@@ -144,6 +160,25 @@ class CheckSoundFragment : BaseFragment<CheckSoundFragViewModel, FragmentCheckSo
                     }
                 ).show(childFragmentManager, CheckVieEngFragment::class.java.name)
             }
+        }
+    }
+
+    private fun openAudio(audio: String) {
+        Timber.i(audio)
+        mediaPlayer = MediaPlayer()
+        try {
+            val activity = activity ?: return
+            val afd = activity.assets.openFd("sound/$audio")
+            mediaPlayer?.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
+            afd.close()
+            mediaPlayer?.prepare()
+        } catch (ex: Exception) {
+            Timber.i("error")
+        }
+        mediaPlayer?.start()
+
+        mediaPlayer?.setOnCompletionListener {
+            it.reset()
         }
     }
 }

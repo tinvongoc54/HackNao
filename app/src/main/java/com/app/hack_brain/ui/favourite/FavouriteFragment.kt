@@ -1,5 +1,7 @@
 package com.app.hack_brain.ui.favourite
 
+import android.content.DialogInterface
+import android.media.MediaPlayer
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -8,11 +10,14 @@ import com.app.hack_brain.databinding.FragmentFavouriteBinding
 import com.app.hack_brain.extension.navigateWithSlideAnim
 import com.app.hack_brain.model.uimodel.Unit
 import com.app.hack_brain.model.uimodel.Word
-import com.app.hack_brain.ui.check.CheckFragmentDirections
+import com.app.hack_brain.ui.pronounce.PronounceAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import timber.log.Timber
 
 class FavouriteFragment : BaseFragment<FavouriteFragViewModel, FragmentFavouriteBinding>(FavouriteFragViewModel::class) {
+
+    private var mediaPlayer: MediaPlayer? = null
+
     override fun inflateViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -48,11 +53,36 @@ class FavouriteFragment : BaseFragment<FavouriteFragViewModel, FragmentFavourite
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        (viewBinding.rvFavourite.adapter as? FavouriteAdapter)?.removeListener()
+        if (mediaPlayer?.isPlaying == true) {
+            mediaPlayer?.stop()
+            mediaPlayer?.release()
+        }
+    }
+
     private fun initFavouriteAdapter(list: List<Word>) {
         viewBinding.run {
             rvFavourite.apply {
                 layoutManager = LinearLayoutManager(context)
-                adapter = FavouriteAdapter()
+                adapter = FavouriteAdapter(
+                    onClickFavourite = {
+                        MaterialAlertDialogBuilder(requireContext())
+                            .setTitle("Xoá yêu thích")
+                            .setMessage("Bạn có muốn xoá từ này khỏi yêu thích không?")
+                            .setNegativeButton("Huỷ", null)
+                            .setPositiveButton("Xoá") { _, which ->
+                                if (which == DialogInterface.BUTTON_POSITIVE) {
+                                    Timber.i("Da xoa")
+                                }
+                            }
+                            .show()
+                    },
+                    onClickSound = {
+                        openAudio("${it.word}.mp3")
+                    }
+                )
                 with(adapter as FavouriteAdapter) {
                     replaceData(list.toMutableList())
                 }
@@ -73,5 +103,24 @@ class FavouriteFragment : BaseFragment<FavouriteFragViewModel, FragmentFavourite
     private fun navigateToDetailCheckSoundUnit(unit: Unit) {
         val action = FavouriteFragmentDirections.actionFavouriteToCheckSoundFragment(unit)
         navigateWithSlideAnim(action)
+    }
+
+    private fun openAudio(audio: String) {
+        Timber.i(audio)
+        mediaPlayer = MediaPlayer()
+        try {
+            val activity = activity ?: return
+            val afd = activity.assets.openFd("sound/$audio")
+            mediaPlayer?.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
+            afd.close()
+            mediaPlayer?.prepare()
+        } catch (ex: Exception) {
+            Timber.i("error")
+        }
+        mediaPlayer?.start()
+
+        mediaPlayer?.setOnCompletionListener {
+            it.reset()
+        }
     }
 }
