@@ -4,11 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.hack_brain.BuildConfig
 import com.app.hack_brain.R
 import com.app.hack_brain.common.base.BaseFragment
 import com.app.hack_brain.databinding.FragmentHomeBinding
+import com.app.hack_brain.model.uimodel.Word
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
@@ -35,6 +38,7 @@ class HomeFragment :
 
     override fun initialize() {
         initClickEvent()
+        setupRVVocabulary()
     }
 
     private fun initClickEvent() {
@@ -60,10 +64,10 @@ class HomeFragment :
             cvPronounce.setOnClickListener {
                 navigateToPronounce()
             }
-            cvShare.setOnClickListener {
+            btnShare.setOnClickListener {
                 shareApp()
             }
-            cvReview.setOnClickListener {
+            btnReview.setOnClickListener {
 //                reviewApp()
             }
         }
@@ -129,5 +133,20 @@ class HomeFragment :
         } else {
             Timber.i("Null")
         }
+    }
+
+    private fun setupRVVocabulary() {
+        viewBinding.rvEverydayVocabulary.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = EverydayVocAdapter()
+        }
+        val list = mutableListOf<Word>()
+        list.add(Word(0, "Hello", "H e l l o", "Xin chao"))
+        list.add(Word(0, "Hello", "H e l l o", "Xin chao"))
+        list.add(Word(0, "Hello", "H e l l o", "Xin chao"))
+        list.add(Word(0, "Hello", "H e l l o", "Xin chao"))
+        list.add(Word(0, "Hello", "H e l l o", "Xin chao"))
+        list.add(Word(0, "Hello", "H e l l o", "Xin chao"))
+        (viewBinding.rvEverydayVocabulary.adapter as EverydayVocAdapter).replaceData(list)
     }
 }
