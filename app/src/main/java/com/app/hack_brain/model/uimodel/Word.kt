@@ -5,9 +5,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Word(
-    val id: Int,
-    val word: String,
-    val phonetic: String,
-    val meanings: String,
+    val id: Int = 0,
+    val word: String = "",
+    val phonetic: String = "",
+    val meanings: String = "",
     var isChecked: Boolean = false
 ): Parcelable
