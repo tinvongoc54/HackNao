@@ -83,7 +83,7 @@
         tools:layout="@layout/fragment_check_eng_vie">
         <argument
             android:name="unit"
-            app:argType="com.app.hack_brain.model.uimodel.Unit" />
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/checkVieEngFragment"
@@ -92,7 +92,7 @@
         tools:layout="@layout/fragment_check_vie_eng">
         <argument
             android:name="unit"
-            app:argType="com.app.hack_brain.model.uimodel.Unit" />
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/checkSoundFragment"
@@ -101,7 +101,7 @@
         tools:layout="@layout/fragment_check_sound">
         <argument
             android:name="unit"
-            app:argType="com.app.hack_brain.model.uimodel.Unit" />
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/favouriteFragment"

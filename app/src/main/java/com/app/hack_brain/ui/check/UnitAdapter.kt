@@ -7,17 +7,17 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.app.hack_brain.R
 import com.app.hack_brain.common.base.BaseRecyclerViewAdapter
+import com.app.hack_brain.data.local.entity.UnitEntity
 import com.app.hack_brain.databinding.ItemCheckUnitBinding
 import com.app.hack_brain.extension.appendPercent
 import com.app.hack_brain.extension.gone
-import com.app.hack_brain.model.uimodel.Unit
 
 class UnitAdapter(
     private val context: Context,
-    private val onClickEngVie: (unit: Unit) -> kotlin.Unit,
-    private val onClickVieEng: (unit: Unit) -> kotlin.Unit,
-    private val onClickSound: (unit: Unit) -> kotlin.Unit
-) : BaseRecyclerViewAdapter<Unit, UnitAdapter.CheckItemViewHolder>() {
+    private val onClickEngVie: (unit: UnitEntity) -> Unit,
+    private val onClickVieEng: (unit: UnitEntity) -> Unit,
+    private val onClickSound: (unit: UnitEntity) -> Unit
+) : BaseRecyclerViewAdapter<UnitEntity, UnitAdapter.CheckItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckItemViewHolder {
         return CheckItemViewHolder(
@@ -38,21 +38,21 @@ class UnitAdapter(
 
     inner class CheckItemViewHolder(
         private val itemBinding: ItemCheckUnitBinding,
-        private val onClickEngVie: (unit: Unit) -> kotlin.Unit,
-        private val onClickVieEng: (unit: Unit) -> kotlin.Unit,
-        private val onClickSound: (unit: Unit) -> kotlin.Unit
+        private val onClickEngVie: (unit: UnitEntity) -> Unit,
+        private val onClickVieEng: (unit: UnitEntity) -> Unit,
+        private val onClickSound: (unit: UnitEntity) -> Unit
     ) : RecyclerView.ViewHolder(itemBinding.root) {
-        fun bindData(context: Context, unit: Unit) {
+        fun bindData(context: Context, unit: UnitEntity) {
             itemBinding.run {
-                tvUnit.text = unit.unit
-                tvEngViePercent.text = unit.engViePercent.appendPercent()
-                tvVieEngPercent.text = unit.vieEngPercent.appendPercent()
-                tvSoundPercent.text = unit.soundPercent.appendPercent()
-                setDisableUnit(context, false)
+                tvUnit.text = String.format("Unit %s", unit.unit.toString())
+                tvEngViePercent.text = unit.progressEngVie.toString().appendPercent()
+                tvVieEngPercent.text = unit.progressVieEng.toString().appendPercent()
+                tvSoundPercent.text = unit.progressSound.toString().appendPercent()
+                setDisableUnit(context, unit.isDisable())
             }
         }
 
-        fun bindItemClick(unit: Unit) {
+        fun bindItemClick(unit: UnitEntity) {
             itemBinding.run {
                 clEngVie.setOnClickListener {
                     onClickEngVie(unit)

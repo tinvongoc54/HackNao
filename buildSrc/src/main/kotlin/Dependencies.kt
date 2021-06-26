@@ -109,6 +109,8 @@ object Versions {
 
     // Release notes https://github.com/google/truth/releases
     const val google_truth = "1.0.1"
+
+    const val sqlite = "2.0.1"
 }
 
 /**
@@ -207,6 +209,9 @@ object Dependencies {
 
     //swipe layout
     const val swipe_layout = "com.daimajia.swipelayout:library:${Versions.swipe_layout}"
+
+    //sqlite
+    const val sqlite = "com.readystatesoftware.sqliteasset:sqliteassethelper:${Versions.sqlite}"
 }
 
 fun DependencyHandler.implementLocalUnitTest() {

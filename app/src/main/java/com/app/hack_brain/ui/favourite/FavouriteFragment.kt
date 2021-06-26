@@ -91,18 +91,18 @@ class FavouriteFragment : BaseFragment<FavouriteFragViewModel, FragmentFavourite
     }
 
     private fun navigateToDetailCheckEngVieUnit(unit: Unit) {
-        val action = FavouriteFragmentDirections.actionFavouriteToCheckEngVieFragment(unit)
-        navigateWithSlideAnim(action)
+//        val action = FavouriteFragmentDirections.actionFavouriteToCheckEngVieFragment(unit)
+//        navigateWithSlideAnim(action)
     }
 
     private fun navigateToDetailCheckVieEngUnit(unit: Unit) {
-        val action = FavouriteFragmentDirections.actionFavouriteToCheckVieEngFragment(unit)
-        navigateWithSlideAnim(action)
+//        val action = FavouriteFragmentDirections.actionFavouriteToCheckVieEngFragment(unit)
+//        navigateWithSlideAnim(action)
     }
 
     private fun navigateToDetailCheckSoundUnit(unit: Unit) {
-        val action = FavouriteFragmentDirections.actionFavouriteToCheckSoundFragment(unit)
-        navigateWithSlideAnim(action)
+//        val action = FavouriteFragmentDirections.actionFavouriteToCheckSoundFragment(unit)
+//        navigateWithSlideAnim(action)
     }
 
     private fun openAudio(audio: String) {

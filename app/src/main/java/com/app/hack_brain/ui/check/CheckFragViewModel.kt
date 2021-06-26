@@ -1,15 +1,20 @@
 package com.app.hack_brain.ui.check
 
+import androidx.lifecycle.MutableLiveData
 import com.app.hack_brain.common.base.BaseViewModel
-import com.app.hack_brain.data.local.db.DatabaseHelper
+import com.app.hack_brain.data.local.db.DatabaseRepository
+import com.app.hack_brain.data.local.entity.UnitEntity
 import com.app.hack_brain.data.local.entity.VocabularyEntity
+import com.app.hack_brain.utils.DataResult
+import com.app.hack_brain.utils.liveData.SingleLiveData
 import timber.log.Timber
 
-class CheckFragViewModel(private val dbHelper: DatabaseHelper) : BaseViewModel() {
+class CheckFragViewModel(private val dbRepository: DatabaseRepository) : BaseViewModel() {
 
+    val unitListEvent = SingleLiveData<List<UnitEntity>>()
     fun insert() {
         viewModelScope {
-            dbHelper.insertVocabulary(
+            dbRepository.insertVocabulary(
                 VocabularyEntity(
                     id = 1,
                     word = "abc",
@@ -26,16 +31,9 @@ class CheckFragViewModel(private val dbHelper: DatabaseHelper) : BaseViewModel()
         }
     }
 
-    fun getVoc() {
-
-        Timber.i("start")
-        viewModelScope {
-            val db = dbHelper.getAllVocabulary()
-            Timber.i("size: ${db.getResultData()?.size}")
-            db.getResultData()?.forEach {
-                Timber.i("voc: ${it.word}")
-            }
-            db
+    fun getUnitList() {
+        viewModelScope(unitListEvent) {
+            dbRepository.getUnitList()
         }
     }
 }

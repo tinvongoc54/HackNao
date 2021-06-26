@@ -2,10 +2,13 @@ package com.app.hack_brain.ui.check
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.app.hack_brain.common.base.BaseFragment
+import com.app.hack_brain.data.local.entity.UnitEntity
 import com.app.hack_brain.databinding.FragmentCheckBinding
 import com.app.hack_brain.extension.navigateWithSlideAnim
+import com.app.hack_brain.extension.nullToZero
 import com.app.hack_brain.model.uimodel.Unit
 
 class CheckFragment : BaseFragment<CheckFragViewModel, FragmentCheckBinding>(CheckFragViewModel::class) {
@@ -17,29 +20,31 @@ class CheckFragment : BaseFragment<CheckFragViewModel, FragmentCheckBinding>(Che
     }
 
     override fun initialize() {
-//        viewModel.insert()
-        viewModel.getVoc()
-//        val unitList = mutableListOf<Unit>()
-//        for (i in 1..150) {
-//            val unit = Unit(unit = "Unit $i", words = databaseHelper.getAllWord(i))
-//            unitList.add(unit)
-//        }
-//        initUnitAdapter(unitList)
+        viewModel.getUnitList()
     }
 
-    private fun initUnitAdapter(list: MutableList<Unit>) {
+    override fun onSubscribeObserver() {
+        super.onSubscribeObserver()
+        viewModel.run {
+            unitListEvent.observe(viewLifecycleOwner, Observer{
+                initUnitAdapter(it.toMutableList())
+            })
+        }
+    }
+
+    private fun initUnitAdapter(list: MutableList<UnitEntity>) {
         viewBinding.rvUnit.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = UnitAdapter(
                 context = requireContext(),
                 onClickEngVie = {
-                    navigateToDetailCheckEngVieUnit(it)
+                    navigateToDetailCheckEngVieUnit(it.unit.nullToZero())
                 },
                 onClickVieEng = {
-                    navigateToDetailCheckVieEngUnit(it)
+                    navigateToDetailCheckVieEngUnit(it.unit.nullToZero())
                 },
                 onClickSound = {
-                    navigateToDetailCheckSoundUnit(it)
+                    navigateToDetailCheckSoundUnit(it.unit.nullToZero())
                 }
             )
             with(adapter as UnitAdapter) {
@@ -48,17 +53,17 @@ class CheckFragment : BaseFragment<CheckFragViewModel, FragmentCheckBinding>(Che
         }
     }
 
-    private fun navigateToDetailCheckEngVieUnit(unit: Unit) {
+    private fun navigateToDetailCheckEngVieUnit(unit: Int) {
         val action = CheckFragmentDirections.actionToCheckEngVieFragment(unit)
         navigateWithSlideAnim(action)
     }
 
-    private fun navigateToDetailCheckVieEngUnit(unit: Unit) {
+    private fun navigateToDetailCheckVieEngUnit(unit: Int) {
         val action = CheckFragmentDirections.actionToCheckVieEngFragment(unit)
         navigateWithSlideAnim(action)
     }
 
-    private fun navigateToDetailCheckSoundUnit(unit: Unit) {
+    private fun navigateToDetailCheckSoundUnit(unit: Int) {
         val action = CheckFragmentDirections.actionToCheckSoundFragment(unit)
         navigateWithSlideAnim(action)
     }
