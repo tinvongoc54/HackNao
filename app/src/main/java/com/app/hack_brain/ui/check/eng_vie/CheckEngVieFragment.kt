@@ -38,8 +38,8 @@ class CheckEngVieFragment :
 
     override fun initialize() {
         checkWord = Word(0, "", "", "")
-        wordList.addAll(args.unit.words)
-        checkedList.addAll(wordList)
+//        wordList.addAll(args.unit.words)
+//        checkedList.addAll(wordList)
         viewBinding.sbProgress.max = wordList.size
         initRecyclerAdapter()
         showQuestion()
@@ -153,7 +153,7 @@ class CheckEngVieFragment :
                         activity?.onBackPressed()
                     },
                     onClickAgain = {
-                        checkedList.addAll(args.unit.words)
+//                        checkedList.addAll(args.unit.words)
                         sbProgress.progress = 0
                         point = 0
                         (activity as? HomeActivity)?.setPoint(point)

@@ -31,7 +31,7 @@ class CheckVieEngFragment :
     }
 
     override fun initialize() {
-        wordList.addAll(args.unit.words)
+//        wordList.addAll(args.unit.words)
         viewBinding.sbProgress.max = wordList.size
         initSuggestCharacter()
         showQuestion()
@@ -110,7 +110,7 @@ class CheckVieEngFragment :
                         activity?.onBackPressed()
                     },
                     onClickAgain = {
-                        wordList.addAll(args.unit.words)
+//                        wordList.addAll(args.unit.words)
                         sbProgress.progress = 0
                         point = 0
                         edtWord.setText("")

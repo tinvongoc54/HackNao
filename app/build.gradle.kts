@@ -173,6 +173,9 @@ dependencies {
     // Swipe layout
     implementation(Dependencies.swipe_layout)
 
+    //SqliteHelper
+    implementation(Dependencies.sqlite)
+
     // Unit Test
     implementLocalUnitTest()
     implementInstrumentationUnitTest()

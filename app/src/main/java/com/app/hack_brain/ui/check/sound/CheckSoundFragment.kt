@@ -38,7 +38,7 @@ class CheckSoundFragment : BaseFragment<CheckSoundFragViewModel, FragmentCheckSo
 
     override fun initialize() {
         checkWord = Word(0, "", "", "")
-        wordList.addAll(args.unit.words)
+//        wordList.addAll(args.unit.words)
         checkedList.addAll(wordList)
         Timber.i("Size: " + wordList.size)
         viewBinding.sbProgress.max = wordList.size
@@ -152,7 +152,7 @@ class CheckSoundFragment : BaseFragment<CheckSoundFragViewModel, FragmentCheckSo
                         activity?.onBackPressed()
                     },
                     onClickAgain = {
-                        checkedList.addAll(args.unit.words)
+//                        checkedList.addAll(args.unit.words)
                         sbProgress.progress = 0
                         point = 0
                         (activity as? HomeActivity)?.setPoint(point)
