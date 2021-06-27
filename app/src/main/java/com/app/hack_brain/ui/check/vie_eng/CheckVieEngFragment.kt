@@ -1,27 +1,35 @@
 package com.app.hack_brain.ui.check.vie_eng
 
+import android.annotation.SuppressLint
+import android.media.MediaPlayer
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.hack_brain.R
+import com.app.hack_brain.common.Constant
 import com.app.hack_brain.common.base.BaseFragment
+import com.app.hack_brain.data.local.entity.VocabularyEntity
 import com.app.hack_brain.databinding.FragmentCheckVieEngBinding
-import com.app.hack_brain.extension.gone
-import com.app.hack_brain.extension.show
+import com.app.hack_brain.extension.*
 import com.app.hack_brain.model.uimodel.Word
 import com.app.hack_brain.ui.check.dialog.FinishDialogFragment
 import com.app.hack_brain.ui.home.HomeActivity
+import timber.log.Timber
 import kotlin.random.Random
 
 class CheckVieEngFragment :
     BaseFragment<CheckVieEngFragViewModel, FragmentCheckVieEngBinding>(CheckVieEngFragViewModel::class) {
 
     private val args: CheckVieEngFragmentArgs by navArgs()
-    private val wordList: MutableList<Word> = mutableListOf()
+    private val wordList: MutableList<VocabularyEntity> = mutableListOf()
+    private val checkedList: MutableList<VocabularyEntity> = mutableListOf()
     private var point = 0
-    private lateinit var checkWord: Word
+    private var mediaPlayer: MediaPlayer? = null
+    private lateinit var checkWord: VocabularyEntity
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,
@@ -30,13 +38,13 @@ class CheckVieEngFragment :
         return FragmentCheckVieEngBinding.inflate(inflater)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun initialize() {
-//        wordList.addAll(args.unit.words)
-        viewBinding.sbProgress.max = wordList.size
-        initSuggestCharacter()
-        showQuestion()
+        viewModel.getVocabularyOfUnit(args.unit)
 
         viewBinding.run {
+            sbProgress.setOnTouchListener { _, _ -> true }
+
             btnCheck.setOnClickListener {
                 if (!viewBinding.edtWord.text.isNullOrBlank()) checkAnswer()
             }
@@ -49,8 +57,33 @@ class CheckVieEngFragment :
             }
 
             ivAudio.setOnClickListener {
-
+                openAudio(checkWord.word.nullToBlank())
             }
+        }
+    }
+
+    override fun onSubscribeObserver() {
+        super.onSubscribeObserver()
+        viewModel.run {
+            vocabularyListEvent.observe(viewLifecycleOwner, Observer {
+                wordList.addAll(it.toMutableList())
+                checkedList.addAll(wordList)
+                viewBinding.sbProgress.max = wordList.size
+                initSuggestCharacter()
+                showQuestion()
+            })
+
+            updateProgressSuccess.observe(viewLifecycleOwner, Observer {
+                if (it) activity?.onBackPressed()
+            })
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (mediaPlayer?.isPlaying == true) {
+            mediaPlayer?.stop()
+            mediaPlayer?.release()
         }
     }
 
@@ -63,21 +96,31 @@ class CheckVieEngFragment :
     }
 
     private fun showQuestion() {
-        checkWord = wordList.random()
+        showKeyboard()
+        checkWord = checkedList.random()
         viewBinding.run {
+            edtWord.requestFocus()
             btnCheck.show()
             btnNext.gone()
             llResult.gone()
-            tvMeanings.text = checkWord.meanings
+            tvMeanings.text = checkWord.shortMean
             with(rvCharacter.adapter as CharacterAdapter) {
-                setPositionShowCharacter(Random.nextInt(0, checkWord.word.toMutableList().size - 1))
-                replaceData(checkWord.word.toMutableList())
+                setPositionShowCharacter(
+                    Random.nextInt(
+                        0,
+                        checkWord.word.nullToBlank().toMutableList().size
+                    )
+                )
+                replaceData(checkWord.word.nullToBlank().toMutableList())
             }
         }
     }
 
     private fun checkAnswer() {
-        val result = checkWord.word == viewBinding.edtWord.text.toString().trim()
+        hideKeyboard()
+        val result = checkWord.word.nullToBlank()
+            .equals(viewBinding.edtWord.text.toString().trim(), ignoreCase = true)
+        openAudio(if (result) Constant.CORRECT else Constant.FAILED)
         viewBinding.run {
             llResult.isEnabled = result
             llResult.show()
@@ -97,7 +140,7 @@ class CheckVieEngFragment :
             )
 
             if (result) point += 10
-            wordList.remove(checkWord)
+            checkedList.remove(checkWord)
             (activity as? HomeActivity)?.setPoint(point)
             sbProgress.progress++
             btnCheck.gone()
@@ -107,10 +150,10 @@ class CheckVieEngFragment :
                 FinishDialogFragment(
                     result = point / 10,
                     onClickNext = {
-                        activity?.onBackPressed()
+                        viewModel.updateProcess(args.unit, point * 10 / Constant.AMOUNT_VOC_AN_UNIT)
                     },
                     onClickAgain = {
-//                        wordList.addAll(args.unit.words)
+                        checkedList.addAll(wordList)
                         sbProgress.progress = 0
                         point = 0
                         edtWord.setText("")
@@ -119,6 +162,25 @@ class CheckVieEngFragment :
                     }
                 ).show(childFragmentManager, CheckVieEngFragment::class.java.name)
             }
+        }
+    }
+
+    private fun openAudio(audio: String) {
+        Timber.i(audio)
+        mediaPlayer = MediaPlayer()
+        try {
+            val activity = activity ?: return
+            val afd = activity.assets.openFd("sound/$audio.mp3")
+            mediaPlayer?.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
+            afd.close()
+            mediaPlayer?.prepare()
+        } catch (ex: Exception) {
+            Timber.i("error")
+        }
+        mediaPlayer?.start()
+
+        mediaPlayer?.setOnCompletionListener {
+            it.reset()
         }
     }
 }

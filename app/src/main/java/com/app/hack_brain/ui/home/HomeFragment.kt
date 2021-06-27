@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.hack_brain.BuildConfig
 import com.app.hack_brain.R
 import com.app.hack_brain.common.base.BaseFragment
+import com.app.hack_brain.data.local.entity.VocabularyEntity
 import com.app.hack_brain.databinding.FragmentHomeBinding
 import com.app.hack_brain.model.uimodel.Word
 import com.google.android.play.core.review.ReviewInfo
@@ -27,6 +29,7 @@ class HomeFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        createReviewApp()
+        viewModel.getRandomVoc()
     }
 
     override fun inflateViewBinding(
@@ -38,7 +41,15 @@ class HomeFragment :
 
     override fun initialize() {
         initClickEvent()
-        setupRVVocabulary()
+    }
+
+    override fun onSubscribeObserver() {
+        super.onSubscribeObserver()
+        viewModel.run {
+            randomVoc.observe(viewLifecycleOwner, Observer {
+                setupRVVocabulary(it)
+            })
+        }
     }
 
     private fun initClickEvent() {
@@ -135,18 +146,11 @@ class HomeFragment :
         }
     }
 
-    private fun setupRVVocabulary() {
+    private fun setupRVVocabulary(list: List<VocabularyEntity>) {
         viewBinding.rvEverydayVocabulary.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = EverydayVocAdapter()
         }
-        val list = mutableListOf<Word>()
-        list.add(Word(0, "Hello", "H e l l o", "Xin chao"))
-        list.add(Word(0, "Hello", "H e l l o", "Xin chao"))
-        list.add(Word(0, "Hello", "H e l l o", "Xin chao"))
-        list.add(Word(0, "Hello", "H e l l o", "Xin chao"))
-        list.add(Word(0, "Hello", "H e l l o", "Xin chao"))
-        list.add(Word(0, "Hello", "H e l l o", "Xin chao"))
-        (viewBinding.rvEverydayVocabulary.adapter as EverydayVocAdapter).replaceData(list)
+        (viewBinding.rvEverydayVocabulary.adapter as EverydayVocAdapter).replaceData(list.toMutableList())
     }
 }

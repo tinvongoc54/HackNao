@@ -31,7 +31,7 @@ class UnitAdapter(
 
     override fun onBindViewHolder(holder: CheckItemViewHolder, position: Int) {
         getItem(position)?.let {
-            holder.bindData(context, it)
+            holder.bindData(context, it, position)
             holder.bindItemClick(it)
         }
     }
@@ -42,13 +42,13 @@ class UnitAdapter(
         private val onClickVieEng: (unit: UnitEntity) -> Unit,
         private val onClickSound: (unit: UnitEntity) -> Unit
     ) : RecyclerView.ViewHolder(itemBinding.root) {
-        fun bindData(context: Context, unit: UnitEntity) {
+        fun bindData(context: Context, unit: UnitEntity, position: Int) {
             itemBinding.run {
                 tvUnit.text = String.format("Unit %s", unit.unit.toString())
                 tvEngViePercent.text = unit.progressEngVie.toString().appendPercent()
                 tvVieEngPercent.text = unit.progressVieEng.toString().appendPercent()
                 tvSoundPercent.text = unit.progressSound.toString().appendPercent()
-                setDisableUnit(context, unit.isDisable())
+                setEnableUnit(context, if (position > 0) getData()[position - 1].isEnableNextUnit() else true)
             }
         }
 
@@ -66,45 +66,48 @@ class UnitAdapter(
             }
         }
 
-        private fun setDisableUnit(context: Context, isDisable: Boolean = false) {
+        private fun setEnableUnit(context: Context, isEnable: Boolean = false) {
             itemBinding.run {
+                clEngVie.isEnabled = isEnable
+                clVieEng.isEnabled = isEnable
+                clSound.isEnabled = isEnable
                 tvEngVie.setTextColor(
                     ContextCompat.getColor(
                         context,
-                        if (isDisable) R.color.border_gray else R.color.black
+                        if (isEnable.not()) R.color.border_gray else R.color.black
                     )
                 )
                 tvVieEng.setTextColor(
                     ContextCompat.getColor(
                         context,
-                        if (isDisable) R.color.border_gray else R.color.black
+                        if (isEnable.not()) R.color.border_gray else R.color.black
                     )
                 )
                 tvSound.setTextColor(
                     ContextCompat.getColor(
                         context,
-                        if (isDisable) R.color.border_gray else R.color.black
+                        if (isEnable.not()) R.color.border_gray else R.color.black
                     )
                 )
                 tvEngViePercent.setTextColor(
                     ContextCompat.getColor(
                         context,
-                        if (isDisable) R.color.border_gray else R.color.light_red
+                        if (isEnable.not()) R.color.border_gray else R.color.light_red
                     )
                 )
                 tvVieEngPercent.setTextColor(
                     ContextCompat.getColor(
                         context,
-                        if (isDisable) R.color.border_gray else R.color.light_red
+                        if (isEnable.not()) R.color.border_gray else R.color.light_red
                     )
                 )
                 tvSoundPercent.setTextColor(
                     ContextCompat.getColor(
                         context,
-                        if (isDisable) R.color.border_gray else R.color.light_red
+                        if (isEnable.not()) R.color.border_gray else R.color.light_red
                     )
                 )
-                ivLock.gone(!isDisable)
+                ivLock.gone(isEnable)
             }
         }
     }

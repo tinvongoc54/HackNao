@@ -3,6 +3,7 @@ package com.app.hack_brain.ui.check.dialog
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.app.hack_brain.R
+import com.app.hack_brain.common.Constant
 import com.app.hack_brain.common.base.BaseDialogFragment
 import com.app.hack_brain.databinding.DialogFinishFragmentBinding
 
@@ -24,7 +25,7 @@ class FinishDialogFragment(
         viewBinding.run {
             tvPoint.text = String.format("$result/20")
             tvMessage.text =
-                if (result > 10) getString(R.string.text_result_pass) else getString(R.string.text_result_fail)
+                if (result > (Constant.AMOUNT_VOC_AN_UNIT/2)) getString(R.string.text_result_pass) else getString(R.string.text_result_fail)
             btnNext.setOnClickListener {
                 onClickNext()
                 dismiss()

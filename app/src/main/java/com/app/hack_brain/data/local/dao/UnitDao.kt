@@ -13,4 +13,13 @@ interface UnitDao {
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateUnit(unit: UnitEntity)
+
+    @Query("UPDATE unit_tracking SET progress_av=:progress WHERE unit=:unit")
+    fun updateEngVieProgress(unit: Int, progress: Int)
+
+    @Query("UPDATE unit_tracking SET progress_va=:progress WHERE unit=:unit")
+    fun updateVieEngProgress(unit: Int, progress: Int)
+
+    @Query("UPDATE unit_tracking SET progress_at=:progress WHERE unit=:unit")
+    fun updateSoundProgress(unit: Int, progress: Int)
 }

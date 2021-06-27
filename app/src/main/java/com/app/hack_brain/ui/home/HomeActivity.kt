@@ -61,6 +61,7 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
                         tvTitle.text = getString(R.string.text_short_story)
                     }
                     R.id.checkFragment -> {
+                        tvPoint.gone()
                         tvTitle.text = getString(R.string.text_checking)
                     }
                     R.id.translateFragment -> {
@@ -88,14 +89,17 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
                     }
                     R.id.checkEngVieFragment -> {
                         tvPoint.show()
+                        tvPoint.text = "0 điểm"
                         tvTitle.text = "Anh - Việt"
                     }
                     R.id.checkVieEngFragment -> {
                         tvPoint.show()
+                        tvPoint.text = "0 điểm"
                         tvTitle.text = "Việt - Anh"
                     }
                     R.id.checkSoundFragment -> {
                         tvPoint.show()
+                        tvPoint.text = "0 điểm"
                         tvTitle.text = "Âm thanh"
                     }
                     else -> {

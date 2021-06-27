@@ -4,10 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.hack_brain.common.base.BaseRecyclerViewAdapter
+import com.app.hack_brain.data.local.entity.VocabularyEntity
 import com.app.hack_brain.databinding.ItemEverydayVocabularyBinding
 import com.app.hack_brain.model.uimodel.Word
 
-class EverydayVocAdapter : BaseRecyclerViewAdapter<Word, EverydayVocAdapter.ItemEverydayVocViewHolder>() {
+class EverydayVocAdapter : BaseRecyclerViewAdapter<VocabularyEntity, EverydayVocAdapter.ItemEverydayVocViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemEverydayVocViewHolder {
         return ItemEverydayVocViewHolder(
@@ -25,11 +26,11 @@ class EverydayVocAdapter : BaseRecyclerViewAdapter<Word, EverydayVocAdapter.Item
 
     inner class ItemEverydayVocViewHolder(private val itemBinding: ItemEverydayVocabularyBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-        fun bindData(word: Word) {
+        fun bindData(word: VocabularyEntity) {
             itemBinding.run {
                 tvVocabulary.text = word.word
                 tvPronounce.text = word.phonetic
-                tvMeaning.text = word.meanings
+                tvMeaning.text = word.shortMean
             }
         }
     }
