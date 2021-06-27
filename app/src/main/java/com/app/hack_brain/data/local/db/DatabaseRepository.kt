@@ -1,15 +1,15 @@
 package com.app.hack_brain.data.local.db
 
+import com.app.hack_brain.common.Constant
 import com.app.hack_brain.common.base.BaseRepository
 import com.app.hack_brain.data.local.entity.UnitEntity
 import com.app.hack_brain.data.local.entity.VocabularyEntity
 import com.app.hack_brain.utils.DataResult
-import timber.log.Timber
 
 class DefaultDatabaseRepository(private val appDatabase: AppDatabase) : DatabaseRepository, BaseRepository() {
     override suspend fun getVocabularyOfUnit(unit: Int): DataResult<List<VocabularyEntity>> {
         return withResultContext {
-            appDatabase.vocabularyDao().getAll(20, unit)
+            appDatabase.vocabularyDao().getVocabularyOfUnit(Constant.AMOUNT_VOC_AN_UNIT, unit)
         }
     }
 
@@ -19,15 +19,33 @@ class DefaultDatabaseRepository(private val appDatabase: AppDatabase) : Database
         }
     }
 
+    override suspend fun getRandomVocabulary(): DataResult<List<VocabularyEntity>> {
+        return withResultContext {
+            appDatabase.vocabularyDao().getRandomVocabulary()
+        }
+    }
+
     override suspend fun getUnitList(): DataResult<List<UnitEntity>> {
         return withResultContext {
             appDatabase.unitDao().getUnitList()
         }
     }
 
-    override suspend fun insertUnit(unit: UnitEntity): DataResult<Unit> {
+    override suspend fun updateEngVieProgress(unit: Int, progress: Int): DataResult<Unit> {
         return withResultContext {
-            appDatabase.unitDao().insertUnit(unit)
+            appDatabase.unitDao().updateEngVieProgress(unit, progress)
+        }
+    }
+
+    override suspend fun updateVieEngProgress(unit: Int, progress: Int): DataResult<Unit> {
+        return withResultContext {
+            appDatabase.unitDao().updateVieEngProgress(unit, progress)
+        }
+    }
+
+    override suspend fun updateSoundProgress(unit: Int, progress: Int): DataResult<Unit> {
+        return withResultContext {
+            appDatabase.unitDao().updateSoundProgress(unit, progress)
         }
     }
 }
@@ -35,6 +53,10 @@ class DefaultDatabaseRepository(private val appDatabase: AppDatabase) : Database
 interface DatabaseRepository {
     suspend fun getVocabularyOfUnit(unit: Int): DataResult<List<VocabularyEntity>>
     suspend fun insertVocabulary(vocabulary: VocabularyEntity): DataResult<Any>
+    suspend fun getRandomVocabulary(): DataResult<List<VocabularyEntity>>
+
     suspend fun getUnitList(): DataResult<List<UnitEntity>>
-    suspend fun insertUnit(unit: UnitEntity): DataResult<Unit>
+    suspend fun updateEngVieProgress(unit: Int, progress: Int): DataResult<Unit>
+    suspend fun updateVieEngProgress(unit: Int, progress: Int): DataResult<Unit>
+    suspend fun updateSoundProgress(unit: Int, progress: Int): DataResult<Unit>
 }

@@ -1,33 +1,36 @@
 package com.app.hack_brain.ui.check.eng_vie
 
+import android.annotation.SuppressLint
 import android.media.MediaPlayer
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.hack_brain.R
+import com.app.hack_brain.common.Constant
 import com.app.hack_brain.common.base.BaseFragment
+import com.app.hack_brain.data.local.entity.VocabularyEntity
 import com.app.hack_brain.databinding.FragmentCheckEngVieBinding
 import com.app.hack_brain.extension.gone
+import com.app.hack_brain.extension.nullToBlank
 import com.app.hack_brain.extension.show
-import com.app.hack_brain.model.uimodel.Word
 import com.app.hack_brain.ui.check.dialog.FinishDialogFragment
 import com.app.hack_brain.ui.check.vie_eng.CheckVieEngFragment
 import com.app.hack_brain.ui.home.HomeActivity
 import timber.log.Timber
-import kotlin.random.Random
+
 
 class CheckEngVieFragment :
     BaseFragment<CheckEngVieFragViewModel, FragmentCheckEngVieBinding>(CheckEngVieFragViewModel::class) {
 
     private val args: CheckEngVieFragmentArgs by navArgs()
-    private val wordList: MutableList<Word> = mutableListOf()
-    private val checkedList: MutableList<Word> = mutableListOf()
+    private val wordList: MutableList<VocabularyEntity> = mutableListOf()
+    private val checkedList: MutableList<VocabularyEntity> = mutableListOf()
     private var point = 0
     private var mediaPlayer: MediaPlayer? = null
-    private lateinit var checkWord: Word
+    private lateinit var checkWord: VocabularyEntity
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,
@@ -36,22 +39,38 @@ class CheckEngVieFragment :
         return FragmentCheckEngVieBinding.inflate(inflater)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun initialize() {
-        checkWord = Word(0, "", "", "")
-//        wordList.addAll(args.unit.words)
-//        checkedList.addAll(wordList)
-        viewBinding.sbProgress.max = wordList.size
-        initRecyclerAdapter()
-        showQuestion()
-        openAudio("${checkWord.word}.mp3")
+        viewModel.getVocabularyOfUnit(args.unit)
 
-        viewBinding.btnNext.setOnClickListener {
-            checkedList.remove(checkWord)
-            showQuestion()
+        viewBinding.run {
+            sbProgress.setOnTouchListener { _, _ -> true }
+
+            btnNext.setOnClickListener {
+                checkedList.remove(checkWord)
+                showQuestion()
+            }
+
+            ivPronounce.setOnClickListener {
+                openAudio("${checkWord.word}")
+            }
         }
+    }
 
-        viewBinding.ivPronounce.setOnClickListener {
-            openAudio("${checkWord.word}.mp3")
+    override fun onSubscribeObserver() {
+        super.onSubscribeObserver()
+        viewModel.run {
+            vocabularyListEvent.observe(viewLifecycleOwner, Observer {
+                wordList.addAll(it.toMutableList())
+                checkedList.addAll(wordList)
+                viewBinding.sbProgress.max = wordList.size
+                initRecyclerAdapter()
+                showQuestion()
+            })
+
+            updateProgressSuccess.observe(viewLifecycleOwner, Observer {
+                if (it) activity?.onBackPressed()
+            })
         }
     }
 
@@ -66,8 +85,7 @@ class CheckEngVieFragment :
     private fun initRecyclerAdapter() {
         viewBinding.rvAnswer.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = AnswerAdapter(requireContext()) { word: Word, position: Int ->
-                Timber.i("click ${word.word}")
+            adapter = AnswerAdapter(requireContext()) { word: VocabularyEntity, position: Int ->
                 checkAnswer(word, position)
             }
         }
@@ -76,8 +94,9 @@ class CheckEngVieFragment :
     private fun showQuestion() {
         if (viewBinding.sbProgress.progress < viewBinding.sbProgress.max) {
             checkWord = checkedList.random()
-            var random2: Word
-            var random3: Word
+            openAudio(checkWord.word.nullToBlank())
+            var random2: VocabularyEntity
+            var random3: VocabularyEntity
             do {
                 random2 = wordList.random()
                 random3 = wordList.random()
@@ -103,8 +122,9 @@ class CheckEngVieFragment :
         }
     }
 
-    private fun checkAnswer(word: Word, position: Int) {
+    private fun checkAnswer(word: VocabularyEntity, position: Int) {
         val result = word.id == checkWord.id
+        openAudio(if (result) Constant.CORRECT else Constant.FAILED)
         viewBinding.run {
             rvAnswer.findViewHolderForAdapterPosition(position)?.itemView?.background =
                 ContextCompat.getDrawable(
@@ -118,7 +138,7 @@ class CheckEngVieFragment :
             tvAnswer.text = String.format(
                 "%s %s",
                 if (result) getString(R.string.text_correct_answer) else getString(R.string.text_wrong_answer),
-                checkWord.meanings
+                checkWord.shortMean
             )
             tvAnswer.setTextColor(
                 ContextCompat.getColor(
@@ -128,15 +148,8 @@ class CheckEngVieFragment :
             )
         }
 
-        if (result) {
-            point += 10
-            Handler().postDelayed({
-                checkedList.remove(checkWord)
-                showQuestion()
-            }, 1000)
-        } else {
-            viewBinding.btnNext.show()
-        }
+        if (result) point += 10
+        viewBinding.btnNext.show()
 
         viewBinding.sbProgress.progress++
         (activity as? HomeActivity)?.setPoint(point)
@@ -150,10 +163,13 @@ class CheckEngVieFragment :
                 FinishDialogFragment(
                     result = point / 10,
                     onClickNext = {
-                        activity?.onBackPressed()
+                        viewModel.updateProcess(
+                            args.unit,
+                            (point * 10 / Constant.AMOUNT_VOC_AN_UNIT)
+                        )
                     },
                     onClickAgain = {
-//                        checkedList.addAll(args.unit.words)
+                        checkedList.addAll(wordList)
                         sbProgress.progress = 0
                         point = 0
                         (activity as? HomeActivity)?.setPoint(point)
@@ -169,7 +185,7 @@ class CheckEngVieFragment :
         mediaPlayer = MediaPlayer()
         try {
             val activity = activity ?: return
-            val afd = activity.assets.openFd("sound/$audio")
+            val afd = activity.assets.openFd("sound/$audio.mp3")
             mediaPlayer?.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
             afd.close()
             mediaPlayer?.prepare()

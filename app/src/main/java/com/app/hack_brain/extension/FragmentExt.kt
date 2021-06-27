@@ -21,6 +21,11 @@ fun Fragment?.hideKeyboard() {
         .toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
 }
 
+fun Fragment?.showKeyboard() {
+    (this?.context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
+        .toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+}
+
 val options = navOptions {
     anim {
         enter = R.anim.slide_out_right

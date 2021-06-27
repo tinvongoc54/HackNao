@@ -18,6 +18,6 @@ data class UnitEntity(
     @ColumnInfo(name = "progress_va") var progressVieEng: Int? = 0,
     @ColumnInfo(name = "progress_at") var progressSound: Int? = 0
 ) : Parcelable {
-    fun isDisable() =
-        progressEngVie.nullToZero() < 50 && progressVieEng.nullToZero() < 50 && progressSound.nullToZero() < 50 && unit != 1
+    fun isEnableNextUnit() =
+        progressEngVie.nullToZero() >= 50 && progressVieEng.nullToZero() >= 50 && progressSound.nullToZero() >= 50
 }

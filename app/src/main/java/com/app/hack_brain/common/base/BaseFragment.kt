@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.app.hack_brain.extension.handleDefaultApiError
 import com.app.hack_brain.utils.liveData.observeSingleEvent
+import com.app.hack_brain.utils.widget.LoadingDialog
 import kotlin.reflect.KClass
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -31,6 +32,8 @@ abstract class BaseFragment<VM : BaseViewModel,
     private var _viewBinding: VB? = null
     protected val viewBinding get() = _viewBinding!! // ktlint-disable
     abstract fun inflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
+
+    protected val loadingDialog by lazy { LoadingDialog() }
 
     protected abstract fun initialize()
 
@@ -61,11 +64,21 @@ abstract class BaseFragment<VM : BaseViewModel,
     open fun onSubscribeObserver() {
         viewModel.run {
             isLoading.observeSingleEvent(viewLifecycleOwner) {
-                // TODO show/hide loading
+                toggleLoading(it)
             }
             exception.observeSingleEvent(viewLifecycleOwner) {
                 (activity as? BaseActivity<*, *>)?.handleDefaultApiError(it)
             }
+        }
+    }
+
+    open fun toggleLoading(show: Boolean) {
+        if (show) {
+            if (loadingDialog.isVisible.not()) {
+                loadingDialog.show(childFragmentManager, "LOADING_DIALOG")
+            }
+        } else {
+            loadingDialog.dismiss()
         }
     }
 }

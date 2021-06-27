@@ -7,13 +7,14 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.app.hack_brain.R
 import com.app.hack_brain.common.base.BaseRecyclerViewAdapter
+import com.app.hack_brain.data.local.entity.VocabularyEntity
 import com.app.hack_brain.databinding.ItemAnswerBinding
 import com.app.hack_brain.model.uimodel.Word
 
 class AnswerAdapter(
     private val context: Context,
-    private val onClickItem: (word: Word, position: Int) -> Unit
-) : BaseRecyclerViewAdapter<Word, AnswerAdapter.ItemAnswerViewHolder>() {
+    private val onClickItem: (word: VocabularyEntity, position: Int) -> Unit
+) : BaseRecyclerViewAdapter<VocabularyEntity, AnswerAdapter.ItemAnswerViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemAnswerViewHolder {
         return ItemAnswerViewHolder(
@@ -34,9 +35,9 @@ class AnswerAdapter(
 
     inner class ItemAnswerViewHolder(private val itemBinding: ItemAnswerBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-        fun bindData(word: Word) {
+        fun bindData(word: VocabularyEntity) {
             itemBinding.llAnswer.background = ContextCompat.getDrawable(context, R.drawable.background_default_answer)
-            itemBinding.tvAnswer.text = word.meanings
+            itemBinding.tvAnswer.text = word.shortMean
         }
 
         fun onClickItem(onClick: () -> Unit) {
