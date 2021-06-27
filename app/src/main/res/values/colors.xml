@@ -21,4 +21,6 @@
     <color name="dark_green_text">#588C23</color>
 
     <color name="blue_light">#335EA6</color>
+    <color name="violet">#673AB7</color>
+    <color name="yellow">#FFEB3B</color>
 </resources>

@@ -7,3 +7,5 @@ package com.app.hack_brain.extension
 fun Boolean?.isTrue() = this == true
 
 fun Boolean?.isNotTrue() = !this.isTrue()
+
+fun Boolean?.toInt() = if (this == true) 1 else 0

@@ -5,10 +5,13 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.app.hack_brain.R
+import com.app.hack_brain.extension.nullToBlank
 import kotlinx.android.parcel.Parcelize
 import org.jetbrains.annotations.NotNull
 
 @Entity(tableName = "dict_en_vi")
+@Parcelize
 data class VocabularyEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") val id: Int,
@@ -21,4 +24,25 @@ data class VocabularyEntity(
     @ColumnInfo(name = "is_learn_av") var isLearnedEngVie: Int?,
     @ColumnInfo(name = "is_learn_at") var isLearnedSound: Int?,
     @ColumnInfo(name = "short_mean") var shortMean: String?
-)
+): Parcelable {
+    fun getTypeOfVoc(): String {
+        val type = meanings?.substring(0, 15).nullToBlank()
+        return when {
+            type.contains("động từ", ignoreCase = true) -> "(v)"
+            type.contains("danh từ", ignoreCase = true) -> "(n)"
+            type.contains("tính từ", ignoreCase = true) -> "(adj)"
+            type.contains("phó từ", ignoreCase = true) || meanings?.contains("trạng từ") == true -> "(adv)"
+            else -> "(n)"
+        }
+    }
+
+    fun getTypeColor(type: String): Int {
+        return when (type) {
+            "(v)" -> R.color.red
+            "(n)" -> R.color.green_text
+            "(adj)" -> R.color.violet
+            "(adv)" -> R.color.yellow
+            else -> R.color.green_text
+        }
+    }
+}

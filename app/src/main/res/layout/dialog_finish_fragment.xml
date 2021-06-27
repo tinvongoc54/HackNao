@@ -9,14 +9,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="XIN CHÚC MỪNG!"
-            android:textColor="@color/light_red"
-            android:textSize="@dimen/sp_20"
-            android:textStyle="bold"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivFinish"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_200"
+            android:src="@drawable/img_finish"
             app:layout_constraintBottom_toTopOf="@+id/tvPoint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -9,6 +9,7 @@ import com.app.hack_brain.databinding.DialogFinishFragmentBinding
 
 class FinishDialogFragment(
     private val result: Int,
+    private val numberQuestion: Int,
     private val onClickNext: () -> Unit,
     private val onClickAgain: () -> Unit
 ) : BaseDialogFragment<FinishDialogFragViewModel, DialogFinishFragmentBinding>(
@@ -23,9 +24,9 @@ class FinishDialogFragment(
 
     override fun initialize() {
         viewBinding.run {
-            tvPoint.text = String.format("$result/20")
+            tvPoint.text = String.format("$result/$numberQuestion")
             tvMessage.text =
-                if (result > (Constant.AMOUNT_VOC_AN_UNIT/2)) getString(R.string.text_result_pass) else getString(R.string.text_result_fail)
+                if (result >= (numberQuestion/2)) getString(R.string.text_result_pass) else getString(R.string.text_result_fail)
             btnNext.setOnClickListener {
                 onClickNext()
                 dismiss()
