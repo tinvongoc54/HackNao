@@ -13,12 +13,11 @@ import com.app.hack_brain.common.Constant
 import com.app.hack_brain.common.base.BaseFragment
 import com.app.hack_brain.data.local.entity.VocabularyEntity
 import com.app.hack_brain.databinding.FragmentCheckEngVieBinding
-import com.app.hack_brain.extension.gone
-import com.app.hack_brain.extension.nullToBlank
-import com.app.hack_brain.extension.show
+import com.app.hack_brain.extension.*
 import com.app.hack_brain.ui.check.dialog.FinishDialogFragment
 import com.app.hack_brain.ui.check.vie_eng.CheckVieEngFragment
 import com.app.hack_brain.ui.home.HomeActivity
+import com.google.gson.Gson
 import timber.log.Timber
 
 
@@ -41,7 +40,15 @@ class CheckEngVieFragment :
 
     @SuppressLint("ClickableViewAccessibility")
     override fun initialize() {
-        viewModel.getVocabularyOfUnit(args.unit)
+        if (args.unit != 0) {
+            Timber.i("unit: ${args.unit}")
+            viewModel.getVocabularyOfUnit(args.unit)
+        } else {
+            args.favouriteList?.forEach {
+                Timber.i("voc: " + it.word)
+            }
+            initData(args.favouriteList?.toMutableList() ?: mutableListOf())
+        }
 
         viewBinding.run {
             sbProgress.setOnTouchListener { _, _ -> true }
@@ -54,6 +61,11 @@ class CheckEngVieFragment :
             ivPronounce.setOnClickListener {
                 openAudio("${checkWord.word}")
             }
+
+            cbFavourite.setOnClickListener {
+                it.preventDoubleClick()
+                viewModel.setFavouriteVoc(checkWord.id, !checkWord.isFavourite.isTrue())
+            }
         }
     }
 
@@ -61,14 +73,10 @@ class CheckEngVieFragment :
         super.onSubscribeObserver()
         viewModel.run {
             vocabularyListEvent.observe(viewLifecycleOwner, Observer {
-                wordList.addAll(it.toMutableList())
-                checkedList.addAll(wordList)
-                viewBinding.sbProgress.max = wordList.size
-                initRecyclerAdapter()
-                showQuestion()
+                initData(it.toMutableList())
             })
 
-            updateProgressSuccess.observe(viewLifecycleOwner, Observer {
+            updateProgressEvent.observe(viewLifecycleOwner, Observer {
                 if (it) activity?.onBackPressed()
             })
         }
@@ -80,6 +88,15 @@ class CheckEngVieFragment :
             mediaPlayer?.stop()
             mediaPlayer?.release()
         }
+    }
+
+    private fun initData(vocList: MutableList<VocabularyEntity>) {
+        wordList.clear()
+        wordList.addAll(vocList)
+        checkedList.addAll(wordList)
+        viewBinding.sbProgress.max = wordList.size
+        initRecyclerAdapter()
+        showQuestion()
     }
 
     private fun initRecyclerAdapter() {
@@ -106,6 +123,7 @@ class CheckEngVieFragment :
             viewBinding.run {
                 llResult.gone()
                 btnNext.gone()
+                cbFavourite.isChecked = checkWord.isFavourite.isTrue()
                 tvWord.text = checkWord.word
                 tvSpelling.text = checkWord.phonetic
                 Timber.i("check word: ${checkWord.word}")
@@ -162,6 +180,7 @@ class CheckEngVieFragment :
             if (sbProgress.progress == sbProgress.max) {
                 FinishDialogFragment(
                     result = point / 10,
+                    numberQuestion = wordList.size,
                     onClickNext = {
                         viewModel.updateProcess(
                             args.unit,
@@ -181,7 +200,6 @@ class CheckEngVieFragment :
     }
 
     private fun openAudio(audio: String) {
-        Timber.i(audio)
         mediaPlayer = MediaPlayer()
         try {
             val activity = activity ?: return

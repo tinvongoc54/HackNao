@@ -54,17 +54,17 @@ class CheckFragment : BaseFragment<CheckFragViewModel, FragmentCheckBinding>(Che
     }
 
     private fun navigateToDetailCheckEngVieUnit(unit: Int) {
-        val action = CheckFragmentDirections.actionToCheckEngVieFragment(unit)
+        val action = CheckFragmentDirections.actionToCheckEngVieFragment(unit, null)
         navigateWithSlideAnim(action)
     }
 
     private fun navigateToDetailCheckVieEngUnit(unit: Int) {
-        val action = CheckFragmentDirections.actionToCheckVieEngFragment(unit)
+        val action = CheckFragmentDirections.actionToCheckVieEngFragment(unit, null)
         navigateWithSlideAnim(action)
     }
 
     private fun navigateToDetailCheckSoundUnit(unit: Int) {
-        val action = CheckFragmentDirections.actionToCheckSoundFragment(unit)
+        val action = CheckFragmentDirections.actionToCheckSoundFragment(unit, null)
         navigateWithSlideAnim(action)
     }
 }

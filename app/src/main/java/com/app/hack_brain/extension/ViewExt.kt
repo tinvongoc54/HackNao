@@ -101,3 +101,8 @@ inline fun View.debounceClick(timePrevent: Int = 1000, crossinline block: (View)
         block(it)
     }
 }
+
+fun View.preventDoubleClick(timeDisable: Int = 500) {
+    isEnabled = false
+    postDelayed({ isEnabled = true }, timeDisable.toLong())
+}

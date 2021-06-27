@@ -7,7 +7,7 @@ import com.app.hack_brain.utils.liveData.SingleLiveData
 
 class CheckEngVieFragViewModel(private val dbRepository: DatabaseRepository) : BaseViewModel() {
     val vocabularyListEvent = SingleLiveData<List<VocabularyEntity>>()
-    val updateProgressSuccess = SingleLiveData<Boolean>()
+    val updateProgressEvent = SingleLiveData<Boolean>()
 
     fun getVocabularyOfUnit(unit: Int) {
         viewModelScope(vocabularyListEvent) {
@@ -18,10 +18,16 @@ class CheckEngVieFragViewModel(private val dbRepository: DatabaseRepository) : B
     fun updateProcess(unit: Int, progress: Int) {
         viewModelScope {
             dbRepository.updateEngVieProgress(unit, progress).executeIfSucceed {
-                updateProgressSuccess.value = true
+                updateProgressEvent.value = true
             }.executeIfFailed {
-                updateProgressSuccess.value = false
+                updateProgressEvent.value = false
             }
+        }
+    }
+
+    fun setFavouriteVoc(id: Int, isFavourite: Boolean) {
+        viewModelScope(isShowLoading = false) {
+            dbRepository.setFavouriteVoc(id, isFavourite)
         }
     }
 }

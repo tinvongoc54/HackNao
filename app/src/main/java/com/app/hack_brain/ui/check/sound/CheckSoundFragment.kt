@@ -41,7 +41,11 @@ class CheckSoundFragment :
 
     @SuppressLint("ClickableViewAccessibility")
     override fun initialize() {
-        viewModel.getVocabularyOfUnit(args.unit)
+        if (args.unit != 0) {
+            viewModel.getVocabularyOfUnit(args.unit)
+        } else {
+            initData(args.favouriteList?.toMutableList() ?: mutableListOf())
+        }
 
         viewBinding.run {
             sbProgress.setOnTouchListener { _, _ -> true }
@@ -61,11 +65,7 @@ class CheckSoundFragment :
         super.onSubscribeObserver()
         viewModel.run {
             vocabularyListEvent.observe(viewLifecycleOwner, Observer {
-                wordList.addAll(it.toMutableList())
-                checkedList.addAll(wordList)
-                viewBinding.sbProgress.max = wordList.size
-                initRecyclerAdapter()
-                showQuestion()
+                initData(it.toMutableList())
             })
 
             updateProgressSuccess.observe(viewLifecycleOwner, Observer {
@@ -80,6 +80,14 @@ class CheckSoundFragment :
             mediaPlayer?.stop()
             mediaPlayer?.release()
         }
+    }
+
+    private fun initData(vocList: MutableList<VocabularyEntity>) {
+        wordList.addAll(vocList)
+        checkedList.addAll(wordList)
+        viewBinding.sbProgress.max = wordList.size
+        initRecyclerAdapter()
+        showQuestion()
     }
 
     private fun initRecyclerAdapter() {
@@ -159,6 +167,7 @@ class CheckSoundFragment :
             if (sbProgress.progress == sbProgress.max) {
                 FinishDialogFragment(
                     result = point / 10,
+                    numberQuestion = wordList.size,
                     onClickNext = {
                         viewModel.updateProcess(
                             args.unit,

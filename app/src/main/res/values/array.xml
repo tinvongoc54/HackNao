@@ -30,4 +30,10 @@
         <item>20 phút</item>
         <item>30 phút</item>
     </string-array>
+
+    <string-array name="check_option">
+        <item>Anh - Việt</item>
+        <item>Việt - Anh</item>
+        <item>Âm thanh</item>
+    </string-array>
 </resources>

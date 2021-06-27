@@ -84,6 +84,10 @@
         <argument
             android:name="unit"
             app:argType="integer" />
+        <argument
+            android:name="favouriteList"
+            app:argType="com.app.hack_brain.data.local.entity.VocabularyEntity[]"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/checkVieEngFragment"
@@ -93,6 +97,10 @@
         <argument
             android:name="unit"
             app:argType="integer" />
+        <argument
+            android:name="favouriteList"
+            app:argType="com.app.hack_brain.data.local.entity.VocabularyEntity[]"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/checkSoundFragment"
@@ -102,6 +110,10 @@
         <argument
             android:name="unit"
             app:argType="integer" />
+        <argument
+            android:name="favouriteList"
+            app:argType="com.app.hack_brain.data.local.entity.VocabularyEntity[]"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/favouriteFragment"
@@ -116,7 +128,7 @@
             app:destination="@+id/checkVieEngFragment" />
         <action
             android:id="@+id/actionFavouriteToCheckSoundFragment"
-            app:destination="@+id/checkSoundFragment"/>
+            app:destination="@+id/checkSoundFragment" />
     </fragment>
     <fragment
         android:id="@+id/timerFragment"

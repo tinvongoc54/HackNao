@@ -40,7 +40,11 @@ class CheckVieEngFragment :
 
     @SuppressLint("ClickableViewAccessibility")
     override fun initialize() {
-        viewModel.getVocabularyOfUnit(args.unit)
+        if (args.unit != 0) {
+            viewModel.getVocabularyOfUnit(args.unit)
+        } else {
+            initData(args.favouriteList?.toMutableList() ?: mutableListOf())
+        }
 
         viewBinding.run {
             sbProgress.setOnTouchListener { _, _ -> true }
@@ -66,11 +70,7 @@ class CheckVieEngFragment :
         super.onSubscribeObserver()
         viewModel.run {
             vocabularyListEvent.observe(viewLifecycleOwner, Observer {
-                wordList.addAll(it.toMutableList())
-                checkedList.addAll(wordList)
-                viewBinding.sbProgress.max = wordList.size
-                initSuggestCharacter()
-                showQuestion()
+                initData(it.toMutableList())
             })
 
             updateProgressSuccess.observe(viewLifecycleOwner, Observer {
@@ -85,6 +85,14 @@ class CheckVieEngFragment :
             mediaPlayer?.stop()
             mediaPlayer?.release()
         }
+    }
+
+    private fun initData(vocList: MutableList<VocabularyEntity>) {
+        wordList.addAll(vocList)
+        checkedList.addAll(wordList)
+        viewBinding.sbProgress.max = wordList.size
+        initSuggestCharacter()
+        showQuestion()
     }
 
     private fun initSuggestCharacter() {
@@ -149,6 +157,7 @@ class CheckVieEngFragment :
             if (sbProgress.progress == sbProgress.max) {
                 FinishDialogFragment(
                     result = point / 10,
+                    numberQuestion = wordList.size,
                     onClickNext = {
                         viewModel.updateProcess(args.unit, point * 10 / Constant.AMOUNT_VOC_AN_UNIT)
                     },
