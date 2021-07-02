@@ -2,11 +2,7 @@ package com.app.hack_brain.app
 
 import android.app.Application
 import com.app.hack_brain.BuildConfig
-import com.app.hack_brain.di.appModule
-import com.app.hack_brain.di.localModule
-import com.app.hack_brain.di.remoteModule
-import com.app.hack_brain.di.repositoryModule
-import com.app.hack_brain.di.viewModelModule
+import com.app.hack_brain.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
@@ -26,7 +22,7 @@ class App : Application() {
     private fun configKoin() {
         startKoin {
             androidContext(this@App)
-            modules(listOf(appModule, remoteModule, localModule, repositoryModule, viewModelModule))
+            modules(listOf(appModule, remoteModule, localModule, repositoryModule, viewModelModule, databaseModule))
         }
     }
 
