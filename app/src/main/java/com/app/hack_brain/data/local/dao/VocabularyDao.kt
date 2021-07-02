@@ -23,4 +23,7 @@ interface VocabularyDao {
     @Insert
     fun insertVocabulary(vocabulary: VocabularyEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertVocabularyList(vocabulary: List<VocabularyEntity>)
+
 }
