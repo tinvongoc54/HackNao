@@ -12,7 +12,7 @@ import kotlinx.android.parcel.Parcelize
 data class TimerEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") val id: Int?,
-    @ColumnInfo(name = "time") var time: String?,
+    @ColumnInfo(name = "time") var time: Long?,
     @ColumnInfo(name = "laplai") var repeat: String?,
     @ColumnInfo(name = "tuvung") var vocabulary: String?,
     @ColumnInfo(name = "type") var type: Int?,
