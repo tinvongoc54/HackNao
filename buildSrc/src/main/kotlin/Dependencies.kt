@@ -111,6 +111,8 @@ object Versions {
     const val google_truth = "1.0.1"
 
     const val sqlite = "2.0.1"
+
+    const val worker = "2.5.0"
 }
 
 /**
@@ -212,6 +214,11 @@ object Dependencies {
 
     //sqlite
     const val sqlite = "com.readystatesoftware.sqliteasset:sqliteassethelper:${Versions.sqlite}"
+
+    //worker
+    const val worker = "androidx.work:work-runtime-ktx:${Versions.worker}"
+
+    const val avoid_duplicate_listenable_future = "com.google.guava:guava:27.0.1-android"
 }
 
 fun DependencyHandler.implementLocalUnitTest() {

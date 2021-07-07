@@ -1,7 +1,8 @@
-package com.app.hack_brain.data.local.db
+package com.app.hack_brain.repository
 
 import com.app.hack_brain.common.Constant
 import com.app.hack_brain.common.base.BaseRepository
+import com.app.hack_brain.data.local.db.AppDatabase
 import com.app.hack_brain.data.local.entity.UnitEntity
 import com.app.hack_brain.data.local.entity.VocabularyEntity
 import com.app.hack_brain.extension.toInt

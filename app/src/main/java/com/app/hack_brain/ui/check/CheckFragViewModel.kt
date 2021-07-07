@@ -1,13 +1,10 @@
 package com.app.hack_brain.ui.check
 
-import androidx.lifecycle.MutableLiveData
 import com.app.hack_brain.common.base.BaseViewModel
-import com.app.hack_brain.data.local.db.DatabaseRepository
+import com.app.hack_brain.repository.DatabaseRepository
 import com.app.hack_brain.data.local.entity.UnitEntity
 import com.app.hack_brain.data.local.entity.VocabularyEntity
-import com.app.hack_brain.utils.DataResult
 import com.app.hack_brain.utils.liveData.SingleLiveData
-import timber.log.Timber
 
 class CheckFragViewModel(private val dbRepository: DatabaseRepository) : BaseViewModel() {
 

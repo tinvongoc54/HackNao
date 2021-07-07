@@ -7,16 +7,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.onNavDestinationSelected
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.app.hack_brain.R
 import com.app.hack_brain.common.base.BaseActivity
 import com.app.hack_brain.databinding.ActivityHomeBinding
 import com.app.hack_brain.extension.gone
 import com.app.hack_brain.extension.show
-import com.app.hack_brain.ui.check.eng_vie.CheckEngVieFragmentArgs
-import com.app.hack_brain.ui.check.vie_eng.CheckVieEngFragmentArgs
 import com.app.hack_brain.ui.short_story.detail.DetailShortStoryFragmentArgs
-import timber.log.Timber
 
 /**
  * Copyright © 2020 Neolab VN.

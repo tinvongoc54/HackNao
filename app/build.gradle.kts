@@ -176,6 +176,11 @@ dependencies {
     //SqliteHelper
     implementation(Dependencies.sqlite)
 
+    //Worker
+    implementation(Dependencies.worker)
+
+    implementation(Dependencies.avoid_duplicate_listenable_future)
+
     // Unit Test
     implementLocalUnitTest()
     implementInstrumentationUnitTest()
