@@ -31,6 +31,7 @@ class FavouriteFragment : BaseFragment<FavouriteFragViewModel, FragmentFavourite
     }
 
     override fun initialize() {
+        initFavouriteAdapter()
         viewModel.getFavouriteVocList()
 
         viewBinding.btnCheck.setOnClickListener {
@@ -55,7 +56,7 @@ class FavouriteFragment : BaseFragment<FavouriteFragViewModel, FragmentFavourite
                 wordList.addAll(it.toMutableList())
                 viewBinding.tvResult.gone(it.isNotEmpty())
                 viewBinding.btnCheck.gone(it.isEmpty())
-                initFavouriteAdapter(it.toMutableList())
+                (viewBinding.rvFavourite.adapter as FavouriteAdapter).replaceData(it.toMutableList())
             })
         }
     }
@@ -69,7 +70,7 @@ class FavouriteFragment : BaseFragment<FavouriteFragViewModel, FragmentFavourite
         }
     }
 
-    private fun initFavouriteAdapter(list: List<VocabularyEntity>) {
+    private fun initFavouriteAdapter() {
         viewBinding.run {
             rvFavourite.apply {
                 layoutManager = LinearLayoutManager(context)
@@ -82,9 +83,6 @@ class FavouriteFragment : BaseFragment<FavouriteFragViewModel, FragmentFavourite
                         openAudio(it)
                     }
                 )
-                with(adapter as FavouriteAdapter) {
-                    replaceData(list.toMutableList())
-                }
             }
         }
     }

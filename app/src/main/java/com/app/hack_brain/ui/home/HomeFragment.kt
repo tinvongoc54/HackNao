@@ -1,29 +1,34 @@
 package com.app.hack_brain.ui.home
 
 import android.annotation.SuppressLint
-import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.work.WorkManager
 import com.app.hack_brain.BuildConfig
 import com.app.hack_brain.R
+import com.app.hack_brain.common.Constant
 import com.app.hack_brain.common.base.BaseFragment
+import com.app.hack_brain.data.local.entity.TargetEntity
 import com.app.hack_brain.data.local.entity.VocabularyEntity
 import com.app.hack_brain.databinding.FragmentHomeBinding
-import com.app.hack_brain.ui.timer.receiver.AlarmReceiver
+import com.app.hack_brain.extension.convertTimestampToDate
+import com.app.hack_brain.ui.home.adapter.EverydayVocAdapter
+import com.app.hack_brain.ui.home.adapter.TargetAdapter
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
+import com.google.gson.Gson
 import timber.log.Timber
 import java.util.*
 
@@ -33,10 +38,12 @@ class HomeFragment :
 
     private lateinit var reviewManager: ReviewManager
     private var reviewInfo: ReviewInfo? = null
+    private var unitNumber = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        createReviewApp()
+        viewModel.getTargetUnit()
         viewModel.getRandomVoc()
     }
 
@@ -52,13 +59,23 @@ class HomeFragment :
     override fun initialize() {
 //        createNotificationChannel()
         initClickEvent()
+        setupRVVocabulary()
+        setupRVTarget()
+        viewBinding.tvChooseTarget.text = String.format("%s Day / Unit", viewModel.getUnitNumber())
     }
 
     override fun onSubscribeObserver() {
         super.onSubscribeObserver()
         viewModel.run {
             randomVoc.observe(viewLifecycleOwner, Observer {
-                setupRVVocabulary(it)
+                (viewBinding.rvEverydayVocabulary.adapter as EverydayVocAdapter).replaceData(it.toMutableList())
+            })
+            targetList.observe(viewLifecycleOwner, Observer {
+                (viewBinding.rvTarget.adapter as TargetAdapter).replaceData(it.toMutableList())
+            })
+            target.observe(viewLifecycleOwner, Observer {
+                Timber.i("target: " + Gson().toJson(it))
+                changeTarget(it.id ?: 1, unitNumber)
             })
         }
     }
@@ -94,7 +111,10 @@ class HomeFragment :
             btnReview.setOnClickListener {
 //                reviewApp()
             }
-            ivLogo.setOnClickListener {
+            tvChooseTarget.setOnClickListener {
+                chooseTargetForDay()
+            }
+//            ivLogo.setOnClickListener {
 //                val constraint = Constraints.Builder()
 //                    .setRequiresDeviceIdle(true)
 //                    .setRequiresCharging(true)
@@ -103,16 +123,16 @@ class HomeFragment :
 //                    .Builder(AlarmOpenAppWorker::class.java, 10, TimeUnit.MILLISECONDS)
 //                    .build()
 //                WorkManager.getInstance(requireContext()).enqueue(request)
-                val calendar = Calendar.getInstance().apply {
-                    set(Calendar.HOUR_OF_DAY, 19)
-                    set(Calendar.MINUTE, 20)
-                }
-
-                val intent = Intent(requireContext(), AlarmReceiver::class.java)
-                val pendingIntent = PendingIntent.getBroadcast(requireContext(), 0, intent, 0)
-                val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
-            }
+//                val calendar = Calendar.getInstance().apply {
+//                    set(Calendar.HOUR_OF_DAY, 19)
+//                    set(Calendar.MINUTE, 20)
+//                }
+//
+//                val intent = Intent(requireContext(), AlarmReceiver::class.java)
+//                val pendingIntent = PendingIntent.getBroadcast(requireContext(), 0, intent, 0)
+//                val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+//                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+//            }
         }
     }
 
@@ -179,14 +199,38 @@ class HomeFragment :
         }
     }
 
-    private fun setupRVVocabulary(list: List<VocabularyEntity>) {
+    private fun setupRVVocabulary() {
         viewBinding.rvEverydayVocabulary.apply {
             layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = EverydayVocAdapter()
         }
-        (viewBinding.rvEverydayVocabulary.adapter as EverydayVocAdapter).replaceData(list.toMutableList())
     }
+
+    private fun setupRVTarget() {
+        viewBinding.rvTarget.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = TargetAdapter()
+        }
+    }
+
+    private fun chooseTargetForDay() {
+        val options = resources.getStringArray(R.array.unit_a_day)
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Chọn số unit")
+            .setSingleChoiceItems(options, 0) { _, which ->
+                unitNumber = options[which].toInt()
+            }
+            .setNegativeButton("Cancel", null)
+            .setPositiveButton("OK") { _, _ ->
+                viewBinding.tvChooseTarget.text = String.format("%s Unit / Day", unitNumber)
+                viewModel.setUnitNumber(unitNumber)
+                viewModel.getCurrentTarget()
+            }
+            .show()
+    }
+
+
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

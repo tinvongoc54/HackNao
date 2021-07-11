@@ -8,12 +8,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SplashActViewModel(private val dbRepository: DatabaseRepository) : BaseViewModel() {
-    var validToken = SingleLiveData<Boolean>()
+    var delaySplash = SingleLiveData<Boolean>()
 
-    fun refreshToken() {
+    fun delay() {
         viewModelScope.launch {
+            dbRepository.getTargetList()
             delay(1500)
-            validToken.value = true
+            delaySplash.value = true
         }
     }
 }

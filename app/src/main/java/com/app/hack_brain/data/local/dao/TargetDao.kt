@@ -8,6 +8,12 @@ interface TargetDao {
     @Query("SELECT * FROM muctieu")
     fun getAll(): List<TargetEntity>
 
+    @Query("SELECT * FROM muctieu WHERE (date = :date AND status = 1) LIMIT 1")
+    fun getTargetEntity(date: String): TargetEntity
+
+    @Query("SELECT * FROM muctieu LIMIT 1")
+    fun getFirstTarget(): TargetEntity
+
     @Insert
     fun insertTarget(vararg target: TargetEntity)
 
@@ -16,4 +22,7 @@ interface TargetDao {
 
     @Delete
     fun deleteTarget(target: TargetEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertTargetList(target: List<TargetEntity>)
 }

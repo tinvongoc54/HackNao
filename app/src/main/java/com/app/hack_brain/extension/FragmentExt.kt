@@ -38,7 +38,7 @@ val options = navOptions {
 fun Fragment.navigateWithSlideAnim(action: NavDirections) {
 
 //    findNavController(this).navigate(action, options)
-    findNavController().navigate(action)
+    findNavController().navigate(action, options)
 }
 
 fun Fragment.navigateWithSlideAnim(actionId: Int) {

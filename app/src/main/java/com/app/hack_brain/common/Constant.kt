@@ -6,6 +6,7 @@ package com.app.hack_brain.common
  */
 object Constant {
     const val AMOUNT_VOC_AN_UNIT = 20
+    const val TOTAL_UNIT = 152
     const val CORRECT = "answer_correct"
     const val FAILED = "answer_failed"
 }

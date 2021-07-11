@@ -13,12 +13,12 @@ class SplashActivity : BaseActivity<SplashActViewModel, ActivitySplashBinding>(S
     }
 
     override fun initialize() {
-        viewModel.refreshToken()
+        viewModel.delay()
     }
 
     override fun onSubscribeObserver() {
         super.onSubscribeObserver()
-        viewModel.validToken.observe(this, Observer {
+        viewModel.delaySplash.observe(this, Observer {
             startActivity(
                 Intent(
                     this@SplashActivity,

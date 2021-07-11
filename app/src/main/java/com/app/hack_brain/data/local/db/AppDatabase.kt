@@ -15,6 +15,9 @@ import com.app.hack_brain.data.local.entity.TargetEntity
 import com.app.hack_brain.data.local.entity.TimerEntity
 import com.app.hack_brain.data.local.entity.UnitEntity
 import com.app.hack_brain.data.local.entity.VocabularyEntity
+import com.app.hack_brain.database.DatabaseAccess
+import com.app.hack_brain.database.ioThread
+import com.app.hack_brain.worker.AddTargetWorker
 import com.app.hack_brain.worker.AddUnitWorker
 import com.app.hack_brain.worker.AddVocabularyWorker
 
@@ -49,9 +52,10 @@ abstract class AppDatabase : RoomDatabase() {
                 .addCallback(object : Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
-                        val dataVocabulary = OneTimeWorkRequestBuilder<AddVocabularyWorker>().build()
-                        val dataUnit = OneTimeWorkRequestBuilder<AddUnitWorker>().build()
-                        WorkManager.getInstance(context).enqueue(listOf(dataVocabulary, dataUnit))
+                        val dataVocabulary = OneTimeWorkRequestBuilder<AddVocabularyWorker>().addTag("vocabulary").build()
+                        val dataUnit = OneTimeWorkRequestBuilder<AddUnitWorker>().addTag("unit").build()
+                        val dataTarget = OneTimeWorkRequestBuilder<AddTargetWorker>().addTag("target").build()
+                        WorkManager.getInstance(context).enqueue(listOf(dataVocabulary, dataTarget, dataUnit))
 //                        ioThread {
 //                            val listUnit = DatabaseAccess.getInstance(context).getUnitList()
 //                            getInstance(context).unitDao().insertUnitList(listUnit)
@@ -59,6 +63,10 @@ abstract class AppDatabase : RoomDatabase() {
 //                        ioThread {
 //                            val listVoc = DatabaseAccess.getInstance(context).getVocabularyList()
 //                            getInstance(context).vocabularyDao().insertVocabularyList(listVoc)
+//                        }
+//                        ioThread {
+//                            val listTarget = DatabaseAccess.getInstance(context).getTargetList()
+//                            getInstance(context).targetDao().insertTargetList(listTarget)
 //                        }
                     }
                 })
