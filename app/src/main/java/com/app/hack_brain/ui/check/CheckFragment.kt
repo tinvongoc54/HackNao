@@ -10,6 +10,7 @@ import com.app.hack_brain.databinding.FragmentCheckBinding
 import com.app.hack_brain.extension.navigateWithSlideAnim
 import com.app.hack_brain.extension.nullToZero
 import com.app.hack_brain.model.uimodel.Unit
+import com.google.android.material.transition.MaterialFadeThrough
 
 class CheckFragment : BaseFragment<CheckFragViewModel, FragmentCheckBinding>(CheckFragViewModel::class) {
     override fun inflateViewBinding(
@@ -21,18 +22,19 @@ class CheckFragment : BaseFragment<CheckFragViewModel, FragmentCheckBinding>(Che
 
     override fun initialize() {
         viewModel.getUnitList()
+        initUnitAdapter()
     }
 
     override fun onSubscribeObserver() {
         super.onSubscribeObserver()
         viewModel.run {
             unitListEvent.observe(viewLifecycleOwner, Observer{
-                initUnitAdapter(it.toMutableList())
+                (viewBinding.rvUnit.adapter as UnitAdapter).replaceData(it.toMutableList())
             })
         }
     }
 
-    private fun initUnitAdapter(list: MutableList<UnitEntity>) {
+    private fun initUnitAdapter() {
         viewBinding.rvUnit.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = UnitAdapter(
@@ -47,9 +49,6 @@ class CheckFragment : BaseFragment<CheckFragViewModel, FragmentCheckBinding>(Che
                     navigateToDetailCheckSoundUnit(it.unit.nullToZero())
                 }
             )
-            with(adapter as UnitAdapter) {
-                replaceData(list)
-            }
         }
     }
 

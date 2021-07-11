@@ -19,6 +19,10 @@ fun View.show(isShow: Boolean = true) {
     visibility = if (isShow) View.VISIBLE else View.INVISIBLE
 }
 
+fun View.showView(isShow: Boolean = true) {
+    visibility = if (isShow) View.VISIBLE else View.GONE
+}
+
 fun View.show() {
     visibility = View.VISIBLE
 }

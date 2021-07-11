@@ -3,6 +3,7 @@ package com.app.hack_brain.repository
 import com.app.hack_brain.common.Constant
 import com.app.hack_brain.common.base.BaseRepository
 import com.app.hack_brain.data.local.db.AppDatabase
+import com.app.hack_brain.data.local.entity.TargetEntity
 import com.app.hack_brain.data.local.entity.UnitEntity
 import com.app.hack_brain.data.local.entity.VocabularyEntity
 import com.app.hack_brain.extension.toInt
@@ -62,6 +63,30 @@ class DefaultDatabaseRepository(private val appDatabase: AppDatabase) : Database
             appDatabase.unitDao().updateSoundProgress(unit, progress)
         }
     }
+
+    override suspend fun addTarget(target: List<TargetEntity>): DataResult<Any> {
+        return withResultContext {
+            appDatabase.targetDao().insertTargetList(target)
+        }
+    }
+
+    override suspend fun getTargetList(): DataResult<List<TargetEntity>> {
+        return withResultContext {
+            appDatabase.targetDao().getAll()
+        }
+    }
+
+    override suspend fun getTarget(date: String): DataResult<TargetEntity> {
+        return withResultContext {
+            appDatabase.targetDao().getTargetEntity(date)
+        }
+    }
+
+    override suspend fun updateTarget(target: TargetEntity): DataResult<Unit> {
+        return withResultContext {
+            appDatabase.targetDao().updateTarget(target)
+        }
+    }
 }
 
 interface DatabaseRepository {
@@ -75,4 +100,9 @@ interface DatabaseRepository {
     suspend fun updateEngVieProgress(unit: Int, progress: Int): DataResult<Unit>
     suspend fun updateVieEngProgress(unit: Int, progress: Int): DataResult<Unit>
     suspend fun updateSoundProgress(unit: Int, progress: Int): DataResult<Unit>
+
+    suspend fun addTarget(target: List<TargetEntity>): DataResult<Any>
+    suspend fun getTargetList(): DataResult<List<TargetEntity>>
+    suspend fun getTarget(date: String): DataResult<TargetEntity>
+    suspend fun updateTarget(target: TargetEntity): DataResult<Unit>
 }

@@ -20,7 +20,7 @@ object Versions {
 
     const val compile_sdk_version = 29
     const val build_tools_version = "29.0.2"
-    const val min_sdk_version = 21
+    const val min_sdk_version = 23
     const val target_sdk_version = 29
 
     // Release notes https://developer.android.com/jetpack/androidx/releases/appcompat

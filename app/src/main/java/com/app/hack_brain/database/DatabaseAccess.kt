@@ -4,8 +4,12 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.app.hack_brain.data.local.entity.TargetEntity
 import com.app.hack_brain.data.local.entity.UnitEntity
 import com.app.hack_brain.data.local.entity.VocabularyEntity
+import com.app.hack_brain.extension.convertTimestampToDate
+import timber.log.Timber
+import java.util.*
 
 class DatabaseAccess(context: Context) {
     private var openHelper: SQLiteOpenHelper = DatabaseOpenHelper(context)
@@ -74,6 +78,31 @@ class DatabaseAccess(context: Context) {
                 isLearnedSound = cursor.getInt(8),
                 shortMean = cursor.getString(9)
             )
+            list.add(voc)
+            cursor.moveToNext()
+        }
+        cursor.close()
+        return list
+    }
+
+    fun getTargetList(): List<TargetEntity> {
+        database = openHelper.readableDatabase
+        val list = mutableListOf<TargetEntity>()
+        val cursor: Cursor = database!!.rawQuery(
+            "SELECT * FROM 'muctieu' ORDER BY id",
+            null
+        )
+        cursor.moveToFirst()
+        val today = Calendar.getInstance()
+        while (!cursor.isAfterLast) {
+            val voc = TargetEntity(
+                id = cursor.getInt(0),
+                unit = cursor.getInt(1),
+                date = convertTimestampToDate(today.timeInMillis),
+                status = 1
+            )
+            Timber.i("" + cursor.getInt(0))
+            today.add(Calendar.DATE, 1)
             list.add(voc)
             cursor.moveToNext()
         }

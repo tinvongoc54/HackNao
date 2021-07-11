@@ -23,4 +23,5 @@
     <color name="blue_light">#335EA6</color>
     <color name="violet">#673AB7</color>
     <color name="yellow">#FFEB3B</color>
+    <color name="yellow_warning">#F5D126</color>
 </resources>

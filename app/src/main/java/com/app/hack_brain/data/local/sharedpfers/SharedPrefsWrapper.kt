@@ -29,7 +29,7 @@ class SharedPrefsWrapper(val sharedPrefs: SharedPreferences, val gson: Gson) {
             String::class -> sharedPrefs.getString(key, "") as T
             Boolean::class -> sharedPrefs.getBoolean(key, false) as T
             Float::class -> sharedPrefs.getFloat(key, 0f) as T
-            Int::class -> sharedPrefs.getInt(key, 0) as T
+            Int::class -> sharedPrefs.getInt(key, 1) as T
             Long::class -> sharedPrefs.getLong(key, 0L) as T
             else -> gson.fromJson(sharedPrefs.getString(key, ""), T::class.java)
         }
