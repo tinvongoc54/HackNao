@@ -2,7 +2,6 @@ package com.app.hack_brain.extension
 
 import android.R
 import android.app.Activity
-import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
@@ -38,7 +37,7 @@ val options = navOptions {
 fun Fragment.navigateWithSlideAnim(action: NavDirections) {
 
 //    findNavController(this).navigate(action, options)
-    findNavController().navigate(action, options)
+    findNavController().navigate(action)
 }
 
 fun Fragment.navigateWithSlideAnim(actionId: Int) {

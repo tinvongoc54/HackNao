@@ -18,6 +18,7 @@ import com.app.hack_brain.data.local.entity.VocabularyEntity
 import com.app.hack_brain.database.DatabaseAccess
 import com.app.hack_brain.database.ioThread
 import com.app.hack_brain.worker.AddTargetWorker
+import com.app.hack_brain.worker.AddTimerPushWorker
 import com.app.hack_brain.worker.AddUnitWorker
 import com.app.hack_brain.worker.AddVocabularyWorker
 
@@ -55,7 +56,8 @@ abstract class AppDatabase : RoomDatabase() {
                         val dataVocabulary = OneTimeWorkRequestBuilder<AddVocabularyWorker>().addTag("vocabulary").build()
                         val dataUnit = OneTimeWorkRequestBuilder<AddUnitWorker>().addTag("unit").build()
                         val dataTarget = OneTimeWorkRequestBuilder<AddTargetWorker>().addTag("target").build()
-                        WorkManager.getInstance(context).enqueue(listOf(dataVocabulary, dataTarget, dataUnit))
+                        val dataTimer = OneTimeWorkRequestBuilder<AddTimerPushWorker>().addTag("timer").build()
+                        WorkManager.getInstance(context).enqueue(listOf(dataVocabulary, dataTarget, dataUnit, dataTimer))
 //                        ioThread {
 //                            val listUnit = DatabaseAccess.getInstance(context).getUnitList()
 //                            getInstance(context).unitDao().insertUnitList(listUnit)

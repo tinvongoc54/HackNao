@@ -4,15 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.hack_brain.common.base.BaseRecyclerViewAdapter
+import com.app.hack_brain.data.local.entity.TimerEntity
 import com.app.hack_brain.databinding.ItemTimerBinding
-import com.app.hack_brain.model.uimodel.Timer
+import java.util.*
 
 class TimerAdapter(
-    private val onClickItem: (timer: Timer) -> Unit,
-    private val onClickEditItem: (timer: Timer) -> Unit,
+    private val onClickItem: (timer: TimerEntity) -> Unit,
+    private val onClickEditItem: (timer: TimerEntity) -> Unit,
     private val onClickDeleteItem: (position: Int) -> Unit,
     private val onClickCheckBox: (position: Int) -> Unit
-) : BaseRecyclerViewAdapter<Timer, TimerAdapter.ItemTimerViewHolder>() {
+) : BaseRecyclerViewAdapter<TimerEntity, TimerAdapter.ItemTimerViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemTimerViewHolder {
         return ItemTimerViewHolder(
@@ -42,9 +43,9 @@ class TimerAdapter(
 
     inner class ItemTimerViewHolder(private val itemBinding: ItemTimerBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-        fun bindData(timer: Timer) {
+        fun bindData(timer: TimerEntity) {
             itemBinding.run {
-                tvTime.text = timer.time
+                tvTime.text = timer.getHour()
                 cbTurnOn.isChecked = timer.isTurnOn
                 tvCalendar.text = timer.getStringCalendar()
             }

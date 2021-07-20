@@ -12,7 +12,10 @@ import com.app.hack_brain.common.base.BaseActivity
 import com.app.hack_brain.databinding.ActivityHomeBinding
 import com.app.hack_brain.extension.gone
 import com.app.hack_brain.extension.show
+import com.app.hack_brain.service.AlarmService
 import com.app.hack_brain.ui.short_story.detail.DetailShortStoryFragmentArgs
+import com.app.hack_brain.ui.timer.dialog.ChooseTimerFragmentArgs
+import java.util.*
 
 /**
  * Copyright © 2020 Neolab VN.
@@ -22,6 +25,7 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
 
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
+    lateinit var alarmService: AlarmService
 
     override fun inflateViewBinding(inflater: LayoutInflater): ActivityHomeBinding {
         return ActivityHomeBinding.inflate(inflater)
@@ -36,6 +40,7 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
     }
 
     override fun initialize() {
+        alarmService = AlarmService(this)
         setSupportActionBar(viewBinding.toolbar)
         val navHost = supportFragmentManager.findFragmentById(R.id.navHostFragment)
         navHost?.let {
@@ -73,7 +78,7 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
                     R.id.timerFragment -> {
                         ivAdd.show()
                         tvDone.gone()
-                        tvTitle.text = getString(R.string.text_timer)
+                        tvTitle.text = "Hẹn giờ"
                     }
                     R.id.chooseTimerFragment -> {
                         ivAdd.gone()
@@ -115,6 +120,10 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
                             val fragArgs = DetailShortStoryFragmentArgs.fromBundle(args)
                             viewBinding.tvTitle.text = fragArgs.shortStory.title
                         }
+                        R.id.chooseTimerFragment -> {
+                            val fragArgs = ChooseTimerFragmentArgs.fromBundle(args)
+                            viewBinding.tvTitle.text = if (fragArgs.isOpenApp) "Hẹn giờ mở ứng dụng" else "Hẹn giờ nhắc từ vựng"
+                        }
                         else -> {
 
                         }
@@ -131,6 +140,19 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
 
     fun setPoint(point: Int) {
         viewBinding.tvPoint.text = String.format("$point điểm")
+    }
+
+    fun setAlarm(callback: (Long) -> Unit) {
+        Calendar.getInstance().apply {
+            val time = this.timeInMillis + 10000
+
+            this.set(Calendar.YEAR, 2021)
+            this.set(Calendar.MONTH, 7)
+            this.set(Calendar.DAY_OF_MONTH, 18)
+            this.set(Calendar.HOUR_OF_DAY, 12)
+            this.set(Calendar.MINUTE, 47)
+            callback(time)
+        }
     }
 }
 

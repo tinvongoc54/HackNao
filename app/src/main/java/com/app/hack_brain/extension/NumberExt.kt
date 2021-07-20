@@ -26,3 +26,5 @@ fun Double.formatMoney(): String {
 }
 
 fun Float.appendPercent() = "$this%"
+
+fun Int.format2Number() = "%02d".format(this)

@@ -9,7 +9,7 @@ interface TimerDao {
     fun getAll(): List<TimerEntity>
 
     @Insert
-    fun insertTimer(vararg timer: TimerEntity)
+    fun insertTimer(timer: List<TimerEntity>)
 
     @Update
     fun updateTimer(timer: TimerEntity)

@@ -31,12 +31,13 @@ abstract class BaseActivity<VM : BaseViewModel,
 
     protected abstract fun initialize()
 
-    protected val loadingDialog by lazy { LoadingDialog() }
+    private lateinit var loadingDialog: LoadingDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = inflateViewBinding(layoutInflater)
         setContentView(viewBinding.root)
+        loadingDialog = LoadingDialog()
         initialize()
         onSubscribeObserver()
     }

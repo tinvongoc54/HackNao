@@ -38,6 +38,7 @@
             tools:node="remove" />
 
         <receiver android:name=".ui.timer.receiver.AlarmReceiver"/>
+        <receiver android:name=".service.AlarmReceiver" />
     </application>
 
 </manifest>
