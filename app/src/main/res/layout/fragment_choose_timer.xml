@@ -66,12 +66,17 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTimeRepeat"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginBottom="@dimen/dp_5"
             android:text="Thứ Hai, Thứ Ba"
             android:textColor="@color/gray_black"
+            android:gravity="end"
             android:textSize="@dimen/sp_16"
+            app:layout_constraintStart_toEndOf="@+id/tvTitleRepeat"
             app:layout_constraintBottom_toBottomOf="@+id/tvTitleRepeat"
             app:layout_constraintEnd_toStartOf="@+id/ivNextRepeat"
             app:layout_constraintTop_toTopOf="@id/tvTitleRepeat" />
@@ -164,12 +169,17 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvVocabulary"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp_10"
+            android:singleLine="true"
+            android:gravity="end"
+            android:ellipsize="end"
             android:text="Unit 1"
             android:textColor="@color/gray_black"
             android:textSize="@dimen/sp_16"
+            app:layout_constraintStart_toEndOf="@+id/tvTitleVocabulary"
             app:layout_constraintBottom_toBottomOf="@+id/tvTitleVocabulary"
             app:layout_constraintEnd_toStartOf="@+id/ivNextVocabulary"
             app:layout_constraintTop_toTopOf="@id/tvTitleVocabulary" />

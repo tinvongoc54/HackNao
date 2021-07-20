@@ -149,6 +149,9 @@
         <argument
             android:name="isOpenApp"
             app:argType="boolean" />
+        <argument
+            android:name="timer"
+            app:argType="com.app.hack_brain.data.local.entity.TimerEntity" />
     </fragment>
     <fragment
         android:id="@+id/pronounceFragment"

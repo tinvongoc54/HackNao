@@ -6,16 +6,24 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.navArgs
 import com.app.hack_brain.R
+import com.app.hack_brain.common.Constant
 import com.app.hack_brain.common.base.BaseFragment
+import com.app.hack_brain.data.local.entity.TimerEntity
 import com.app.hack_brain.databinding.FragmentChooseTimerBinding
+import com.app.hack_brain.extension.format2Number
 import com.app.hack_brain.extension.gone
 import com.app.hack_brain.extension.showDialogChooseTime
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.transition.MaterialSharedAxis
+import timber.log.Timber
+import java.util.*
 
 class ChooseTimerFragment(
 ) : BaseFragment<ChooseTimerFragViewModel, FragmentChooseTimerBinding>(ChooseTimerFragViewModel::class) {
 
     private val args: ChooseTimerFragmentArgs by navArgs()
+    private lateinit var timer: TimerEntity
+    private var isOpenApp = false
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,
@@ -24,9 +32,17 @@ class ChooseTimerFragment(
         return FragmentChooseTimerBinding.inflate(inflater)
     }
 
+    override fun onStop() {
+        super.onStop()
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun initialize() {
-        val isOpenApp = args.isOpenApp
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        isOpenApp = args.isOpenApp
+        timer = args.timer
+        bindDataTimer()
 
         viewBinding.run {
             clNumberRepeat.gone(isOpenApp)
@@ -39,7 +55,7 @@ class ChooseTimerFragment(
                     time[0].trim().toInt(),
                     time[1].trim().toInt()
                 ) { hour, minute ->
-                    tvTime.text = String.format("%s:%s", hour, minute)
+                    tvTime.text = String.format("%s:%s", hour.format2Number(), minute.format2Number())
                 }
             }
 
@@ -61,57 +77,75 @@ class ChooseTimerFragment(
         }
     }
 
+    private fun bindDataTimer() {
+        viewBinding.run {
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = timer.time
+            tvTime.text = timer.getHour()
+            tvTimeRepeat.text = timer.getStringCalendar()
+
+            if (isOpenApp.not()) {
+                tvNumberRepeat.text = timer.getRepeatNumbers()
+                tvVocabulary.text = timer.getListVocabulary()
+                tvWait.text = timer.getWaitingTimeString()
+            }
+        }
+    }
+
     private fun chooseRepeat() {
         val multiItems = resources.getStringArray(R.array.repeat)
-        val checkedItems = booleanArrayOf(false, true, true, true, true, true, false)
-        var time = ""
+        val checkedItems = timer.getListBoolean().toBooleanArray()
 
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Hẹn giờ mở ứng dụng")
             .setMultiChoiceItems(multiItems, checkedItems) { dialog, which, checked ->
-                when (which) {
-                    0 -> if (checked) time += "Chủ Nhật, "
-                    1 -> if (checked) time += "Thứ Hai, "
-                    2 -> if (checked) time += "Thứ Ba, "
-                    3 -> if (checked) time += "Thứ Tư, "
-                    4 -> if (checked) time += "Thứ Năm, "
-                    5 -> if (checked) time += "Thứ Sáu, "
-                    6 -> if (checked) time += "Thứ Bảy, "
-                }
+                checkedItems[which] = checked
             }
             .setNegativeButton("Cancel", null)
             .setPositiveButton("OK") { _, _ ->
-                viewBinding.tvTimeRepeat.text = time
+                timer.repeat = convertToRepeatString(checkedItems.toList())
+                Timber.i("repeat: ${timer.repeat}")
+                viewBinding.tvTimeRepeat.text = timer.getStringCalendar()
             }
             .show()
     }
 
+    private fun convertToRepeatString(checkedItems: List<Boolean>): String {
+        val repeat = mutableListOf<String>()
+        checkedItems.forEachIndexed { index, bool ->
+            if (bool)
+                repeat.add((index + 1).toString())
+        }
+        return repeat.joinToString(",")
+    }
+
     private fun chooseVocabulary() {
-        val multiItems = mutableListOf("Yêu thích")
-        val checked = mutableListOf(true)
-        for (i in 1..150) {
-            multiItems.add("Unit $i")
-            checked.add(false)
+        val options = mutableListOf("Yêu thích")
+        var checked = timer.vocabulary ?: 0
+        var vocabulary = ""
+        for (i in 1..Constant.TOTAL_UNIT) {
+            options.add("Unit $i")
         }
 
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Chọn từ vựng từ danh sách")
-            .setMultiChoiceItems(multiItems.toTypedArray(), checked.toBooleanArray()) { dialog, which, checked ->
-                when (which) {
-
-                }
+            .setSingleChoiceItems(options.toTypedArray(), checked) { _, which ->
+                checked = which
+                vocabulary = options[which]
             }
             .setNegativeButton("Cancel", null)
             .setPositiveButton("OK") { _, _ ->
-
+                timer.vocabulary = checked
+                Timber.i("vocabulary: ${timer.vocabulary}")
+                viewBinding.tvVocabulary.text = vocabulary
             }
             .show()
     }
 
     private fun chooseNumberRepeat() {
         val options = resources.getStringArray(R.array.number_repeat)
-        val checked = 0
-        var numberRepeat = ""
+        val checked = timer.getPositionRepeatNumber()
+        var numberRepeat = options[checked]
 
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Chọn số lần lặp")
@@ -120,23 +154,30 @@ class ChooseTimerFragment(
             }
             .setNegativeButton("Cancel", null)
             .setPositiveButton("OK") { _, _ ->
+                timer.repeatNumber = numberRepeat[0].toString().toInt()
+                Timber.i("repeat number: ${timer.repeatNumber}")
                 viewBinding.tvNumberRepeat.text = numberRepeat
             }
             .show()
     }
 
     private fun chooseWaitingTime() {
+        val second = resources.getIntArray(R.array.waiting_time_second)
         val options = resources.getStringArray(R.array.waiting_time)
-        val checked = 0
+        var checked = second.indexOf(timer.waitingTime ?: 5)
+        Timber.i("waiting time before: ${timer.waitingTime}")
         var waitingTime = ""
 
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Chọn thời gian chờ")
             .setSingleChoiceItems(options, checked) { _, which ->
+                checked = which
                 waitingTime = options[which]
             }
             .setNegativeButton("Cancel", null)
-            .setPositiveButton("OK") { dialogInterface, _ ->
+            .setPositiveButton("OK") { _, _ ->
+                timer.waitingTime = second[checked]
+                Timber.i("waiting time: ${timer.waitingTime}")
                 viewBinding.tvWait.text = waitingTime
             }
             .show()

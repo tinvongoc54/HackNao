@@ -33,8 +33,6 @@ abstract class BaseFragment<VM : BaseViewModel,
     protected val viewBinding get() = _viewBinding!! // ktlint-disable
     abstract fun inflateViewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 
-    protected val loadingDialog by lazy { LoadingDialog() }
-
     protected abstract fun initialize()
 
     override fun onCreateView(
@@ -64,7 +62,7 @@ abstract class BaseFragment<VM : BaseViewModel,
     open fun onSubscribeObserver() {
         viewModel.run {
             isLoading.observeSingleEvent(viewLifecycleOwner) {
-                toggleLoading(it)
+                (activity as? BaseActivity<*,*>)?.toggleLoading(it)
             }
             exception.observeSingleEvent(viewLifecycleOwner) {
                 (activity as? BaseActivity<*, *>)?.handleDefaultApiError(it)
@@ -72,13 +70,13 @@ abstract class BaseFragment<VM : BaseViewModel,
         }
     }
 
-    open fun toggleLoading(show: Boolean) {
-        if (show) {
-            if (loadingDialog.isVisible.not()) {
-                loadingDialog.show(childFragmentManager, "LOADING_DIALOG")
-            }
-        } else {
-            loadingDialog.dismiss()
-        }
-    }
+//    open fun toggleLoading(show: Boolean) {
+//        if (show) {
+//            if (loadingDialog.isVisible.not()) {
+//                loadingDialog.show(childFragmentManager, "LOADING_DIALOG")
+//            }
+//        } else {
+//            loadingDialog.dismiss()
+//        }
+//    }
 }
