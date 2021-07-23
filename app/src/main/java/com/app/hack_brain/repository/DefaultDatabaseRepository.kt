@@ -89,6 +89,24 @@ class DefaultDatabaseRepository(private val appDatabase: AppDatabase) : Database
         }
     }
 
+    override suspend fun insertTimer(timer: TimerEntity): DataResult<Any> {
+        return withResultContext { 
+            appDatabase.timerDao().insertTimer(timer)
+        }
+    }
+
+    override suspend fun updateTimer(timer: TimerEntity): DataResult<Any> {
+        return withResultContext {
+            appDatabase.timerDao().updateTimer(timer)
+        }
+    }
+
+    override suspend fun deleteTimer(timer: TimerEntity): DataResult<Any> {
+        return withResultContext { 
+            appDatabase.timerDao().deleteTimer(timer)
+        }
+    }
+
     override suspend fun getTimerList(): DataResult<List<TimerEntity>> {
         return withResultContext {
             appDatabase.timerDao().getAll()
@@ -113,11 +131,8 @@ interface DatabaseRepository {
     suspend fun getTarget(date: String): DataResult<TargetEntity>
     suspend fun updateTarget(target: TargetEntity): DataResult<Unit>
 
-//    suspend fun addOpenAppTimer(timer: TimerEntity): DataResult<Any>
-//    suspend fun addRemindVocTimer(timer: TimerEntity): DataResult<Any>
-//    suspend fun updateOpenAppTimer(timer: TimerEntity): DataResult<Any>
-//    suspend fun updateRemindVocTimer(timer: TimerEntity): DataResult<Any>
-//    suspend fun deleteOpenAppTimer(timer: TimerEntity): DataResult<Any>
-//    suspend fun deleteRemindVocTimer(timer: TimerEntity): DataResult<Any>
+    suspend fun insertTimer(timer: TimerEntity): DataResult<Any>
+    suspend fun updateTimer(timer: TimerEntity): DataResult<Any>
+    suspend fun deleteTimer(timer: TimerEntity): DataResult<Any>
     suspend fun getTimerList(): DataResult<List<TimerEntity>>
 }

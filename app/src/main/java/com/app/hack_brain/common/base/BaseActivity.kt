@@ -31,13 +31,13 @@ abstract class BaseActivity<VM : BaseViewModel,
 
     protected abstract fun initialize()
 
-    private lateinit var loadingDialog: LoadingDialog
+//    private lateinit var loadingDialog: LoadingDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = inflateViewBinding(layoutInflater)
         setContentView(viewBinding.root)
-        loadingDialog = LoadingDialog()
+//        loadingDialog = LoadingDialog()
         initialize()
         onSubscribeObserver()
     }
@@ -45,7 +45,7 @@ abstract class BaseActivity<VM : BaseViewModel,
     open fun onSubscribeObserver() {
         viewModel.run {
             isLoading.observeSingleEvent(this@BaseActivity) {
-                toggleLoading(it)
+//                toggleLoading(it)
             }
             exception.observeSingleEvent(this@BaseActivity) {
                 handleDefaultApiError(it)
@@ -54,12 +54,12 @@ abstract class BaseActivity<VM : BaseViewModel,
     }
 
     open fun toggleLoading(show: Boolean) {
-        if (show) {
-            if (loadingDialog.isVisible.not()) {
-                loadingDialog.show(supportFragmentManager, "LOADING_DIALOG")
-            }
-        } else {
-            loadingDialog.dismiss()
-        }
+//        if (show) {
+//            if (loadingDialog.isVisible.not()) {
+//                loadingDialog.show(supportFragmentManager, "LOADING_DIALOG")
+//            }
+//        } else {
+//            loadingDialog.dismiss()
+//        }
     }
 }

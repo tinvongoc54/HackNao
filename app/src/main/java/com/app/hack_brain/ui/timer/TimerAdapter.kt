@@ -6,13 +6,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.hack_brain.common.base.BaseRecyclerViewAdapter
 import com.app.hack_brain.data.local.entity.TimerEntity
 import com.app.hack_brain.databinding.ItemTimerBinding
-import java.util.*
+import com.app.hack_brain.extension.gone
 
 class TimerAdapter(
+    private val isOpenApp: Boolean,
     private val onClickItem: (timer: TimerEntity) -> Unit,
     private val onClickEditItem: (timer: TimerEntity) -> Unit,
-    private val onClickDeleteItem: (position: Int) -> Unit,
-    private val onClickCheckBox: (position: Int) -> Unit
+    private val onClickDeleteItem: (timer: TimerEntity, position: Int) -> Unit,
+    private val onClickCheckBox: (timer: TimerEntity) -> Unit
 ) : BaseRecyclerViewAdapter<TimerEntity, TimerAdapter.ItemTimerViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemTimerViewHolder {
@@ -27,27 +28,29 @@ class TimerAdapter(
 
     override fun onBindViewHolder(holder: ItemTimerViewHolder, position: Int) {
         getItem(position)?.let {
-            holder.bindData(it)
+            holder.bindData(it, isOpenApp)
             holder.bindClickItem({
                 onClickItem(it)
             }, {
                 onClickEditItem(it)
             }, {
-                onClickDeleteItem(position)
+                onClickDeleteItem(it, position)
             }, {
                 it.isTurnOn = holder.getCheckBoxSelected()
-                onClickCheckBox(position)
+                onClickCheckBox(it)
             })
         }
     }
 
     inner class ItemTimerViewHolder(private val itemBinding: ItemTimerBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-        fun bindData(timer: TimerEntity) {
+        fun bindData(timer: TimerEntity, isOpenApp: Boolean) {
             itemBinding.run {
                 tvTime.text = timer.getHour()
                 cbTurnOn.isChecked = timer.isTurnOn
                 tvCalendar.text = timer.getStringCalendar()
+                tvVocabulary.gone(isOpenApp)
+                tvVocabulary.text = if (isOpenApp.not()) timer.getListVocabulary() else ""
             }
         }
 

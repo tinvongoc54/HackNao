@@ -35,7 +35,16 @@ class App : Application(), Configuration.Provider {
     private fun configKoin() {
         startKoin {
             androidContext(this@App)
-            modules(listOf(appModule, remoteModule, localModule, repositoryModule, viewModelModule, databaseModule))
+            modules(
+                listOf(
+                    appModule,
+                    remoteModule,
+                    localModule,
+                    repositoryModule,
+                    viewModelModule,
+                    databaseModule
+                )
+            )
         }
     }
 
@@ -43,5 +52,13 @@ class App : Application(), Configuration.Provider {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
+    }
+
+    companion object {
+        private var activityVisible = false
+        fun setRunning(isRunning: Boolean) {
+            activityVisible = isRunning
+        }
+        fun isRunning() = activityVisible
     }
 }

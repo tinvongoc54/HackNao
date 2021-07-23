@@ -73,6 +73,7 @@ class HomeFragment :
             target.observe(viewLifecycleOwner, Observer {
                 Timber.i("target: " + Gson().toJson(it))
                 changeTarget(it.id ?: 1, unitNumber)
+                (activity as? HomeActivity)?.alarmService?.setRemindTarget()
             })
         }
     }
