@@ -31,7 +31,15 @@
         <action
             android:id="@+id/actionHomeFragmentToPronounceFragment"
             app:destination="@id/pronounceFragment" />
-
+        <action
+            android:id="@+id/actionHomeFragmentToCheckEngVieFragment"
+            app:destination="@+id/checkEngVieFragment" />
+        <action
+            android:id="@+id/actionHomeFragmentToCheckVieEngFragment"
+            app:destination="@+id/checkVieEngFragment" />
+        <action
+            android:id="@+id/actionHomeFragmentToCheckSoundFragment"
+            app:destination="@+id/checkSoundFragment" />
     </fragment>
     <fragment
         android:id="@+id/shortStoryFragment"

@@ -8,6 +8,9 @@ interface UnitDao {
     @Query("SELECT * FROM unit_tracking ORDER BY unit")
     fun getUnitList(): List<UnitEntity>
 
+    @Query("SELECT * FROM unit_tracking WHERE unit=:unit")
+    fun getUnit(unit: Int): UnitEntity
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertUnit(unit: UnitEntity)
 

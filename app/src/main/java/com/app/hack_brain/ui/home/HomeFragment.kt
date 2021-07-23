@@ -1,6 +1,7 @@
 package com.app.hack_brain.ui.home
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -14,6 +15,8 @@ import com.app.hack_brain.BuildConfig
 import com.app.hack_brain.R
 import com.app.hack_brain.common.base.BaseFragment
 import com.app.hack_brain.databinding.FragmentHomeBinding
+import com.app.hack_brain.extension.navigateWithSlideAnim
+import com.app.hack_brain.model.eventBus.UpdateTargetEvent
 import com.app.hack_brain.ui.home.adapter.EverydayVocAdapter
 import com.app.hack_brain.ui.home.adapter.TargetAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -22,6 +25,9 @@ import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.gson.Gson
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import timber.log.Timber
 
 
@@ -35,8 +41,23 @@ class HomeFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        createReviewApp()
-        viewModel.getTargetUnit()
+//        viewModel.getTargetUnit()
         viewModel.getRandomVoc()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        EventBus.getDefault().unregister(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        exitTransition = MaterialFadeThrough()
     }
 
     override fun inflateViewBinding(
@@ -46,11 +67,6 @@ class HomeFragment :
         return FragmentHomeBinding.inflate(inflater)
     }
 
-    override fun onStop() {
-        super.onStop()
-        exitTransition = MaterialFadeThrough()
-    }
-
     @SuppressLint("IdleBatteryChargingConstraints")
     @RequiresApi(Build.VERSION_CODES.M)
     override fun initialize() {
@@ -58,6 +74,7 @@ class HomeFragment :
         initClickEvent()
         setupRVVocabulary()
         setupRVTarget()
+        viewModel.getTargetUnit()
         viewBinding.tvChooseTarget.text = String.format("%s Day / Unit", viewModel.getUnitNumber())
     }
 
@@ -189,7 +206,18 @@ class HomeFragment :
     private fun setupRVTarget() {
         viewBinding.rvTarget.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = TargetAdapter()
+            adapter = TargetAdapter {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Chọn loại kiểm tra")
+                    .setItems(resources.getStringArray(R.array.check_option)) { _, which ->
+                        when (which) {
+                            0 -> navigateToDetailCheckEngVieUnit(it)
+                            1 -> navigateToDetailCheckVieEngUnit(it)
+                            2 -> navigateToDetailCheckSoundUnit(it)
+                        }
+                    }
+                    .show()
+            }
         }
     }
 
@@ -207,5 +235,25 @@ class HomeFragment :
                 viewModel.getCurrentTarget()
             }
             .show()
+    }
+
+    private fun navigateToDetailCheckEngVieUnit(unit: Int) {
+        val action = HomeFragmentDirections.actionHomeFragmentToCheckEngVieFragment(unit, null)
+        navigateWithSlideAnim(action)
+    }
+
+    private fun navigateToDetailCheckVieEngUnit(unit: Int) {
+        val action = HomeFragmentDirections.actionHomeFragmentToCheckVieEngFragment(unit, null)
+        navigateWithSlideAnim(action)
+    }
+
+    private fun navigateToDetailCheckSoundUnit(unit: Int) {
+        val action = HomeFragmentDirections.actionHomeFragmentToCheckSoundFragment(unit, null)
+        navigateWithSlideAnim(action)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onMessageEvent(event: UpdateTargetEvent) {
+        viewModel.changeStatusTargetOfUnit(event.unit)
     }
 }

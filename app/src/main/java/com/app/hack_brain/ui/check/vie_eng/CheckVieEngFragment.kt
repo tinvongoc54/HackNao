@@ -15,9 +15,10 @@ import com.app.hack_brain.common.base.BaseFragment
 import com.app.hack_brain.data.local.entity.VocabularyEntity
 import com.app.hack_brain.databinding.FragmentCheckVieEngBinding
 import com.app.hack_brain.extension.*
-import com.app.hack_brain.model.uimodel.Word
+import com.app.hack_brain.model.eventBus.UpdateTargetEvent
 import com.app.hack_brain.ui.check.dialog.FinishDialogFragment
 import com.app.hack_brain.ui.home.HomeActivity
+import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 import kotlin.random.Random
 
@@ -74,7 +75,10 @@ class CheckVieEngFragment :
             })
 
             updateProgressSuccess.observe(viewLifecycleOwner, Observer {
-                if (it) activity?.onBackPressed()
+                if (it) {
+                    EventBus.getDefault().post(UpdateTargetEvent(unit = args.unit))
+                    activity?.onBackPressed()
+                }
             })
         }
     }

@@ -113,6 +113,8 @@ object Versions {
     const val sqlite = "2.0.1"
 
     const val worker = "2.5.0"
+
+    const val event_bus = "3.2.0"
 }
 
 /**
@@ -219,6 +221,9 @@ object Dependencies {
     const val worker = "androidx.work:work-runtime-ktx:${Versions.worker}"
 
     const val avoid_duplicate_listenable_future = "com.google.guava:guava:27.0.1-android"
+
+    //event bus
+    const val event_bus = "org.greenrobot:eventbus:${Versions.event_bus}"
 }
 
 fun DependencyHandler.implementLocalUnitTest() {

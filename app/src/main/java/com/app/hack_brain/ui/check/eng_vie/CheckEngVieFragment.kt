@@ -14,10 +14,11 @@ import com.app.hack_brain.common.base.BaseFragment
 import com.app.hack_brain.data.local.entity.VocabularyEntity
 import com.app.hack_brain.databinding.FragmentCheckEngVieBinding
 import com.app.hack_brain.extension.*
+import com.app.hack_brain.model.eventBus.UpdateTargetEvent
 import com.app.hack_brain.ui.check.dialog.FinishDialogFragment
 import com.app.hack_brain.ui.check.vie_eng.CheckVieEngFragment
 import com.app.hack_brain.ui.home.HomeActivity
-import com.google.gson.Gson
+import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 
 
@@ -77,7 +78,10 @@ class CheckEngVieFragment :
             })
 
             updateProgressEvent.observe(viewLifecycleOwner, Observer {
-                if (it) activity?.onBackPressed()
+                if (it) {
+                    EventBus.getDefault().post(UpdateTargetEvent(unit = args.unit))
+                    activity?.onBackPressed()
+                }
             })
         }
     }

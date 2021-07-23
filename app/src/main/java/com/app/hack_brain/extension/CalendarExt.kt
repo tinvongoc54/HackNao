@@ -33,3 +33,8 @@ fun convertTimestampToDate(time: Long?): String {
     val format = SimpleDateFormat(DATE_FORMAT_EN)
     return format.format(date)
 }
+
+@SuppressLint("SimpleDateFormat")
+fun toDate(date: String?): Date {
+    return SimpleDateFormat(DATE_FORMAT_EN).parse(date.nullToBlank()) ?: Date()
+}
