@@ -4,6 +4,7 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.navigation.fragment.navArgs
 import com.app.hack_brain.R
 import com.app.hack_brain.common.Constant
@@ -13,6 +14,7 @@ import com.app.hack_brain.databinding.FragmentChooseTimerBinding
 import com.app.hack_brain.extension.format2Number
 import com.app.hack_brain.extension.gone
 import com.app.hack_brain.extension.showDialogChooseTime
+import com.app.hack_brain.ui.home.HomeActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialSharedAxis
 import timber.log.Timber
@@ -24,6 +26,7 @@ class ChooseTimerFragment(
     private val args: ChooseTimerFragmentArgs by navArgs()
     private lateinit var timer: TimerEntity
     private var isOpenApp = false
+    private var isCreateNew = false
 
     override fun inflateViewBinding(
         inflater: LayoutInflater,
@@ -40,6 +43,7 @@ class ChooseTimerFragment(
     @RequiresApi(Build.VERSION_CODES.O)
     override fun initialize() {
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        isCreateNew = args.isCreateNew
         isOpenApp = args.isOpenApp
         timer = args.timer
         bindDataTimer()
@@ -50,13 +54,7 @@ class ChooseTimerFragment(
             clWait.gone(isOpenApp)
 
             tvTime.setOnClickListener {
-                val time = tvTime.text.toString().split(":")
-                requireContext().showDialogChooseTime(
-                    time[0].trim().toInt(),
-                    time[1].trim().toInt()
-                ) { hour, minute ->
-                    tvTime.text = String.format("%s:%s", hour.format2Number(), minute.format2Number())
-                }
+                chooseTime()
             }
 
             clRepeat.setOnClickListener {
@@ -74,13 +72,28 @@ class ChooseTimerFragment(
             clWait.setOnClickListener {
                 chooseWaitingTime()
             }
+            activity?.findViewById<AppCompatTextView>(R.id.tvDone)?.setOnClickListener {
+                viewModel.run {
+                    if (isCreateNew) {
+                        insertTimer(timer)
+                    } else {
+                        updateTimer(timer)
+                        if (timer.isTurnOn) {
+                            if (isOpenApp) {
+                                (activity as? HomeActivity)?.alarmService?.setRepeatOpenApp(timer.time, timer.repeat)
+                            } else {
+                                (activity as? HomeActivity)?.alarmService?.setRepeatRemindVoc(timer)
+                            }
+                        }
+                    }
+                }
+                activity?.onBackPressed()
+            }
         }
     }
 
     private fun bindDataTimer() {
         viewBinding.run {
-            val calendar = Calendar.getInstance()
-            calendar.timeInMillis = timer.time
             tvTime.text = timer.getHour()
             tvTimeRepeat.text = timer.getStringCalendar()
 
@@ -89,6 +102,22 @@ class ChooseTimerFragment(
                 tvVocabulary.text = timer.getListVocabulary()
                 tvWait.text = timer.getWaitingTimeString()
             }
+        }
+    }
+
+    private fun chooseTime() {
+        val time = viewBinding.tvTime.text.toString().split(":")
+        requireContext().showDialogChooseTime(
+            time[0].trim().toInt(),
+            time[1].trim().toInt()
+        ) { hour, minute ->
+            val calendar = Calendar.getInstance()
+            calendar.set(Calendar.HOUR_OF_DAY, hour)
+            calendar.set(Calendar.MINUTE, minute)
+            calendar.set(Calendar.SECOND, 0)
+            calendar.set(Calendar.MILLISECOND, 0)
+            timer.time = calendar.timeInMillis
+            viewBinding.tvTime.text = String.format("%s:%s", hour.format2Number(), minute.format2Number())
         }
     }
 

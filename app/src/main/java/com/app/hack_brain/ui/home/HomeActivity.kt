@@ -8,6 +8,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.onNavDestinationSelected
 import com.app.hack_brain.R
+import com.app.hack_brain.app.App
 import com.app.hack_brain.common.base.BaseActivity
 import com.app.hack_brain.databinding.ActivityHomeBinding
 import com.app.hack_brain.extension.gone
@@ -15,7 +16,6 @@ import com.app.hack_brain.extension.show
 import com.app.hack_brain.service.AlarmService
 import com.app.hack_brain.ui.short_story.detail.DetailShortStoryFragmentArgs
 import com.app.hack_brain.ui.timer.dialog.ChooseTimerFragmentArgs
-import java.util.*
 
 /**
  * Copyright © 2020 Neolab VN.
@@ -37,6 +37,16 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        App.setRunning(true)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        App.setRunning(false)
     }
 
     override fun initialize() {
@@ -140,19 +150,6 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>(HomeViewMo
 
     fun setPoint(point: Int) {
         viewBinding.tvPoint.text = String.format("$point điểm")
-    }
-
-    fun setAlarm(callback: (Long) -> Unit) {
-        Calendar.getInstance().apply {
-            val time = this.timeInMillis + 10000
-
-            this.set(Calendar.YEAR, 2021)
-            this.set(Calendar.MONTH, 7)
-            this.set(Calendar.DAY_OF_MONTH, 18)
-            this.set(Calendar.HOUR_OF_DAY, 12)
-            this.set(Calendar.MINUTE, 47)
-            callback(time)
-        }
     }
 }
 

@@ -11,8 +11,8 @@ interface TargetDao {
     @Query("SELECT * FROM muctieu WHERE (date = :date AND status = 1) LIMIT 1")
     fun getTargetEntity(date: String): TargetEntity
 
-    @Query("SELECT * FROM muctieu LIMIT 1")
-    fun getFirstTarget(): TargetEntity
+    @Query("SELECT * FROM muctieu WHERE (date = :date AND status = 1)")
+    fun getTargetListOfDay(date: String): List<TargetEntity>
 
     @Insert
     fun insertTarget(vararg target: TargetEntity)

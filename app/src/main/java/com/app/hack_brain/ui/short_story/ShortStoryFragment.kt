@@ -7,6 +7,7 @@ import com.app.hack_brain.common.base.BaseFragment
 import com.app.hack_brain.databinding.FragmentShortStoryBinding
 import com.app.hack_brain.extension.navigateWithSlideAnim
 import com.app.hack_brain.model.uimodel.ShortStory
+import com.google.android.material.transition.MaterialSharedAxis
 import com.google.gson.Gson
 
 class ShortStoryFragment :
@@ -19,12 +20,14 @@ class ShortStoryFragment :
     }
 
     override fun initialize() {
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
         initShortStoryAdapter()
     }
 
     override fun onStop() {
         super.onStop()
         (viewBinding.rvShortStoryList.adapter as? ShortStoryAdapter)?.removeListener()
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
 
     private fun navigateToDetailShortStory(story: ShortStory) {

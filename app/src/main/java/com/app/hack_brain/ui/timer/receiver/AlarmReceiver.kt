@@ -1,16 +1,16 @@
 package com.app.hack_brain.ui.timer.receiver
 
-import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.app.hack_brain.R
+import com.app.hack_brain.common.Constant
 
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        val builder = NotificationCompat.Builder(context, "notifycc")
+        val builder = NotificationCompat.Builder(context, Constant.CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_logo)
             .setContentTitle("Alarm")
             .setContentText("Subcribe")
