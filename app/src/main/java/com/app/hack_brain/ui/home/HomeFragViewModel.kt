@@ -9,6 +9,7 @@ import com.app.hack_brain.repository.DatabaseRepository
 import com.app.hack_brain.data.local.entity.VocabularyEntity
 import com.app.hack_brain.data.local.sharedpfers.SharePrefsService
 import com.app.hack_brain.extension.convertTimestampToDate
+import com.app.hack_brain.extension.toDate
 import com.app.hack_brain.utils.liveData.SingleLiveData
 import java.util.*
 
@@ -24,8 +25,22 @@ class HomeFragViewModel(private val dbRepository: DatabaseRepository, private va
     }
 
     fun getTargetUnit() {
-        viewModelScope(targetList) {
-            dbRepository.getTargetList()
+        viewModelScope {
+            dbRepository.getTargetList().executeIfSucceed {
+                kotlin.run {
+                    it.forEach { target ->
+                        if (Date().after(toDate(target.date)) && convertTimestampToDate(System.currentTimeMillis()) != target.date) {
+                            if (target.status == 1) {
+                                target.status = 0
+                                dbRepository.updateTargetByUnit(target.unit ?: 0, 0)
+                            }
+                        } else {
+                            return@run
+                        }
+                    }
+                }
+                targetList.value = it
+            }
         }
     }
 
@@ -63,6 +78,16 @@ class HomeFragViewModel(private val dbRepository: DatabaseRepository, private va
         }
         Handler().postDelayed({
             getTargetUnit()
-        }, 200)
+        }, 500)
+    }
+
+    fun changeStatusTargetOfUnit(unit: Int) {
+        viewModelScope {
+            dbRepository.getUnit(unit).executeIfSucceed {
+                if (it.isEnableNextUnit()) {
+                    dbRepository.updateTargetByUnit(it.unit ?: 0, 2)
+                }
+            }
+        }
     }
 }

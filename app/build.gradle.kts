@@ -179,6 +179,9 @@ dependencies {
     //Worker
     implementation(Dependencies.worker)
 
+    //Event bus
+    implementation(Dependencies.event_bus)
+
     implementation(Dependencies.avoid_duplicate_listenable_future)
 
     // Unit Test

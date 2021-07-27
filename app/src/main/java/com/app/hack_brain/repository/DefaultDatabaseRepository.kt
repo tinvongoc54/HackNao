@@ -47,6 +47,12 @@ class DefaultDatabaseRepository(private val appDatabase: AppDatabase) : Database
         }
     }
 
+    override suspend fun getUnit(unit: Int): DataResult<UnitEntity> {
+        return withResultContext {
+            appDatabase.unitDao().getUnit(unit)
+        }
+    }
+
     override suspend fun updateEngVieProgress(unit: Int, progress: Int): DataResult<Unit> {
         return withResultContext {
             appDatabase.unitDao().updateEngVieProgress(unit, progress)
@@ -89,6 +95,12 @@ class DefaultDatabaseRepository(private val appDatabase: AppDatabase) : Database
         }
     }
 
+    override suspend fun updateTargetByUnit(unit: Int, status: Int): DataResult<Unit> {
+        return withResultContext {
+            appDatabase.targetDao().updateTargetByUnit(unit, status)
+        }
+    }
+
     override suspend fun insertTimer(timer: TimerEntity): DataResult<Any> {
         return withResultContext { 
             appDatabase.timerDao().insertTimer(timer)
@@ -122,6 +134,7 @@ interface DatabaseRepository {
     suspend fun getFavouriteVocList(): DataResult<List<VocabularyEntity>>
 
     suspend fun getUnitList(): DataResult<List<UnitEntity>>
+    suspend fun getUnit(unit: Int): DataResult<UnitEntity>
     suspend fun updateEngVieProgress(unit: Int, progress: Int): DataResult<Unit>
     suspend fun updateVieEngProgress(unit: Int, progress: Int): DataResult<Unit>
     suspend fun updateSoundProgress(unit: Int, progress: Int): DataResult<Unit>
@@ -130,6 +143,7 @@ interface DatabaseRepository {
     suspend fun getTargetList(): DataResult<List<TargetEntity>>
     suspend fun getTarget(date: String): DataResult<TargetEntity>
     suspend fun updateTarget(target: TargetEntity): DataResult<Unit>
+    suspend fun updateTargetByUnit(unit: Int, status: Int): DataResult<Unit>
 
     suspend fun insertTimer(timer: TimerEntity): DataResult<Any>
     suspend fun updateTimer(timer: TimerEntity): DataResult<Any>

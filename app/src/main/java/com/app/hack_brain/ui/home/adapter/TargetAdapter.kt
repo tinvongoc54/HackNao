@@ -6,11 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.hack_brain.common.base.BaseRecyclerViewAdapter
 import com.app.hack_brain.data.local.entity.TargetEntity
 import com.app.hack_brain.databinding.ItemTargetBinding
-import com.app.hack_brain.extension.convertTimestampToDate
 import com.app.hack_brain.extension.nullToBlank
 import com.app.hack_brain.extension.showView
 
-class TargetAdapter : BaseRecyclerViewAdapter<TargetEntity, TargetAdapter.ItemTargetViewHolder>() {
+class TargetAdapter(
+    private val onClickItem: (unit: Int) -> Unit
+) : BaseRecyclerViewAdapter<TargetEntity, TargetAdapter.ItemTargetViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemTargetViewHolder {
         return ItemTargetViewHolder(
@@ -23,7 +24,10 @@ class TargetAdapter : BaseRecyclerViewAdapter<TargetEntity, TargetAdapter.ItemTa
     }
 
     override fun onBindViewHolder(holder: ItemTargetViewHolder, position: Int) {
-        getItem(position)?.let { holder.bindData(it) }
+        getItem(position)?.let {
+            holder.bindData(it)
+            holder.bindClickListener { onClickItem(it.unit ?: 1) }
+        }
     }
 
     inner class ItemTargetViewHolder(private val itemBinding: ItemTargetBinding) :
@@ -36,6 +40,10 @@ class TargetAdapter : BaseRecyclerViewAdapter<TargetEntity, TargetAdapter.ItemTa
                 ivLate.showView(target.isLate())
                 ivDone.showView(target.isDone())
             }
+        }
+
+        fun bindClickListener(onClick: () -> Unit) {
+            itemBinding.root.setOnClickListener { onClick() }
         }
     }
 }

@@ -16,10 +16,12 @@ import com.app.hack_brain.databinding.FragmentCheckSoundBinding
 import com.app.hack_brain.extension.gone
 import com.app.hack_brain.extension.nullToBlank
 import com.app.hack_brain.extension.show
+import com.app.hack_brain.model.eventBus.UpdateTargetEvent
 import com.app.hack_brain.ui.check.dialog.FinishDialogFragment
 import com.app.hack_brain.ui.check.eng_vie.AnswerAdapter
 import com.app.hack_brain.ui.check.vie_eng.CheckVieEngFragment
 import com.app.hack_brain.ui.home.HomeActivity
+import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 
 class CheckSoundFragment :
@@ -69,7 +71,10 @@ class CheckSoundFragment :
             })
 
             updateProgressSuccess.observe(viewLifecycleOwner, Observer {
-                if (it) activity?.onBackPressed()
+                if (it) {
+                    EventBus.getDefault().post(UpdateTargetEvent(unit = args.unit))
+                    activity?.onBackPressed()
+                }
             })
         }
     }
