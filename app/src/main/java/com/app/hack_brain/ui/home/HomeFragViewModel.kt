@@ -11,12 +11,17 @@ import com.app.hack_brain.data.local.sharedpfers.SharePrefsService
 import com.app.hack_brain.extension.convertTimestampToDate
 import com.app.hack_brain.extension.toDate
 import com.app.hack_brain.utils.liveData.SingleLiveData
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Flowable
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class HomeFragViewModel(private val dbRepository: DatabaseRepository, private val sharePrefsService: SharePrefsService) : BaseViewModel() {
     val randomVoc = MutableLiveData<List<VocabularyEntity>>()
     val targetList = MutableLiveData<List<TargetEntity>>()
     val target = SingleLiveData<TargetEntity>()
+    val positionTargetScroll = SingleLiveData<Int>()
+    val positionAutoScroll = SingleLiveData<Int>()
 
     fun getRandomVoc() {
         viewModelScope(randomVoc) {
@@ -28,13 +33,14 @@ class HomeFragViewModel(private val dbRepository: DatabaseRepository, private va
         viewModelScope {
             dbRepository.getTargetList().executeIfSucceed {
                 kotlin.run {
-                    it.forEach { target ->
+                    it.forEachIndexed { index, target ->
                         if (Date().after(toDate(target.date)) && convertTimestampToDate(System.currentTimeMillis()) != target.date) {
                             if (target.status == 1) {
                                 target.status = 0
                                 dbRepository.updateTargetByUnit(target.unit ?: 0, 0)
                             }
                         } else {
+                            positionTargetScroll.value = index
                             return@run
                         }
                     }
@@ -90,4 +96,19 @@ class HomeFragViewModel(private val dbRepository: DatabaseRepository, private va
             }
         }
     }
+
+    fun autoScrollVocabulary() {
+        Flowable.interval(5, TimeUnit.SECONDS)
+            .map { it % 5 }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                positionAutoScroll.value = it.toInt()
+            }
+    }
+
+    fun setIsOpenedApp(isOpened: Boolean) {
+        sharePrefsService.setIsOpenedApp(isOpened)
+    }
+
+    fun isOpenedApp() = sharePrefsService.isOpenedApp()
 }

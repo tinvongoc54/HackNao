@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.hack_brain.common.base.BaseFragment
 import com.app.hack_brain.databinding.FragmentPronounceBinding
 import com.app.hack_brain.model.uimodel.Pronounce
+import com.google.android.material.transition.MaterialSharedAxis
 import com.google.gson.Gson
 import timber.log.Timber
 
@@ -22,6 +23,7 @@ class PronounceFragment : BaseFragment<PronounceFragViewModel, FragmentPronounce
     }
 
     override fun initialize() {
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
         viewBinding.run {
             rvPronounce.apply {
                 layoutManager = LinearLayoutManager(context)
@@ -39,6 +41,7 @@ class PronounceFragment : BaseFragment<PronounceFragViewModel, FragmentPronounce
 
     override fun onStop() {
         super.onStop()
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
         (viewBinding.rvPronounce.adapter as? PronounceAdapter)?.removeListener()
         if (mediaPlayer?.isPlaying == true) {
             mediaPlayer?.stop()

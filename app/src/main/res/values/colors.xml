@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#202751</color>
     <color name="colorPrimaryLight">#343C6A</color>
     <color name="colorAccent">#3AD4D7</color>
+    <color name="colorSurface">#F9FAFC</color>
 
     <color name="dim_gray_opacity_40">#4D717171</color>
     <color name="white">#FFFFFF</color>

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
+import com.app.hack_brain.utils.widget.CustomDialogFragment
 
 /**
  * Copyright © 2020 Neolab VN.
@@ -67,4 +68,10 @@ fun Context.showDialogChooseTime(
         onDateSet(h, m)
     }, hour, minute, true)
     timePickerDialog.show()
+}
+
+fun Fragment.showMessage(content: String) {
+    CustomDialogFragment.Builder(content = content)
+        .build()
+        .show(childFragmentManager, "message dialog")
 }

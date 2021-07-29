@@ -36,16 +36,8 @@ android {
             versionCode = 1
             versionName = "1.0.0"
 
-            resValue("string", "app_name", "Hack Nao")
+            resValue("string", "app_name", "3K Words")
             buildConfigField("String", "END_POINT", "\"http://api.tracau.vn/WBBcwnwQpV89/\"")
-        }
-
-        create("PROD") {
-            versionCode = 1
-            versionName = "1.0.0"
-
-            resValue("string", "app_name", "Hack Nao")
-            buildConfigField("String", "END_POINT", "\"https://api-dev.neo-lab.com/v1/\"")
         }
 
 //        applicationVariants.all {

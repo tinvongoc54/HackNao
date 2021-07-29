@@ -20,4 +20,6 @@
 
     <string name="text_result_fail">Rất tiếc bạn chưa vượt qua được bài kiểm tra. Vui lòng chơi lại để có kết quả tốt hơn</string>
     <string name="text_result_pass">Chúc mừng bạn đã vượt qua bài kiểm tra. Bạn có thể chơi lại để có kết quả tốt hơn hoặc chọn unit mới nhé</string>
+
+    <string name="text_warning_unit">Bạn hãy hoàn thành Unit %s trước nhé! Cố lên nào!</string>
 </resources>

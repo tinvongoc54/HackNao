@@ -61,7 +61,7 @@ class RemindVocabularyWorker(val context: Context, workerParameters: WorkerParam
 
         val builder = NotificationCompat.Builder(context, Constant.CHANNEL_ID)
             .setContentIntent(notifyPendingIntent)
-            .setSmallIcon(R.drawable.ic_logo)
+            .setSmallIcon(R.drawable.img_logo)
             .setContentTitle(title)
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)

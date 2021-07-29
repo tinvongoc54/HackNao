@@ -24,7 +24,6 @@ import com.google.android.material.transition.MaterialFadeThrough
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
-import com.google.gson.Gson
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -43,6 +42,7 @@ class HomeFragment :
 //        createReviewApp()
 //        viewModel.getTargetUnit()
         viewModel.getRandomVoc()
+        viewModel.autoScrollVocabulary()
     }
 
     override fun onAttach(context: Context) {
@@ -74,6 +74,10 @@ class HomeFragment :
         initClickEvent()
         setupRVVocabulary()
         setupRVTarget()
+        if (viewModel.isOpenedApp().not()) {
+            viewModel.setIsOpenedApp(true)
+            (activity as? HomeActivity)?.alarmService?.setRemindTarget()
+        }
         viewModel.getTargetUnit()
         viewBinding.tvChooseTarget.text = String.format("%s Day / Unit", viewModel.getUnitNumber())
     }
@@ -84,13 +88,17 @@ class HomeFragment :
             randomVoc.observe(viewLifecycleOwner, Observer {
                 (viewBinding.rvEverydayVocabulary.adapter as EverydayVocAdapter).replaceData(it.toMutableList())
             })
+            positionAutoScroll.observe(viewLifecycleOwner, Observer {
+                viewBinding.rvEverydayVocabulary.smoothScrollToPosition(it)
+            })
+            positionTargetScroll.observe(viewLifecycleOwner, Observer {
+                viewBinding.rvTarget.smoothScrollToPosition(it)
+            })
             targetList.observe(viewLifecycleOwner, Observer {
                 (viewBinding.rvTarget.adapter as TargetAdapter).replaceData(it.toMutableList())
             })
             target.observe(viewLifecycleOwner, Observer {
-                Timber.i("target: " + Gson().toJson(it))
                 changeTarget(it.id ?: 1, unitNumber)
-                (activity as? HomeActivity)?.alarmService?.setRemindTarget()
             })
         }
     }
@@ -233,6 +241,7 @@ class HomeFragment :
                 viewBinding.tvChooseTarget.text = String.format("%s Unit / Day", unitNumber)
                 viewModel.setUnitNumber(unitNumber)
                 viewModel.getCurrentTarget()
+                (activity as? HomeActivity)?.alarmService?.setRemindTarget()
             }
             .show()
     }

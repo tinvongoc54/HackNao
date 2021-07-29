@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.hack_brain.common.base.BaseFragment
 import com.app.hack_brain.databinding.FragmentTranslateBinding
 import com.app.hack_brain.model.uimodel.DetailTranslate
+import com.google.android.material.transition.MaterialSharedAxis
 
 class TranslateFragment : BaseFragment<TranslateFragViewModel, FragmentTranslateBinding>(TranslateFragViewModel::class) {
     override fun inflateViewBinding(
@@ -16,7 +17,13 @@ class TranslateFragment : BaseFragment<TranslateFragViewModel, FragmentTranslate
         return FragmentTranslateBinding.inflate(inflater)
     }
 
+    override fun onStop() {
+        super.onStop()
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+    }
+
     override fun initialize() {
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
         viewBinding.ivSearch.setOnClickListener {
             viewModel.doTranslate(viewBinding.tvSearch.text.toString())
         }

@@ -59,7 +59,7 @@ class AlarmReceiver : BroadcastReceiver() {
 
         val builder = NotificationCompat.Builder(context, Constant.CHANNEL_ID)
             .setContentIntent(notifyPendingIntent)
-            .setSmallIcon(R.drawable.ic_logo)
+            .setSmallIcon(R.drawable.img_logo)
             .setContentTitle("3K Words")
             .setContentText("Đến giờ học bài rồi!")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
