@@ -14,9 +14,20 @@ class DefaultSharePrefsService(
     override fun getTargetUnitNumberOfDay(): Int {
         return sharedPrefsWrapper[SharedPrefKeys.SHARED_UNIT_NUMBER]
     }
+
+    override fun setIsOpenedApp(isOpened: Boolean) {
+        sharedPrefsWrapper[SharedPrefKeys.SHARED_IS_OPENED_APP] = isOpened
+    }
+
+    override fun isOpenedApp(): Boolean {
+        return sharedPrefsWrapper[SharedPrefKeys.SHARED_IS_OPENED_APP]
+    }
 }
 
 interface SharePrefsService {
     fun setTargetUnitNumberOfDay(number: Int)
     fun getTargetUnitNumberOfDay(): Int
+
+    fun setIsOpenedApp(isOpened: Boolean)
+    fun isOpenedApp(): Boolean
 }

@@ -48,7 +48,7 @@ class UnitAdapter(
                 tvEngViePercent.text = unit.progressEngVie.toString().appendPercent()
                 tvVieEngPercent.text = unit.progressVieEng.toString().appendPercent()
                 tvSoundPercent.text = unit.progressSound.toString().appendPercent()
-                setEnableUnit(context, if (position > 0) getData()[position - 1].isEnableNextUnit() else true)
+                setEnableUnit(context, position, if (position > 0) getData()[position - 1].isEnableNextUnit() else true)
             }
         }
 
@@ -66,11 +66,9 @@ class UnitAdapter(
             }
         }
 
-        private fun setEnableUnit(context: Context, isEnable: Boolean = false) {
+        private fun setEnableUnit(context: Context, position: Int, isEnable: Boolean = false) {
             itemBinding.run {
-                clEngVie.isEnabled = isEnable
-                clVieEng.isEnabled = isEnable
-                clSound.isEnabled = isEnable
+                getItem(position)?.isEnable = isEnable
                 tvEngVie.setTextColor(
                     ContextCompat.getColor(
                         context,

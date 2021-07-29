@@ -12,10 +12,8 @@ import com.app.hack_brain.data.local.entity.VocabularyEntity
 import com.app.hack_brain.databinding.FragmentFavouriteBinding
 import com.app.hack_brain.extension.gone
 import com.app.hack_brain.extension.navigateWithSlideAnim
-import com.app.hack_brain.model.uimodel.Unit
-import com.app.hack_brain.model.uimodel.Word
-import com.app.hack_brain.ui.pronounce.PronounceAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.transition.MaterialSharedAxis
 import timber.log.Timber
 
 class FavouriteFragment : BaseFragment<FavouriteFragViewModel, FragmentFavouriteBinding>(FavouriteFragViewModel::class) {
@@ -31,6 +29,7 @@ class FavouriteFragment : BaseFragment<FavouriteFragViewModel, FragmentFavourite
     }
 
     override fun initialize() {
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
         initFavouriteAdapter()
         viewModel.getFavouriteVocList()
 
@@ -63,6 +62,7 @@ class FavouriteFragment : BaseFragment<FavouriteFragViewModel, FragmentFavourite
 
     override fun onStop() {
         super.onStop()
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
         (viewBinding.rvFavourite.adapter as? FavouriteAdapter)?.removeListener()
         if (mediaPlayer?.isPlaying == true) {
             mediaPlayer?.stop()

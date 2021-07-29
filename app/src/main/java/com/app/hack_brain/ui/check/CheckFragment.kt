@@ -4,15 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import com.app.hack_brain.R
+import com.app.hack_brain.common.Constant
 import com.app.hack_brain.common.base.BaseFragment
 import com.app.hack_brain.data.local.entity.UnitEntity
 import com.app.hack_brain.databinding.FragmentCheckBinding
 import com.app.hack_brain.extension.navigateWithSlideAnim
 import com.app.hack_brain.extension.nullToZero
-import com.app.hack_brain.model.uimodel.Unit
-import com.google.android.material.transition.MaterialFadeThrough
+import com.app.hack_brain.extension.showMessage
+import com.google.android.material.transition.MaterialSharedAxis
 
-class CheckFragment : BaseFragment<CheckFragViewModel, FragmentCheckBinding>(CheckFragViewModel::class) {
+class CheckFragment :
+    BaseFragment<CheckFragViewModel, FragmentCheckBinding>(CheckFragViewModel::class) {
     override fun inflateViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -20,7 +23,13 @@ class CheckFragment : BaseFragment<CheckFragViewModel, FragmentCheckBinding>(Che
         return FragmentCheckBinding.inflate(inflater)
     }
 
+    override fun onStop() {
+        super.onStop()
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+    }
+
     override fun initialize() {
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
         viewModel.getUnitList()
         initUnitAdapter()
     }
@@ -28,7 +37,7 @@ class CheckFragment : BaseFragment<CheckFragViewModel, FragmentCheckBinding>(Che
     override fun onSubscribeObserver() {
         super.onSubscribeObserver()
         viewModel.run {
-            unitListEvent.observe(viewLifecycleOwner, Observer{
+            unitListEvent.observe(viewLifecycleOwner, Observer {
                 (viewBinding.rvUnit.adapter as UnitAdapter).replaceData(it.toMutableList())
             })
         }
@@ -40,15 +49,27 @@ class CheckFragment : BaseFragment<CheckFragViewModel, FragmentCheckBinding>(Che
             adapter = UnitAdapter(
                 context = requireContext(),
                 onClickEngVie = {
-                    navigateToDetailCheckEngVieUnit(it.unit.nullToZero())
+                    doClick(it, Constant.TypeCheckClick.TYPE_ENG_VIE)
                 },
                 onClickVieEng = {
-                    navigateToDetailCheckVieEngUnit(it.unit.nullToZero())
+                    doClick(it, Constant.TypeCheckClick.TYPE_VIE_ENG)
                 },
                 onClickSound = {
-                    navigateToDetailCheckSoundUnit(it.unit.nullToZero())
+                    doClick(it, Constant.TypeCheckClick.TYPE_SOUND)
                 }
             )
+        }
+    }
+
+    private fun doClick(unit: UnitEntity, typeClick: Constant.TypeCheckClick) {
+        if (unit.isEnable == false) {
+            showMessage(getString(R.string.text_warning_unit, ((unit.unit ?: 2) - 1).toString()))
+        } else {
+            when (typeClick) {
+                Constant.TypeCheckClick.TYPE_ENG_VIE -> navigateToDetailCheckEngVieUnit(unit.unit.nullToZero())
+                Constant.TypeCheckClick.TYPE_VIE_ENG -> navigateToDetailCheckVieEngUnit(unit.unit.nullToZero())
+                Constant.TypeCheckClick.TYPE_SOUND -> navigateToDetailCheckSoundUnit(unit.unit.nullToZero())
+            }
         }
     }
 

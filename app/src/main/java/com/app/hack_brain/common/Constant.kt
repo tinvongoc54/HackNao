@@ -26,4 +26,10 @@ object Constant {
 
     const val TYPE_OPEN_APP = 0
     const val TYPE_REMIND_VOCABULARY = 1
+
+    enum class TypeCheckClick {
+        TYPE_ENG_VIE,
+        TYPE_VIE_ENG,
+        TYPE_SOUND
+    }
 }

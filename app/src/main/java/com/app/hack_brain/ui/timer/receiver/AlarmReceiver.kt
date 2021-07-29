@@ -11,7 +11,7 @@ import com.app.hack_brain.common.Constant
 class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val builder = NotificationCompat.Builder(context, Constant.CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_logo)
+            .setSmallIcon(R.drawable.img_logo)
             .setContentTitle("Alarm")
             .setContentText("Subcribe")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
