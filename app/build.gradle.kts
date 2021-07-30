@@ -23,16 +23,15 @@ android {
     flavorDimensions("default")
 
     defaultConfig {
-        applicationId = "com.app.hack_brain"
+        applicationId = "com.vtd.hacknao"
         minSdkVersion(Versions.min_sdk_version)
         targetSdkVersion(Versions.target_sdk_version)
         vectorDrawables.useSupportLibrary = true
-        testInstrumentationRunner = "com.app.hack_brain.app.CustomTestRunner"
+        testInstrumentationRunner = "com.vtd.hacknao.app.CustomTestRunner"
     }
 
     productFlavors {
-        create("DEV") {
-            applicationIdSuffix = ".dev"
+        create("APP") {
             versionCode = 1
             versionName = "1.0.0"
 

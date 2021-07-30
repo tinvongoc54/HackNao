@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.app.hack_brain.ui.home.HomeFragment"
+        android:name="com.vtd.hacknao.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/shortStoryFragment"
-        android:name="com.app.hack_brain.ui.short_story.ShortStoryFragment"
+        android:name="com.vtd.hacknao.ui.short_story.ShortStoryFragment"
         android:label="fragment_short_story"
         tools:layout="@layout/fragment_short_story">
         <action
@@ -52,21 +52,21 @@
     </fragment>
     <fragment
         android:id="@+id/detailShortStoryFragment"
-        android:name="com.app.hack_brain.ui.short_story.detail.DetailShortStoryFragment"
+        android:name="com.vtd.hacknao.ui.short_story.detail.DetailShortStoryFragment"
         android:label="fragment_detail_short_story"
         tools:layout="@layout/fragment_detail_short_story">
         <argument
             android:name="shortStory"
-            app:argType="com.app.hack_brain.model.uimodel.ShortStory" />
+            app:argType="com.vtd.hacknao.model.uimodel.ShortStory" />
     </fragment>
     <fragment
         android:id="@+id/irregularFragment"
-        android:name="com.app.hack_brain.ui.irregular.IrregularFragment"
+        android:name="com.vtd.hacknao.ui.irregular.IrregularFragment"
         android:label="fragment_irregular"
         tools:layout="@layout/fragment_irregular" />
     <fragment
         android:id="@+id/checkFragment"
-        android:name="com.app.hack_brain.ui.check.CheckFragment"
+        android:name="com.vtd.hacknao.ui.check.CheckFragment"
         android:label="fragment_check"
         tools:layout="@layout/fragment_check">
         <action
@@ -81,12 +81,12 @@
     </fragment>
     <fragment
         android:id="@+id/translateFragment"
-        android:name="com.app.hack_brain.ui.translate.TranslateFragment"
+        android:name="com.vtd.hacknao.ui.translate.TranslateFragment"
         android:label="fragment_translate"
         tools:layout="@layout/fragment_translate" />
     <fragment
         android:id="@+id/checkEngVieFragment"
-        android:name="com.app.hack_brain.ui.check.eng_vie.CheckEngVieFragment"
+        android:name="com.vtd.hacknao.ui.check.eng_vie.CheckEngVieFragment"
         android:label="fragment_check_eng_vie"
         tools:layout="@layout/fragment_check_eng_vie">
         <argument
@@ -94,12 +94,12 @@
             app:argType="integer" />
         <argument
             android:name="favouriteList"
-            app:argType="com.app.hack_brain.data.local.entity.VocabularyEntity[]"
+            app:argType="com.vtd.hacknao.data.local.entity.VocabularyEntity[]"
             app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/checkVieEngFragment"
-        android:name="com.app.hack_brain.ui.check.vie_eng.CheckVieEngFragment"
+        android:name="com.vtd.hacknao.ui.check.vie_eng.CheckVieEngFragment"
         android:label="fragment_check_vie_eng"
         tools:layout="@layout/fragment_check_vie_eng">
         <argument
@@ -107,12 +107,12 @@
             app:argType="integer" />
         <argument
             android:name="favouriteList"
-            app:argType="com.app.hack_brain.data.local.entity.VocabularyEntity[]"
+            app:argType="com.vtd.hacknao.data.local.entity.VocabularyEntity[]"
             app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/checkSoundFragment"
-        android:name="com.app.hack_brain.ui.check.sound.CheckSoundFragment"
+        android:name="com.vtd.hacknao.ui.check.sound.CheckSoundFragment"
         android:label="fragment_check_sound"
         tools:layout="@layout/fragment_check_sound">
         <argument
@@ -120,12 +120,12 @@
             app:argType="integer" />
         <argument
             android:name="favouriteList"
-            app:argType="com.app.hack_brain.data.local.entity.VocabularyEntity[]"
+            app:argType="com.vtd.hacknao.data.local.entity.VocabularyEntity[]"
             app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/favouriteFragment"
-        android:name="com.app.hack_brain.ui.favourite.FavouriteFragment"
+        android:name="com.vtd.hacknao.ui.favourite.FavouriteFragment"
         android:label="fragment_favourite"
         tools:layout="@layout/fragment_favourite">
         <action
@@ -140,7 +140,7 @@
     </fragment>
     <fragment
         android:id="@+id/timerFragment"
-        android:name="com.app.hack_brain.ui.timer.TimerFragment"
+        android:name="com.vtd.hacknao.ui.timer.TimerFragment"
         android:label="fragment_timer"
         tools:layout="@layout/fragment_timer">
 
@@ -151,7 +151,7 @@
     </fragment>
     <fragment
         android:id="@+id/chooseTimerFragment"
-        android:name="com.app.hack_brain.ui.timer.dialog.ChooseTimerFragment"
+        android:name="com.vtd.hacknao.ui.timer.dialog.ChooseTimerFragment"
         android:label="fragment_choose_timer"
         tools:layout="@layout/fragment_choose_timer">
         <argument
@@ -162,11 +162,11 @@
             app:argType="boolean" />
         <argument
             android:name="timer"
-            app:argType="com.app.hack_brain.data.local.entity.TimerEntity" />
+            app:argType="com.vtd.hacknao.data.local.entity.TimerEntity" />
     </fragment>
     <fragment
         android:id="@+id/pronounceFragment"
-        android:name="com.app.hack_brain.ui.pronounce.PronounceFragment"
+        android:name="com.vtd.hacknao.ui.pronounce.PronounceFragment"
         android:label="fragment_pronounce"
         tools:layout="@layout/fragment_pronounce" />
 </navigation>
