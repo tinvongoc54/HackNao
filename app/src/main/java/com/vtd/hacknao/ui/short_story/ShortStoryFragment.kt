@@ -1,0 +1,67 @@
+package com.vtd.hacknao.ui.short_story
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.vtd.hacknao.common.base.BaseFragment
+import com.vtd.hacknao.databinding.FragmentShortStoryBinding
+import com.vtd.hacknao.extension.navigateWithSlideAnim
+import com.vtd.hacknao.model.uimodel.ShortStory
+import com.google.android.material.transition.MaterialSharedAxis
+import com.google.gson.Gson
+
+class ShortStoryFragment :
+    BaseFragment<ShortStoryFragViewModel, FragmentShortStoryBinding>(ShortStoryFragViewModel::class) {
+    override fun inflateViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentShortStoryBinding {
+        return FragmentShortStoryBinding.inflate(inflater)
+    }
+
+    override fun initialize() {
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        initShortStoryAdapter()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (viewBinding.rvShortStoryList.adapter as? ShortStoryAdapter)?.removeListener()
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
+    }
+
+    private fun navigateToDetailShortStory(story: ShortStory) {
+        val action = ShortStoryFragmentDirections.actionShortStoryFragmentToDetailFragment(story)
+        navigateWithSlideAnim(action)
+    }
+
+    private fun getShortStoryList(): List<ShortStory> {
+        var json = ""
+        try {
+            val activity = activity ?: return emptyList()
+            val inputStream = activity.assets.open("short_story_audio/short_story")
+            val size = inputStream.available()
+            val buffer = ByteArray(size)
+            inputStream.read(buffer)
+            json = String(buffer)
+        } catch (ex: Exception) {
+
+        }
+        return Gson().fromJson(json, Array<ShortStory>::class.java).asList()
+    }
+
+    private fun initShortStoryAdapter() {
+        viewBinding.run {
+            rvShortStoryList.apply {
+                layoutManager = LinearLayoutManager(context)
+                adapter = ShortStoryAdapter {
+                    navigateToDetailShortStory(it)
+                }
+                with(adapter as ShortStoryAdapter) {
+                    replaceData(getShortStoryList().toMutableList())
+                }
+            }
+        }
+    }
+
+}
