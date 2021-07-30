@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -39,7 +40,7 @@ class HomeFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        createReviewApp()
+        createReviewApp()
 //        viewModel.getTargetUnit()
         viewModel.getRandomVoc()
         viewModel.autoScrollVocabulary()
@@ -132,7 +133,7 @@ class HomeFragment :
                 shareApp()
             }
             btnReview.setOnClickListener {
-//                reviewApp()
+                reviewApp()
             }
             tvChooseTarget.setOnClickListener {
                 chooseTargetForDay()
@@ -182,10 +183,6 @@ class HomeFragment :
         request.addOnCompleteListener {
             if (it.isSuccessful) {
                 reviewInfo = it.result
-                val flow = reviewManager.launchReviewFlow(requireActivity(), reviewInfo!!)
-                flow.addOnCompleteListener {
-                    Timber.i("Thank you")
-                }
             } else {
                 Timber.i("Fail")
             }
@@ -196,7 +193,7 @@ class HomeFragment :
         if (reviewInfo != null) {
             val flow = reviewManager.launchReviewFlow(requireActivity(), reviewInfo!!)
             flow.addOnCompleteListener {
-                Timber.i("Success")
+                Toast.makeText(requireContext(), "Cảm ơn bạn đã đánh giá!", Toast.LENGTH_SHORT).show()
             }
         } else {
             Timber.i("Null")

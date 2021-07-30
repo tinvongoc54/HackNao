@@ -12,6 +12,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/llSwipe"
             android:layout_width="@dimen/dp_120"
             android:layout_height="match_parent">
 
