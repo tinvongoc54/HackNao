@@ -74,10 +74,8 @@ class TimerFragment :
         viewBinding.rvOpenApp.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = TimerAdapter(
+                context = requireContext(),
                 isOpenApp = true,
-                onClickItem = {
-                    navigateToTimerDialog(isCreateNew = false, isOpenApp = true, timer = it)
-                },
                 onClickEditItem = {
                     navigateToTimerDialog(isCreateNew = false, isOpenApp = true, timer = it)
                 },
@@ -99,10 +97,8 @@ class TimerFragment :
         viewBinding.rvRemindVocabulary.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = TimerAdapter(
+                context = requireContext(),
                 isOpenApp = false,
-                onClickItem = {
-                    navigateToTimerDialog(isCreateNew = false, isOpenApp = false, timer = it)
-                },
                 onClickEditItem = {
                     navigateToTimerDialog(isCreateNew = false, isOpenApp = false, timer = it)
                 },

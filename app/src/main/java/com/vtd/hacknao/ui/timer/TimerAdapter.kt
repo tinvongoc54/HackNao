@@ -1,16 +1,18 @@
 package com.vtd.hacknao.ui.timer
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.vtd.hacknao.R
 import com.vtd.hacknao.common.base.BaseRecyclerViewAdapter
 import com.vtd.hacknao.data.local.entity.TimerEntity
 import com.vtd.hacknao.databinding.ItemTimerBinding
 import com.vtd.hacknao.extension.gone
 
 class TimerAdapter(
+    private val context: Context,
     private val isOpenApp: Boolean,
-    private val onClickItem: (timer: TimerEntity) -> Unit,
     private val onClickEditItem: (timer: TimerEntity) -> Unit,
     private val onClickDeleteItem: (timer: TimerEntity, position: Int) -> Unit,
     private val onClickCheckBox: (timer: TimerEntity) -> Unit
@@ -28,10 +30,8 @@ class TimerAdapter(
 
     override fun onBindViewHolder(holder: ItemTimerViewHolder, position: Int) {
         getItem(position)?.let {
-            holder.bindData(it, isOpenApp)
+            holder.bindData(context, it, isOpenApp, isHideDelete = position == 0)
             holder.bindClickItem({
-                onClickItem(it)
-            }, {
                 onClickEditItem(it)
             }, {
                 onClickDeleteItem(it, position)
@@ -44,24 +44,31 @@ class TimerAdapter(
 
     inner class ItemTimerViewHolder(private val itemBinding: ItemTimerBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-        fun bindData(timer: TimerEntity, isOpenApp: Boolean) {
+        fun bindData(
+            context: Context,
+            timer: TimerEntity,
+            isOpenApp: Boolean,
+            isHideDelete: Boolean
+        ) {
             itemBinding.run {
                 tvTime.text = timer.getHour()
                 cbTurnOn.isChecked = timer.isTurnOn
                 tvCalendar.text = timer.getStringCalendar()
+                llSwipe.layoutParams.width =
+                    context.resources.getDimension(if (isHideDelete) R.dimen.dp_60 else R.dimen.dp_120)
+                        .toInt()
+                llSwipe.requestLayout()
                 tvVocabulary.gone(isOpenApp)
                 tvVocabulary.text = if (isOpenApp.not()) timer.getListVocabulary() else ""
             }
         }
 
         fun bindClickItem(
-            onClickItem: () -> Unit,
             onClickEditItem: () -> Unit,
             onClickDeleteItem: () -> Unit,
             onClickCheckBox: () -> Unit
         ) {
             itemBinding.run {
-                clTimer.setOnClickListener { onClickItem() }
                 tvEdit.setOnClickListener { onClickEditItem() }
                 tvDelete.setOnClickListener { onClickDeleteItem() }
                 cbTurnOn.setOnClickListener { onClickCheckBox() }

@@ -30,6 +30,7 @@ class CheckSoundFragment :
     private val args: CheckSoundFragmentArgs by navArgs()
     private val wordList: MutableList<VocabularyEntity> = mutableListOf()
     private val checkedList: MutableList<VocabularyEntity> = mutableListOf()
+    private val tempCheckedList: MutableList<VocabularyEntity> = mutableListOf()
     private var point = 0
     private var mediaPlayer: MediaPlayer? = null
     private lateinit var checkWord: VocabularyEntity
@@ -43,11 +44,7 @@ class CheckSoundFragment :
 
     @SuppressLint("ClickableViewAccessibility")
     override fun initialize() {
-        if (args.unit != 0) {
-            viewModel.getVocabularyOfUnit(args.unit)
-        } else {
-            initData(args.favouriteList?.toMutableList() ?: mutableListOf())
-        }
+        viewModel.getVocabularyOfUnit(if (args.unit != 0) args.unit else 1)
 
         viewBinding.run {
             sbProgress.setOnTouchListener { _, _ -> true }
@@ -88,9 +85,11 @@ class CheckSoundFragment :
     }
 
     private fun initData(vocList: MutableList<VocabularyEntity>) {
+        wordList.clear()
         wordList.addAll(vocList)
-        checkedList.addAll(wordList)
-        viewBinding.sbProgress.max = wordList.size
+        checkedList.addAll(if (args.unit != 0) wordList else args.favouriteList?.toMutableList() ?: mutableListOf())
+        tempCheckedList.addAll(checkedList)
+        viewBinding.sbProgress.max = checkedList.size
         initRecyclerAdapter()
         showQuestion()
     }
@@ -172,15 +171,20 @@ class CheckSoundFragment :
             if (sbProgress.progress == sbProgress.max) {
                 FinishDialogFragment(
                     result = point / 10,
-                    numberQuestion = wordList.size,
+                    numberQuestion = tempCheckedList.size,
                     onClickNext = {
-                        viewModel.updateProcess(
-                            args.unit,
-                            (point * 10 / Constant.AMOUNT_VOC_AN_UNIT)
-                        )
+                        if (args.unit != 0) {
+                            viewModel.updateProcess(
+                                args.unit,
+                                (point * 10 / Constant.AMOUNT_VOC_AN_UNIT)
+                            )
+                        } else {
+                            activity?.onBackPressed()
+                        }
                     },
                     onClickAgain = {
-                        checkedList.addAll(wordList)
+                        checkedList.clear()
+                        checkedList.addAll(tempCheckedList)
                         sbProgress.progress = 0
                         point = 0
                         (activity as? HomeActivity)?.setPoint(point)
