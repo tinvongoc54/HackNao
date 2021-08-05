@@ -1,5 +1,4 @@
-import java.text.SimpleDateFormat
-import java.util.Calendar
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 plugins {
     id(Plugins.androidApp)
@@ -37,15 +36,25 @@ android {
 
             resValue("string", "app_name", "3K Words")
             buildConfigField("String", "END_POINT", "\"http://api.tracau.vn/WBBcwnwQpV89/\"")
+            addManifestPlaceholders(mapOf("appIcon" to "@mipmap/ic_launcher", "appIconRound" to "@mipmap/ic_launcher_round"))
         }
 
         applicationVariants.all {
             outputs.forEach { output ->
                 if (output is com.android.build.gradle.internal.api.BaseVariantOutputImpl) {
                     output.outputFileName =
-                        "App-${SimpleDateFormat("HH_mm_dd_MM_yyyy").format(Calendar.getInstance().time)}-v$versionName(${this.versionCode})-$name.${output.outputFile.extension}"
+                        "HackNao-${name}_v$versionName(${this.versionCode}).${output.outputFile.extension}"
                 }
             }
+        }
+    }
+
+    signingConfigs {
+        create("release") {
+            keyAlias = gradleLocalProperties(rootDir).getProperty("RELEASE_KEY_ALIAS")
+            keyPassword = gradleLocalProperties(rootDir).getProperty("RELEASE_KEY_PASSWORD")
+            storeFile = file(gradleLocalProperties(rootDir).getProperty("RELEASE_STORE_FILE"))
+            storePassword = gradleLocalProperties(rootDir).getProperty("RELEASE_STORE_PASSWORD")
         }
     }
 
@@ -58,6 +67,7 @@ android {
                 file("proguard-rules.pro"),
                 file("androidx-proguard-rules.pro")
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 

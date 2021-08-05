@@ -132,3 +132,26 @@
 #https://android.googlesource.com/platform/frameworks/support/+/androidx-master-dev/room/runtime/proguard-rules.pro
 -keep class * extends androidx.room.RoomDatabase
 -dontwarn androidx.room.paging.**
+
+##### Navigation Component #####
+#-------------------------------------------------
+# JetPack Navigation
+# This fixes: Caused by: androidx.fragment.app.Fragment$InstantiationException: Unable to instantiate fragment androidx.navigation.fragment.NavHostFragment: make sure class name exists
+#-------------------------------------------------
+-keepnames class androidx.navigation.fragment.NavHostFragment
+# adding Argument model, using in graph
+-keep class com.vtd.hacknao.model.uimodel.ShortStory
+-keep class com.vtd.hacknao.data.local.entity.VocabularyEntity
+-keep class com.vtd.hacknao.data.local.entity.TimerEntity
+
+##### Event Bus #####
+-keepattributes *Annotation*
+-keepclassmembers class * {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+
+# And if you use AsyncExecutor:
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}
