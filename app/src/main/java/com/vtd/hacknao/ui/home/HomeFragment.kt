@@ -17,7 +17,6 @@ import com.vtd.hacknao.R
 import com.vtd.hacknao.common.base.BaseFragment
 import com.vtd.hacknao.databinding.FragmentHomeBinding
 import com.vtd.hacknao.extension.navigateWithSlideAnim
-import com.vtd.hacknao.model.eventBus.UpdateTargetEvent
 import com.vtd.hacknao.ui.home.adapter.EverydayVocAdapter
 import com.vtd.hacknao.ui.home.adapter.TargetAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -25,6 +24,7 @@ import com.google.android.material.transition.MaterialFadeThrough
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
+import com.vtd.hacknao.model.eventBus.UpdateTargetEvent
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
