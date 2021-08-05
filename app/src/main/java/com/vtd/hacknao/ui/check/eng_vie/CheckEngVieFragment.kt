@@ -49,6 +49,7 @@ class CheckEngVieFragment :
 
             btnNext.setOnClickListener {
                 checkedList.remove(checkWord)
+                (viewBinding.rvAnswer.adapter as AnswerAdapter).setIsClickableItem(true)
                 showQuestion()
             }
 

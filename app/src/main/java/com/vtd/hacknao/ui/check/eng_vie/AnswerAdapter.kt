@@ -15,6 +15,8 @@ class AnswerAdapter(
     private val onClickItem: (word: VocabularyEntity, position: Int) -> Unit
 ) : BaseRecyclerViewAdapter<VocabularyEntity, AnswerAdapter.ItemAnswerViewHolder>() {
 
+    private var isClickableItem = true
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemAnswerViewHolder {
         return ItemAnswerViewHolder(
             ItemAnswerBinding.inflate(
@@ -25,10 +27,19 @@ class AnswerAdapter(
         )
     }
 
+    fun setIsClickableItem(isClickable: Boolean) {
+        isClickableItem = isClickable
+    }
+
     override fun onBindViewHolder(holder: ItemAnswerViewHolder, position: Int) {
         getItem(position)?.let {
             holder.bindData(it)
-            holder.onClickItem { onClickItem(it, position) }
+            holder.onClickItem {
+                if (isClickableItem) {
+                    onClickItem(it, position)
+                    isClickableItem = false
+                }
+            }
         }
     }
 
