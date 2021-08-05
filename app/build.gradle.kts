@@ -39,14 +39,14 @@ android {
             buildConfigField("String", "END_POINT", "\"http://api.tracau.vn/WBBcwnwQpV89/\"")
         }
 
-//        applicationVariants.all {
-//            outputs.forEach { output ->
-//                if (output is com.android.build.gradle.internal.api.BaseVariantOutputImpl) {
-//                    output.outputFileName =
-//                        "App-${SimpleDateFormat("HH_mm_dd_MM_yyyy").format(Calendar.getInstance().time)}-v$versionName(${this.versionCode})-$name.${output.outputFile.extension}"
-//                }
-//            }
-//        }
+        applicationVariants.all {
+            outputs.forEach { output ->
+                if (output is com.android.build.gradle.internal.api.BaseVariantOutputImpl) {
+                    output.outputFileName =
+                        "App-${SimpleDateFormat("HH_mm_dd_MM_yyyy").format(Calendar.getInstance().time)}-v$versionName(${this.versionCode})-$name.${output.outputFile.extension}"
+                }
+            }
+        }
     }
 
     buildTypes {
